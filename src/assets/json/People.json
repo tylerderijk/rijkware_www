@@ -1,0 +1,60 @@
+{
+  "hero_title": "People",
+  "hero_subtitle": "Meet some of the Students",
+  "people": [
+    {
+      "role": "Founder, CEO",
+      "name": "Tyler de Rijk",
+      "email": "tderijk@rijkware.nl",
+      "image": "TylerRijkwareInspired2024.png",
+      "description": "In my second year of study, I sought a part-time developer role but found that most job openings required 32-40 hours per week, despite possessing all the necessary skills and more. This inspired me to create Rijkware.",
+      "socials": {
+        "linkedin": "https://www.linkedin.com/in/tylerderijk/",
+        "instagram": "https://www.instagram.com/tylerderijk/",
+        "email": "mailto:tderijk@rijkware.nl"
+      }
+    },
+    {
+      "role": "Public Relations Officer",
+      "name": "Vlad Milosteanu",
+      "email": "vmilosteanu@rijkware.nl",
+      "image": "VladMugshot2024.png",
+      "description": "As the Public Relations Officer at Rijkware, I play an important role persuading businesses about the potential of Student Developers.",
+      "socials": {
+        "linkedin": "https://www.linkedin.com/in/vlad-milosteanu-a66687184/",
+        "email": "mailto:vmilosteanu@rijkware.nl"
+      }
+    },
+    {
+      "role": "Currently Active Student Developers",
+      "team": [
+        {
+          "name": "Samy Farahat",
+          "image": "PlaceholderMugshot2024.png",
+          "description": "Works on the Tandartspraktijk Rembrandt Project as a Student Developer.",
+          "socials": {
+            "linkedin": "https://www.linkedin.com/in/samy-farahat-298358183/"
+          }
+        },
+        {
+          "name": "Rehan Choudrey",
+          "email": "rchoudrey@rijkware.nl",
+          "image": "RehanMugshot2024.png",
+          "description": "Works on the Tandartspraktijk Rembrandt Project as a Digital Marketeer.",
+          "socials": {
+            "linkedin": "https://www.linkedin.com/in/rehan-choudrey-68960b290/",
+            "email": "mailto:rchoudrey@rijkware.nl"
+          }
+        },
+        {
+          "name": "Tonko Klein Gunnewiek",
+          "image": "PlaceholderMugshot2024.png",
+          "description": "Works on the FRIDAY Mascara Project as a Student Developer.",
+          "socials": {
+            "linkedin": "https://www.linkedin.com/in/tonko-klein-gunnewiek-312812207/"
+          }
+        }
+      ]
+    }
+  ]
+}

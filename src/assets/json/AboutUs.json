@@ -1,0 +1,46 @@
+{
+  "hero_texts": {
+    "title": "At Rijkware, we connect ambitious students with businesses.",
+    "subtitle1": "We empower university students by giving them the chance to work on real projects and gain invaluable experience.",
+    "subtitle2": "Delivering Cost-Effective solutions through a transparent process.",
+    "subtitle3": "Why pay more for the same result?",
+    "manifesto_link_text": "Read about our ambitions and culture in",
+    "cta": "Experience the Potential of Ambitious Students",
+    "cta_link": "Got a project or position in mind? Let's talk!"
+  },
+  "reasons": [
+    {
+      "title": "Cost-Effective",
+      "description": "High-quality work at a budget-friendly price."
+    },
+    {
+      "title": "Clear Contracts",
+      "description": "Transparent agreements before the work begins."
+    },
+    {
+      "title": "Experience Growth",
+      "description": "Support university students in gaining real-world expertise."
+    },
+    {
+      "title": "Flexibility",
+      "description": "Choose on-site or remote collaboration."
+    },
+    {
+      "title": "Cutting-Edge Skills",
+      "description": "Students with proficiency in the latest technologies."
+    },
+    {
+      "title": "Progress Reports",
+      "description": "Stay informed with progress reports."
+    },
+    {
+      "title": "Payment Options",
+      "description": "Pay weekly, monthly, or upon project completion."
+    },
+    {
+      "title": "Reassurance",
+      "description": "Details are extensively discussed and agreed upon. We only offer the achievable."
+    }
+  ],
+  "cases_link_text": "Read some of our success stories in "
+}
