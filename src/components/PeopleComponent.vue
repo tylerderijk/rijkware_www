@@ -60,10 +60,41 @@ import LinkedInIcon from "@/components/shorts/LinkedInIcon.vue";
 import InstagramIcon from "@/components/shorts/InstagramIcon.vue";
 import EmailIcon from "@/components/shorts/EmailIcon.vue";
 import peopleData from '@/assets/json/People.json';
+import anime from 'animejs';
+import {onMounted} from "vue";
 
 const getImageUrl = (imageName) => {
   return require(`@/assets/${imageName}`);
 }
+
+onMounted(() => {
+  anime({
+    targets: '.hero-title, .hero-wrapper small',
+    translateY: [-20, 0],
+    opacity: [0, 1],
+    duration: 1000,
+    easing: 'easeOutQuad',
+    delay: anime.stagger(200)
+  });
+
+  anime({
+    targets: '.people-article',
+    translateX: [-50, 0],
+    opacity: [0, 1],
+    duration: 1000,
+    easing: 'easeOutQuad',
+    delay: anime.stagger(300, { start: 500 })
+  });
+
+  anime({
+    targets: '.people-image',
+    scale: [0.8, 1],
+    opacity: [0, 1],
+    duration: 800,
+    easing: 'easeOutQuad',
+    delay: anime.stagger(300, { start: 1000 })
+  });
+});
 </script>
 
 <style scoped>
@@ -93,7 +124,6 @@ const getImageUrl = (imageName) => {
 }
 
 .people-description h3 {
-  font-family: "Unbounded", system-ui;
 }
 
 .people-description span {
@@ -112,6 +142,7 @@ const getImageUrl = (imageName) => {
 }
 
 .people-image {
+  z-index: 1111111;
   width: 200px;
   border-radius: 50%;
 }
@@ -168,6 +199,7 @@ const getImageUrl = (imageName) => {
   }
 
   .hero-wrapper {
+    margin-top: 0px;
     width: 100%;
   }
 }

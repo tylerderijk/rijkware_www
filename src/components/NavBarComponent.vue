@@ -12,7 +12,7 @@ export default {
   emits: ['toggle-menu'],
   computed: {
     isMobile() {
-      return window.innerWidth <= 820;
+      return /Mobi|Android/i.test(navigator.userAgent);
     },
     currentPath() {
       return this.$route.path;
@@ -33,17 +33,19 @@ export default {
         begin: () => {
           if (this.showMobileNav) {
             this.$el.querySelector('.mobile-nav').style.display = 'flex';
+            this.$el.querySelector('.rijkware-logo').style.display = 'flex';
           }
         },
         complete: () => {
           if (!this.showMobileNav) {
             this.$el.querySelector('.mobile-nav').style.display = 'none';
+            this.$el.querySelector('.rijkware-logo').style.display = 'flex';
           }
         }
       });
     },
     handleResize() {
-      if (window.innerWidth > 820) {
+      if (window.innerWidth > 820 && !this.isMobile) {
         this.$emit('toggle-menu');
       }
     }
@@ -62,17 +64,17 @@ export default {
   <nav>
     <div class="logo-hamburger">
       <router-link v-if="showMobileNav" to="/rijkware" @click="handleClick">
-        <img src="../assets/RijkwareLogo-2024-v2-Long.png" id="rijkware-logo" class="d-inline-block align-top" alt="">
+        <img src="../assets/RijkwareLogo-2024-v2-Long.png" class="rijkware-logo d-inline-block align-top" alt="">
       </router-link>
       <router-link v-else to="/rijkware">
-      <img src="../assets/RijkwareLogo-2024-v2-Long.png" id="rijkware-logo" class="d-inline-block align-top" alt="">
+      <img src="../assets/RijkwareLogo-2024-v2.png" class="rijkware-logo d-inline-block align-top" alt="">
       </router-link>
       <button v-if="!showMobileNav" @click="handleClick" class="hamburger-button"><MenuIcon/></button>
       <button v-else @click="handleClick" class="hamburger-button"><MenuCloseIcon/></button>
     </div>
     <ul class="navbar-nav">
       <li class="nav-item">
-        <router-link to="/">About us</router-link>
+        <router-link to="/">About</router-link>
       </li>
       <li class="nav-item">
         <router-link to="manifesto">Manifesto</router-link>
@@ -83,8 +85,8 @@ export default {
       <li class="nav-item">
         <router-link to="people">People</router-link>
       </li>
-      <li class="nav-item">
-        <router-link to="contact">Contact</router-link>
+      <li class="nav-item contact-li">
+        <router-link to="contact" class="contact">Contact Us</router-link>
       </li>
     </ul>
     <div class="mobile-nav-wrapper">
@@ -113,6 +115,45 @@ export default {
 </template>
 
 <style scoped>
+.navbar-nav:hover .contact {
+  opacity: 1;
+}
+
+.nav-item:hover:not {
+  opacity: 1;
+}
+
+.contact:hover {
+  box-shadow: 0 0 10px 0 rgba(0, 94, 255, 0.25);
+}
+.contact {
+  opacity: 0.5;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 18px;
+  background: linear-gradient(-45deg, black, #0474ff, #500bff, black);
+  padding: 0px 12px;
+  background-size: 400% 400%;
+  animation: gradient 8s ease infinite;
+  transition: all 300ms ease-in-out;
+  margin: 0 -12px;
+
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
 .logo-hamburger {
   display: flex;
   justify-content: space-between;
@@ -124,7 +165,7 @@ export default {
 }
 
 .navbar-nav {
-  opacity: 0.5;
+  opacity: 0.3;
   transition: all 350ms ease-out
 }
 
@@ -159,21 +200,25 @@ ul {
   display: flex;
   justify-content: center;
   cursor: pointer;
-  margin: 10px 20px 0 0;
+  margin: 10px 2vw;
   padding: 8px;
-  font-weight: 700;
+  font-weight: 300;
   font-size: 20px;
-  font-family: "Quicksand", system-ui;
+  font-family: "Lexend", system-ui;
   transition: all 100ms ease-in-out;
 }
 
-
 .nav-item:hover {
+  opacity: 1;
   transform: translateY(-4px);
 }
 
+.navbar-nav:hover .contact {
+  opacity: 1;
+}
+
 .nav-item:active {
-  transform: translateY(4px);
+  transform: translateY(0px);
 }
 
 a {
@@ -183,14 +228,15 @@ a {
 
 .router-link-active, .router-link-exact-active {
   position: relative;
-  font-weight: 1000;
+  font-weight: 500;
 }
 
 
-#rijkware-logo {
+.rijkware-logo {
   cursor: pointer;
   height: 36px;
   margin: 24px 48px 0 0;
+  opacity: 0.9;
 }
 
 .mobile-nav {
@@ -235,7 +281,7 @@ a {
     transform: none;
   }
 
-  #rijkware-logo {
+  .rijkware-logo {
     margin: 16px;
   }
 

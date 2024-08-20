@@ -3,64 +3,39 @@
     <h1 class="hero-title">{{ lang.hero_title }}</h1>
     <small>{{ lang.hero_subtitle }}</small>
   </div>
-  <hr style="border: 1px solid rgba(233,233,233,0.3); width: 70%;">
-  <section v-for="caseItem in lang.cases" :key="caseItem.title" class="case-section">
-    <div class="case-wrapper">
-      <img :src="getImgUrl(caseItem.image)"
-           class="case-image"
-           :alt="`${caseItem.title}`">
-      <div class="case-texts-wrapper">
-        <article class="case-texts">
-          <h3 class="grey-gradient">{{ caseItem.title }}</h3>
-          <p>{{ caseItem.description }}</p>
-        </article>
-        <article v-if="caseItem.technologies" class="case-texts">
-          <h3 class="grey-gradient">Technologies</h3>
-          <p>{{ caseItem.technologies }}</p>
-        </article>
-        <article v-if="caseItem.results" class="case-texts">
-          <h3 class="grey-gradient">Results Achieved</h3>
-          <p>{{ caseItem.results }}</p>
-        </article>
-        <article v-if="caseItem.responsibilities" class="case-texts">
-          <h3 class="grey-gradient">Responsibilities</h3>
-          <p>{{ caseItem.responsibilities }}</p>
-        </article>
-        <article v-if="caseItem.duration" class="case-texts">
-          <h3 class="grey-gradient">Duration</h3>
-          <p>{{ caseItem.duration }}</p>
-        </article>
-        <article v-if="caseItem.features" class="case-texts">
-          <h3 class="grey-gradient">Features</h3>
-          <p>{{ caseItem.features }}</p>
-        </article>
-        <article v-if="caseItem.management" class="case-texts">
-          <h3 class="grey-gradient">Management</h3>
-          <p>{{ caseItem.management }}</p>
-        </article>
-        <div class="case-button-wrapper">
-          <button v-if="caseItem.url">
-            <a class="svg-wrapper-1" :href="caseItem.url" target="_blank">
-              <div class="svg-wrapper">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#e9e9e9" width="30" height="30"
-                     class="icon">
-                  <path
-                      d="M22,15.04C22,17.23 20.24,19 18.07,19H5.93C3.76,19 2,17.23 2,15.04C2,13.07 3.43,11.44 5.31,11.14C5.28,11 5.27,10.86 5.27,10.71C5.27,9.33 6.38,8.2 7.76,8.2C8.37,8.2 8.94,8.43 9.37,8.8C10.14,7.05 11.13,5.44 13.91,5.44C17.28,5.44 18.87,8.06 18.87,10.83C18.87,10.94 18.87,11.06 18.86,11.17C20.65,11.54 22,13.13 22,15.04Z"
-                  ></path>
-                </svg>
-              </div>
-            </a>
-            <a class="case-url" :href="caseItem.url" target="_blank">Visit</a>
-          </button>
+  <hr style="border: 1px solid rgba(233,233,233,0.3); width: 60%;">
+  <div class="container">
+    <div id="cards">
+      <div v-for="caseItem in lang.cases"
+           :key="caseItem.title"
+           class="card"
+           @click="toggleCard(caseItem)"
+           @mousemove="updateMousePosition"
+           @mouseenter="caseItem.isHovered = true"
+           @mouseleave="caseItem.isHovered = false">
+        <img :src="getImgUrl(caseItem.isHovered ? caseItem.image : caseItem.logo)"
+             v-if="!caseItem.isClicked && !isMobile"
+             class="case-image"
+             :alt="`${caseItem.title}`">
+        <img :src="getImgUrl(caseItem.image)"
+             v-if="!caseItem.isClicked && isMobile"
+             class="case-image case-image-mobile"
+             :alt="`${caseItem.title}`">
+        <small class="case-click-me" v-if="!caseItem.isClicked && !isMobile">Click me</small>
+        <div class="case-texts">
+          <h2 v-if="caseItem.isClicked" class="case-title blue-gradient">{{ caseItem.title }}</h2>
+          <p v-if="caseItem.isClicked" class="case-description">{{ caseItem.description }}</p>
+          <p v-if="caseItem.isClicked" class="case-small">{{ caseItem.extra }} </p>
         </div>
       </div>
     </div>
-  </section>
+  </div>
 </template>
 
 <script>
 import CasesData from '@/assets/json/Cases.json';
 import anime from 'animejs';
+
 export default {
   name: 'CasesComponent',
   data() {
@@ -69,6 +44,14 @@ export default {
     }
   },
   mounted() {
+    anime({
+      targets: '.hero-title, .hero-wrapper small',
+      translateY: [-20, 0],
+      opacity: [0, 1],
+      duration: 1000,
+      easing: 'easeOutQuad',
+      delay: anime.stagger(200)
+    });
     anime({
       targets: ['.case-texts', '.case-button-wrapper'],
       translateY: [-20, 0],
@@ -81,109 +64,188 @@ export default {
       targets: '.case-image',
       translateY: [-20, 0],
       opacity: [0, 1],
-      duration: 1000,
+      duration: 390,
       delay: anime.stagger(400),
       easing: 'easeInOutQuad'
     });
+
+    window.addEventListener('mousemove', this.updateMousePosition);
   },
   methods: {
     getImgUrl(path) {
-      var images = require.context('../assets/', false, /\.png$/)
-      return images('./' + path + ".png")
+      let images = require.context('../assets/', false, /\.png$/);
+      return images('./' + path + ".png");
+    },
+    toggleCard(caseItem) {
+      caseItem.isClicked = !caseItem.isClicked;
+    },
+    updateMousePosition(event) {
+      if (this.isMobile) {
+        return;
+      }
+
+      let card = event.currentTarget;
+
+      if (!card || !card.classList || !card.classList.contains('card')) {
+        card = event.target.closest('.card');
+      }
+
+      if (card) {
+        const rect = card.getBoundingClientRect();
+        const x = event.clientX - rect.left;
+        const y = event.clientY - rect.top;
+
+        card.style.setProperty('--mouse-x', `${x}px`);
+        card.style.setProperty('--mouse-y', `${y}px`);
+      }
     }
+  },
+  computed: {
+    isMobile() {
+      return /Mobi|Android/i.test(navigator.userAgent);
+    },
   }
 }
 </script>
 <style scoped>
-.case-url {
-  color: inherit;
-  text-decoration: none;
-  display: block;
-  margin-left: 0.3em;
-  transition: all 0.3s ease-in-out;
+.card:hover::before {
+  opacity: 1;
 }
 
-button {
-  font-size: 18px;
-  background: transparent;
-  color: white;
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-  border: none;
-  font-weight: 400;
-}
-
-button svg {
-  display: block;
-  transform-origin: center center;
-  transition: transform 0.3s ease-in-out;
-}
-
-button:hover .svg-wrapper {
-  transform: scale(1.25);
-  transition: 0.5s linear;
-}
-
-button:hover svg {
-  transform: translateX(1.2em) scale(1.1);
-  fill: #fff;
-}
-
-button:hover .case-url {
+.card::before,
+.card::after {
+  border-radius: inherit;
+  content: "";
+  height: 100%;
+  left: 0px;
   opacity: 0;
-  transition: 0.5s linear;
+  position: absolute;
+  top: 0px;
+  transition: opacity 500ms;
+  width: 100%;
 }
 
-button:active {
-  transform: scale(0.95);
+.card::before {
+  background: radial-gradient(
+      800px circle at var(--mouse-x) var(--mouse-y),
+      rgba(185, 201, 255, 0.16),
+      transparent 40%
+  );
+  z-index: 3;
 }
 
-p {
-  color: #EAEAEA;
-  font-weight: 300;
+.card::after {
+  background: radial-gradient(
+      600px circle at var(--mouse-x) var(--mouse-y),
+      rgba(255, 255, 255, 0.4),
+      transparent 40%
+  );
+  z-index: 1;
 }
 
-h3 {
-  font-weight: 200;
-}
 
-.case-image {
-  width: 40%;
-  min-width: 400px;
-  max-width: 700px;
-  object-fit: cover;
-}
 
-.case-texts-wrapper {
-  max-width: 700px;
+
+
+.case-description {
+  font-size: medium;
+  margin: 12px 0;
   text-align: start;
-  width: 60%;
-  padding-left: 20px;
-  padding-top: 96px;
+}
+
+.case-title {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  text-align: start;
+}
+
+.case-small {
+  text-align: start;
+  font-size: small;
+  color: gray;
 }
 
 .case-texts {
-  margin-bottom: 18px;
+  padding: 16px;
 }
 
-.case-wrapper {
-  gap: 18px;
-  padding: 36px;
+
+.container {
+  display: flex;
+  justify-content: center;
+}
+
+#cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  max-width: 1016px;
+  width: calc(100% - 20px);
+}
+
+.card {
+  background-color: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  cursor: pointer;
+  height: 400px;
+  width: 500px;
   display: flex;
   align-items: center;
-  width: 100%;
   justify-content: center;
-}
-
-.case-section {
-  padding: 28px 5% 128px 5%;
-  display: flex;
-  justify-content: center;
+  position: relative;
+  overflow: hidden;
   flex-direction: column;
-  width: 100%;
+}
+.card::before {
+  border-radius: inherit;
 }
 
+
+
+
+.case-image {
+  padding: 24px;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: cover;
+  transition: all 0.3s ease-in-out;
+}
+
+.case-image:hover {
+  padding: 12px;
+}
+
+.case-image-mobile {
+  padding: 0;
+}
+.case-image-mobile:hover {
+  padding: 0;
+}
+
+.case-click-me {
+  opacity: 0;
+  transition: transform 0.4s ease-out;
+}
+
+.card:hover .case-click-me {
+  transform: translateY(-30%);
+  opacity: 1;
+}
+
+.case-title {
+  color: white;
+  font-size: 24px;
+  opacity: 0;
+  transition: opacity 0.3s ease-out;
+}
+
+.card:hover .case-image {
+  opacity: 0.8;
+}
+
+.card .case-title {
+  opacity: 1;
+}
 
 .hero-title {
   font-size: 56px;
@@ -195,21 +257,21 @@ h3 {
   z-index: 1;
 }
 
+.container {
+  margin-bottom: 64px;
+}
 
 @media (max-width: 768px) {
-  .case-section {
-    padding: 28px 5% 36px 5%;
-  }
-  .case-texts-wrapper {
-    width: 90vw;
-    padding-top: 8px;
-  }
-  .case-wrapper {
-    flex-direction: column;
+  .hero-wrapper {
+    margin-top: 0;
   }
 
   .case-image {
-    min-width: 80vw;
+    margin: 36px;
+  }
+
+  .card {
+    height: fit-content;
   }
 }
 </style>

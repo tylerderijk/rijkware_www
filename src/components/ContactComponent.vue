@@ -3,6 +3,7 @@ import ContactData from "@/assets/json/Contact.json";
 import emailjs from '@emailjs/browser';
 import PhoneIcon from "@/components/shorts/PhoneIcon.vue";
 import FaqIcon from "@/components/shorts/FaqIcon.vue";
+import anime from 'animejs';
 
 export default {
   name: 'ContactComponent',
@@ -22,15 +23,31 @@ export default {
     };
   },
   mounted() {
-    const faqs = document.querySelectorAll('.holder-qna');
-    faqs.forEach((reason) => {
-      reason.style.opacity = 0;
-      reason.style.transition = 'opacity 2s, filter 350ms';
-      window.addEventListener('scroll', () => {
-        if (reason.getBoundingClientRect().top < window.innerHeight) {
-          reason.style.opacity = 1;
-        }
-      });
+    anime({
+      targets: '.hero-title, .hero-wrapper small',
+      translateY: [-20, 0],
+      opacity: [0, 1],
+      duration: 1000,
+      easing: 'easeOutQuad',
+      delay: anime.stagger(200)
+    });
+
+    anime({
+      targets: '.contact-wrapper, .contact-call-card, .section-qna, .contact-call-text',
+      translateY: [30, 0],
+      opacity: [0, 1],
+      duration: 1000,
+      easing: 'easeOutQuad',
+      delay: anime.stagger(300, { start: 500 })
+    });
+
+    anime({
+      targets: '.holder-qna',
+      translateX: [-50, 0],
+      opacity: [0, 1],
+      duration: 1000,
+      easing: 'easeOutQuad',
+      delay: anime.stagger(300, { start: 800 })
     });
   },
   methods: {
@@ -84,7 +101,7 @@ export default {
 <template>
   <div class="hero-wrapper">
     <h1 class="hero-title">Contact Us</h1>
-    <small>Have questions? We're here to help. (Scroll down for FAQ)</small>
+    <small>Do you have questions? We're here to help. (Scroll down for FAQ)</small>
   </div>
   <hr style="border: 1px solid rgba(233,233,233,0.3); width: 70%;">
   <div class="contact-main" v-bind="$attrs">
@@ -107,10 +124,10 @@ export default {
     </div>
     <div class="contact-bottom-wrapper">
       <div class="contact-call-wrapper">
-        <h3>Can't wait for an e-mail reply?</h3>
+        <h3 class="contact-call-text">Can't wait for an e-mail reply?</h3>
         <a class="contact-call-card" href="tel:+31642068928">
           <PhoneIcon/>
-          <h4> +31 420 68 928</h4>
+          <h4 class="phone-number"> +31 420 68 928</h4>
         </a>
         <section class="section-qna">
           <h3>Frequently Asked Questions</h3>
@@ -134,6 +151,12 @@ export default {
 </template>
 
 <style scoped>
+.contact-main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
 .contact-bottom-wrapper {
   display: flex;
   justify-content: center;
@@ -198,7 +221,6 @@ summary {
 }
 
 .contact-call-card h4 {
-  font-family: "Unbounded", system-ui;
   font-size: large;
 }
 
@@ -208,11 +230,13 @@ summary {
   align-items: center;
   justify-content: center;
   gap: 18px;
-  background-color: #191919;
-  border-radius: 8px;
+  background-color: rgba(255, 255, 255, 0.074);
+  border: 1px solid rgba(255, 255, 255, 0.222);
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  border-radius: 12px;
   padding: 8px 0;
-  width: 50%;
-  transition: all ease-in-out 350ms;
+  width: 60%;
   text-decoration: none;
 }
 
@@ -257,15 +281,22 @@ summary {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100%;
-  margin: 56px 0;
+  width: 50%;
+  margin: 24px 0;
+  padding: 28px 0;
+  border-radius: 12px;
+  background-color: rgba(255, 255, 255, 0.074);
+  border: 1px solid rgba(255, 255, 255, 0.222);
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  max-width: 800px;
 }
 
 .form {
   display: flex;
   text-align: start;
   flex-direction: column;
-  width: 50%;
+  width: 90%;
   height: fit-content;
 }
 
@@ -281,7 +312,7 @@ summary {
   border: solid 1px #5d5d5d;
   width: 100%;
   border-radius: 8px;
-  background-color: black;
+  background-color: #171717;
   padding: 10px;
   color: #e9e9e9;
   transition: .1s;
@@ -301,15 +332,13 @@ summary {
 }
 
 .submit {
-  background-color: #191919;
+  background-color: black;
   border: none;
-  color: #e9e9e9;
   height: 56px;
   font-weight: 400;
   padding: 7px 0;
   border-radius: 8px;
   cursor: pointer;
-  transition: .5s;
   width: 100%;
 }
 
@@ -356,6 +385,11 @@ summary {
 
   .contact-call-card {
     width: 90vw;
+  }
+
+  .contact-wrapper {
+    margin: 24px 0;
+    width: 95%;
   }
 
   .contact-main {

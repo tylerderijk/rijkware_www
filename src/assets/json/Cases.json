@@ -4,39 +4,34 @@
   "cases": [
     {
       "image": "project_rembrandt",
-      "title": "Tandartspraktijk Rembrandt | Website + Hosting",
+      "logo": "Rembrandt_logo",
+      "title": "Tandartspraktijk Rembrandt | Website",
       "description": "Our student developers redesigned and optimized SEO for enhanced visibility among Amstelveen's dense market of dental services. The project, completed within a 30-day deadline, showcases our commitment to timely and effective delivery.",
-      "technologies": "Built with React, Vite, and SWC, and styled using SCSS and Tailwind CSS. We incorporated advanced SEO strategies to ensure superior search engine rankings.",
-      "results": "Achieved a perfect 100 SEO score on Google’s Lighthouse, underscoring our technical proficiency and ongoing commitment as we continue hosting and marketing the site.",
+      "extra": "Built with React, Vite, and SWC, and styled using SCSS and Tailwind CSS. We incorporated advanced SEO strategies to ensure superior search engine rankings. Achieved a perfect 100 SEO score on Google’s Lighthouse, underscoring our technical proficiency and ongoing commitment as we continue hosting and marketing the site.",
       "url": "https://www.tandartspraktijkrembrandt.nl/"
     },
     {
       "image": "project_fridaymascara",
+      "logo": "FRIDAY_logo",
       "title": "FRIDAY Mascara | Maintenance",
-      "description": "A dedicated Rijkware Student Developer manages technical operations for the site, working 16 hours a week to ensure smooth functionality and continual enhancements.",
-      "responsibilities": "The student is responsible for comprehensive technical upkeep and proactive improvements, maintaining high performance and user satisfaction.",
-      "duration": "Engagement began in February 2023 and continues to demonstrate our long-term support and reliability in partnerships.",
+      "description": "A dedicated Rijkware Student Developer manages technical operations for the site, working 16 hours a week to ensure smooth functionality and continual enhancements. Implementing new features, performing maintenance and more.",
+      "extra": "The student is responsible for comprehensive technical upkeep and proactive improvements, maintaining high performance and user satisfaction. Engagement began in February 2023 and continues to demonstrate our long-term support and reliability in partnerships.",
       "url": "https://www.fridaymascara.com/"
     },
     {
       "image": "project_watnu",
+      "logo": "WatNu_logo",
       "title": "WatNu | iOS App",
       "description": "Developed by a Rijkware Student Developer, the WatNu app revolutionizes event planning and task management. This intuitive app allows users to organize events, manage tasks, and share their agendas effortlessly with others.",
-      "technologies": "Developed in Swift and SwiftUI, with Firebase for real-time database storage.",
-      "features": "Features include creating and editing event plans, task management, and easy sharing of plans through QR codes, enhancing user interaction and collaboration.",
+      "extra": "Developed in Swift and SwiftUI, with Firebase for real-time database storage. Features include creating and editing event plans, task management, and easy sharing of plans through QR codes, enhancing user interaction and collaboration.",
       "url": "https://apps.apple.com/nl/app/watnu/id6463496609?l=en-GB"
     },
     {
       "image": "project_greenoffice",
+      "logo": "GreenTopia_logo",
       "title": "Green Office | Website",
       "description": "Green Office is a platform promoting sustainability through team collaboration. Users can form teams, assign tasks for sustainability goals, and use live chat for communication.",
-      "features": "Features include customizable team logos, names, and mottos. This personalization enhances user experience and is displayed prominently on the team information page.",
-      "management": "Our platform supports dynamic team management and goal-setting, with live chat enhancing real-time communication and effective collaboration."
-    },
-    {
-      "image": "RijkwareLogo-2024-v2-Long",
-      "title": "Your Project | Website",
-      "description": "Reach out to us and discuss your vision. Together, we can create a plan and find the perfect Student Developers for the task."
+      "extra": "Features include customizable team logos, names, and mottos. This personalization enhances user experience and is displayed prominently on the team information page. Our platform supports dynamic team management and goal-setting, with live chat enhancing real-time communication and effective collaboration."
     }
   ]
 }

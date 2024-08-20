@@ -11,6 +11,14 @@ export default {
   },
   mounted() {
     anime({
+      targets: '.hero-title, .hero-wrapper small',
+      translateY: [-20, 0],
+      opacity: [0, 1],
+      duration: 1000,
+      easing: 'easeOutQuad',
+      delay: anime.stagger(200)
+    });
+    anime({
       targets: '.manifesto-text',
       translateY: [-20, 0],
       opacity: [0, 1],
@@ -28,14 +36,15 @@ export default {
     <small>{{ lang.hero_subtitle }}</small>
   </div>
   <hr style="border: 1px solid rgba(0,0,0,0.3); width: 70%; max-width: 900px;">
-
   <div class="manifesto-wrapper">
-    <p class="manifesto-text" v-for="(text, index) in lang.text_sections" :key="index">{{ text }}</p>
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" class="waves-bottom">
-      <path fill="black" fill-opacity="1"
-            d="M0,128L20,149.3C40,171,80,213,120,229.3C160,245,200,235,240,213.3C280,192,320,160,360,170.7C400,181,440,235,480,240C520,245,560,203,600,192C640,181,680,203,720,197.3C760,192,800,160,840,149.3C880,139,920,149,960,165.3C1000,181,1040,203,1080,213.3C1120,224,1160,224,1200,197.3C1240,171,1280,117,1320,90.7C1360,64,1400,64,1420,64L1440,64L1440,320L1420,320C1400,320,1360,320,1320,320C1280,320,1240,320,1200,320C1160,320,1120,320,1080,320C1040,320,1000,320,960,320C920,320,880,320,840,320C800,320,760,320,720,320C680,320,640,320,600,320C560,320,520,320,480,320C440,320,400,320,360,320C320,320,280,320,240,320C200,320,160,320,120,320C80,320,40,320,20,320L0,320Z"></path>
-    </svg>
+    <div class="manifesto-card">
+      <p class="manifesto-text" v-for="(text, index) in lang.text_sections" :key="index">{{ text }}</p>
+    </div>
   </div>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" class="waves-bottom">
+    <path fill="black" fill-opacity="1"
+          d="M0,128L20,149.3C40,171,80,213,120,229.3C160,245,200,235,240,213.3C280,192,320,160,360,170.7C400,181,440,235,480,240C520,245,560,203,600,192C640,181,680,203,720,197.3C760,192,800,160,840,149.3C880,139,920,149,960,165.3C1000,181,1040,203,1080,213.3C1120,224,1160,224,1200,197.3C1240,171,1280,117,1320,90.7C1360,64,1400,64,1420,64L1440,64L1440,320L1420,320C1400,320,1360,320,1320,320C1280,320,1240,320,1200,320C1160,320,1120,320,1080,320C1040,320,1000,320,960,320C920,320,880,320,840,320C800,320,760,320,720,320C680,320,640,320,600,320C560,320,520,320,480,320C440,320,400,320,360,320C320,320,280,320,240,320C200,320,160,320,120,320C80,320,40,320,20,320L0,320Z"></path>
+  </svg>
   <div class="header">
     <div>
       <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -51,7 +60,7 @@ export default {
           <use xlink:href="#gentle-wave" x="48" y="0" fill="url(#wave-gradient)" opacity="0.08"/>
           <use xlink:href="#gentle-wave" x="48" y="3" fill="url(#wave-gradient)" opacity="0.08"/>
           <use xlink:href="#gentle-wave" x="48" y="5" fill="url(#wave-gradient)" opacity="0.05"/>
-          <use xlink:href="#gentle-wave" x="48" y="7" fill="url(#wave-gradient)" opacity="0.15"/>
+          <use xlink:href="#gentle-wave" x="48" y="7" fill="#8193DC" opacity="0.13"/>
         </g>
       </svg>
     </div>
@@ -112,17 +121,30 @@ export default {
   }
 }
 
+
 .manifesto-wrapper {
   display: flex;
   align-items: center;
+  justify-content: center;
   text-align: start;
   flex-direction: column;
-  margin-top: 36px;
+  margin-top: 6px;
+  width: 100%;
+}
+
+.manifesto-card {
+  background-color: rgba(229, 229, 229, 0.01);
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  border-radius: 0.7rem;
+  padding: 16px;
 }
 
 .manifesto-text {
+
   font-weight: 350;
   font-size: x-large;
+  width: fit-content;
   max-width: 800px;
   margin: 36px 0;
 }
@@ -143,12 +165,14 @@ export default {
 
 @media (max-width: 768px) {
   .manifesto-text {
-    text-align: center;
+    font-size: 20px;
+    text-align: start;
     padding: 5vw;
     margin: 16px 0;
   }
 
   .hero-wrapper {
+    margin-top: 0;
     width: 100%;
   }
 

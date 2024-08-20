@@ -11,9 +11,6 @@
       <small>{{ lang.hero_texts.manifesto_link_text }}
         <router-link class="hero-text-manifesto" to="manifesto">Manifesto</router-link>.
       </small>
-      <div class="CTA-wrapper">
-        <router-link to="/contact" class="CTA">{{ lang.hero_texts.cta_link }}</router-link>
-      </div>
     </div>
   </div>
   <section class="why-section">
@@ -52,6 +49,7 @@ export default {
       duration: 3500,
       easing: 'easeInOutQuad'
     });
+
     anime({
       targets: '.hero-text',
       translateY: [-20, 0],
@@ -60,6 +58,10 @@ export default {
       delay: anime.stagger(1400),
       easing: 'easeInOutQuad'
     });
+
+    this.updateHeroTextOpacity();
+
+    window.addEventListener('scroll', this.updateHeroTextOpacity);
 
     const whyReasons = document.querySelectorAll('.why-reason');
     whyReasons.forEach((reason) => {
@@ -71,66 +73,68 @@ export default {
         }
       });
     });
+  },
+  beforeUnmount() {
+    window.removeEventListener('scroll', this.updateHeroTextOpacity);
+  },
+  methods: {
+    updateHeroTextOpacity() {
+      const heroTexts = document.querySelectorAll('.hero-text');
+      const windowCenter = window.innerHeight / 2;
+
+      let closestElement = null;
+      let closestDistance = Infinity;
+
+      heroTexts.forEach((text) => {
+        const rect = text.getBoundingClientRect();
+        const textCenter = rect.top + rect.height / 2;
+        const distanceToCenter = Math.abs(windowCenter - textCenter);
+
+        if (distanceToCenter < closestDistance) {
+          closestDistance = distanceToCenter;
+          closestElement = text;
+        }
+      });
+
+      heroTexts.forEach((text) => {
+        if (text === closestElement) {
+          text.style.opacity = 1;
+        } else {
+          text.style.opacity = 0.3;
+        }
+      });
+    }
   }
 }
 </script>
+
 <style scoped>
+.hero-text {
+  font-family: "Unbounded", system-ui;
+  font-weight: 300;
+  padding: 56px 0;
+  max-width: 760px;
+  text-align: start;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.hero-wrapper {
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.hero-text_wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
 .why-success-cases {
   margin-top: 24px;
   display: flex;
   justify-content: center;
-}
-.CTA:hover {
-  box-shadow: 7px 5px 56px -14px #040f2b;
-  text-decoration: none;
-  font-weight: bolder;
-}
-
-.CTA:active {
-  transform: scale(0.97);
-  box-shadow: 7px 5px 56px -10px #0094c7;
-}
-
-.CTA {
-  //outline: solid 1px white;
-  box-shadow: rgba(72, 72, 72, 0.1) 1px 1px 8px;
-  color: #e9e9e9;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 8px;
-  background: linear-gradient(-45deg, black, black, #002873, black);
-  background-size: 400% 400%;
-  animation: gradient 8s ease infinite;
-  height: 40px;
-  width: 760px;
-  padding: 48px 48px 48px 48px;
-  transition: all 300ms ease-in-out;
-  font-size: 18px;
-}
-
-@keyframes gradient {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-}
-
-.CTA-wrapper {
-  margin: 128px 0 256px 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 120px;
-  width: 100%;
-  flex-direction: column;
-  gap: 20px;
 }
 
 
@@ -139,6 +143,7 @@ export default {
 }
 
 .why-section {
+  margin-top: 128px;
   height: 1200px;
   background: linear-gradient(black, #040e33, #081548, #000933, black);
 }
@@ -172,7 +177,6 @@ export default {
   justify-content: center;
   flex-direction: column;
   padding: 0 84px;
-  //padding: 18px 0 0 36px;
 }
 
 .why-wrapper {
@@ -184,32 +188,14 @@ export default {
   height: fit-content;
 }
 
-.hero-wrapper {
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-}
+
 
 #rijkware-animation {
   max-height: fit-content;
   min-height: 50vh;
 }
 
-.hero-text_wrapper {
-  //margin: 96px 0 56px 0;
-  display: flex;
-  flex-direction: column;
-}
 
-.hero-text {
-  font-family: "Unbounded", system-ui;
-  font-weight: 300;
-  margin: 56px 0 56px 0;
-  max-width: 760px;
-  text-align: start;
-}
 
 small {
   margin-top: 24px;
@@ -220,8 +206,14 @@ small {
 .hero-text-manifesto {
   margin-left: 4px;
   color: #c2c2c2;
-  text-decoration-line: underline;
-  text-underline: #e9e9e9;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.why-success-cases .hero-text-manifesto {
+  margin-left: 4px;
+  color: #c2c2c2;
+  text-decoration: underline;
   text-underline-offset: 4px;
 }
 

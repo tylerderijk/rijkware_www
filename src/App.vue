@@ -3,32 +3,31 @@
   <div class="spacer"></div>
   <router-view/>
   <FooterComponent></FooterComponent>
+  <div class="cursor-glow" ref="cursorGlow"></div>
 </template>
 
 <script>
 import NavBar from "@/components/NavBarComponent.vue";
 import FooterComponent from "@/components/FooterComponent.vue";
+import anime from 'animejs';
 
 export default {
   name: 'App',
   data() {
     return {
-      showMobileNav: false
-    }
+      showMobileNav: false,
+      isMobile: false,
+    };
   },
   components: {
     NavBar,
-    FooterComponent
+    FooterComponent,
   },
   watch: {
     '$route'(to) {
-      if (this.showMobileNav) {
-        this.toggleMenu();
-      }
       this.setBodyStyle(to);
-    }
+    },
   },
-
   methods: {
     toggleMenu() {
       this.showMobileNav = !this.showMobileNav;
@@ -45,15 +44,24 @@ export default {
       } else if (path === '/manifesto') {
         document.body.style.backgroundColor = '#e9e9e9';
       }
-    }
+    },
+    animateCursorGlow() {
+      anime({
+        targets: this.$refs.cursorGlow,
+        opacity: [0, 0.4],
+        duration: 1000,
+        easing: 'easeInOutQuad',
+        delay: 3000,
+      });
+    },
+
   },
   mounted() {
     this.setBodyStyle(this.$route);
   },
   beforeUnmount() {
-    document.body.style.backgroundColor = 'black';
-  }
-}
+  },
+};
 </script>
 
 <style>
@@ -68,6 +76,20 @@ export default {
   height: 84px;
 }
 
+body {
+  background-color: black;
+}
+
+#app {
+  letter-spacing: 0.5px;
+  font-family: Lexend, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #e9e9e9;
+  box-sizing: border-box;
+  position: relative;
+}
 
 .title-animation-wrapper {
   position: relative;
@@ -125,19 +147,5 @@ export default {
   -webkit-text-fill-color: transparent;
 }
 
-body {
-  background-color: black;
-}
-
-#app {
-  letter-spacing: 0.5px;
-  font-family: Lexend, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #e9e9e9;
-  box-sizing: border-box;
-  position: relative;
-}
 
 </style>
