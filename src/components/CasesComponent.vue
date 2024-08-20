@@ -65,7 +65,7 @@ export default {
       translateY: [-20, 0],
       opacity: [0, 1],
       duration: 390,
-      delay: anime.stagger(400),
+      delay: anime.stagger(400, {start: 400}) ,
       easing: 'easeInOutQuad'
     });
 
@@ -176,6 +176,7 @@ export default {
 
 #cards {
   display: flex;
+  justify-content: center;
   flex-wrap: wrap;
   gap: 16px;
   max-width: 1016px;

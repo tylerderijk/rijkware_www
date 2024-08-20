@@ -1,4 +1,4 @@
-import {createApp} from 'vue'
+import {createApp, nextTick} from 'vue'
 import App from './App.vue'
 import {createRouter, createWebHashHistory} from "vue-router";
 import AboutUs from "@/components/AboutUsComponent.vue";
@@ -9,6 +9,7 @@ import Contact from "@/components/ContactComponent.vue";
 import TermsAndConditions from "@/components/TermsAndConditions.vue";
 import PrivacyPolicy from "@/components/PrivacyPolicy.vue";
 import Cookies from "@/components/CookiesPolicy.vue";
+import posthogPlugin from './plugins/posthog.js';
 
 const router = createRouter({
     history: createWebHashHistory(),
@@ -32,5 +33,13 @@ const router = createRouter({
         return { left: 0, top: 0 };
     }
 })
+const app = createApp(App);
+app.use(posthogPlugin).use(router).mount('#app')
 
-createApp(App).use(router).mount('#app')
+router.afterEach((to, from, failure) => {
+    if (!failure) {
+        nextTick(() => {
+            app.config.globalProperties.$posthog.capture('$pageview', { path: to.fullPath });
+        });
+    }
+});

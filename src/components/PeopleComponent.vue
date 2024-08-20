@@ -19,15 +19,15 @@
           <div class="people-socials">
             <a class="people-social" v-if="person.socials.linkedin" :href="person.socials.linkedin" target="_blank"
                title="LinkedIn">
-              <LinkedInIcon/>
+              <LinkedInIcon :employeeName="person.name"/>
             </a>
             <a class="people-social" v-if="person.socials.instagram" :href="person.socials.instagram" target="_blank"
                title="Instagram">
-              <InstagramIcon/>
+              <InstagramIcon :employeeName="person.name"/>
             </a>
             <a class="people-social" v-if="person.socials.email" :href="person.socials.email" target="_blank"
                title="E-Mail">
-              <EmailIcon/>
+              <EmailIcon :employeeName="person.name"/>
             </a>
           </div>
         </div>
@@ -41,11 +41,11 @@
             <div class="people-socials">
               <a class="people-social" v-if="teamMember.socials.linkedin" :href="teamMember.socials.linkedin"
                  target="_blank" title="LinkedIn">
-                <LinkedInIcon/>
+                <LinkedInIcon :employeeName="teamMember.name"/>
               </a>
               <a class="people-social" v-if="teamMember.socials.email" :href="teamMember.socials.email" target="_blank"
                  title="E-Mail">
-                <EmailIcon/>
+                <EmailIcon :employeeName="teamMember.name"/>
               </a>
             </div>
           </div>

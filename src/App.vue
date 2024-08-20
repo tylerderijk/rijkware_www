@@ -1,15 +1,18 @@
 <template>
-  <NavBar :showMobileNav="showMobileNav" @toggle-menu="toggleMenu"></NavBar>
-  <div class="spacer"></div>
-  <router-view/>
-  <FooterComponent></FooterComponent>
-  <div class="cursor-glow" ref="cursorGlow"></div>
+  <CookieBanner v-if="showBanner" :class="{ bannerActive: showBanner }" @hideBanner="showBanner = false" @acceptBanner="handleCookieBanner(true)"/>
+  <div :class="{ application: showBanner }">
+    <NavBar :showMobileNav="showMobileNav" @toggle-menu="toggleMenu"></NavBar>
+    <div class="spacer"></div>
+    <router-view/>
+    <FooterComponent></FooterComponent>
+    <div class="cursor-glow" ref="cursorGlow"></div>
+  </div>
 </template>
 
 <script>
+import CookieBanner from "@/components/shorts/CookieBanner.vue";
 import NavBar from "@/components/NavBarComponent.vue";
 import FooterComponent from "@/components/FooterComponent.vue";
-import anime from 'animejs';
 
 export default {
   name: 'App',
@@ -17,16 +20,18 @@ export default {
     return {
       showMobileNav: false,
       isMobile: false,
+      showBanner: !localStorage.getItem('posthog_user_consent')
     };
   },
   components: {
     NavBar,
     FooterComponent,
+    CookieBanner,
   },
   watch: {
-    '$route'(to) {
+    $route(to) {
       this.setBodyStyle(to);
-    },
+    }
   },
   methods: {
     toggleMenu() {
@@ -45,16 +50,6 @@ export default {
         document.body.style.backgroundColor = '#e9e9e9';
       }
     },
-    animateCursorGlow() {
-      anime({
-        targets: this.$refs.cursorGlow,
-        opacity: [0, 0.4],
-        duration: 1000,
-        easing: 'easeInOutQuad',
-        delay: 3000,
-      });
-    },
-
   },
   mounted() {
     this.setBodyStyle(this.$route);
@@ -64,7 +59,15 @@ export default {
 };
 </script>
 
+
 <style>
+.bannerActive {
+  display: block;
+}
+.application {
+  transition: all 0.5s ease-in-out;
+  transform: translateY(0px);
+}
 .no-scroll {
   overflow: hidden;
   height: 100%;
@@ -116,31 +119,37 @@ body {
 #title-animation {
   filter: contrast(0%) blur(5px);
 }
+
 .grey-gradient {
   background: -webkit-linear-gradient(180deg, #ffffff, #bebebe);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
+
 .blue-gradient {
   background: -webkit-linear-gradient(180deg, #5B71C9, #8193DC);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
+
 .white-blue-gradient-1 {
   background: -webkit-linear-gradient(45deg, #9baae8, #7994ff, #e9e9e9, #e9e9e9, #e9e9e9);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
+
 .white-blue-gradient-2 {
-  background: -webkit-linear-gradient(45deg, #e9e9e9, #9baae8, #7994ff, #e9e9e9,  #e9e9e9);
+  background: -webkit-linear-gradient(45deg, #e9e9e9, #9baae8, #7994ff, #e9e9e9, #e9e9e9);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
+
 .white-blue-gradient-3 {
   background: -webkit-linear-gradient(45deg, #e9e9e9, #e9e9e9, #9baae8, #7994ff, #e9e9e9);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
+
 .white-blue-gradient-4 {
   background: -webkit-linear-gradient(45deg, #e9e9e9, #e9e9e9, #e9e9e9, #9baae8, #7994ff);
   -webkit-background-clip: text;
