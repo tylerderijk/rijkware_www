@@ -61,11 +61,18 @@ export default {
       easing: 'easeInOutQuad'
     });
     anime({
-      targets: '.case-image',
+      targets: ['.case-image'],
       translateY: [-20, 0],
       opacity: [0, 1],
       duration: 390,
       delay: anime.stagger(400, {start: 400}) ,
+      easing: 'easeInOutQuad'
+    });
+    anime({
+      targets: ['#cards'],
+      opacity: [0, 1],
+      duration: 390,
+      delay: 200,
       easing: 'easeInOutQuad'
     });
 

@@ -52,6 +52,7 @@ export default {
     },
   },
   mounted() {
+    document.body.classList.remove('no-scroll');
     this.setBodyStyle(this.$route);
   },
   beforeUnmount() {
