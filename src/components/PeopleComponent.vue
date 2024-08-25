@@ -178,6 +178,12 @@ onMounted(() => {
 }
 
 @media (max-width: 768px) {
+  .hero-title {
+    font-size: 36px;
+  }
+  hr {
+    display: none;
+  }
   h2 {
     text-align: start;
   }

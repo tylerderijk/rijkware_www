@@ -270,8 +270,15 @@ export default {
 }
 
 @media (max-width: 768px) {
+  .hero-title {
+    font-size: 36px;
+  }
+  hr {
+    display: none;
+  }
   .hero-wrapper {
     margin-top: 0;
+    margin-bottom: 12px;
   }
 
   .case-image {

@@ -164,6 +164,15 @@ export default {
 }
 
 @media (max-width: 768px) {
+  .hero-title {
+    font-size: 36px;
+  }
+  hr {
+    display: none;
+  }
+  .manifesto-text:first-child {
+    margin-top: 0;
+  }
   .manifesto-text {
     font-size: 20px;
     text-align: start;

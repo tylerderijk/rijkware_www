@@ -2,7 +2,7 @@
   <div class="cookie-banner">
     <div class="cookie-banner-content">
       <button class="close-button" @click="acceptCookies">x</button>
-      <p>By using this website, you agree to our use of cookies. We use cookies to provide you with a great experience and to help our website run effectively.</p>
+      <p>By using this website, you agree to our use of cookies. We use cookies to provide you with a great experience and to help our website run effectively. <router-link class="cookies-read-more" to="/cookies"> Read more.</router-link></p>
       <div class="cookie-banner-buttons">
         <button class="cookie-button cookie-button-accept" @click="acceptCookies">Accept</button>
         <button class="cookie-button" @click="declineCookies">Deny</button>
@@ -30,6 +30,11 @@ export default {
 </script>
 
 <style scoped>
+.cookies-read-more {
+  color: #106691;
+  text-decoration: none;
+}
+
 .cookie-banner {
   position: fixed;
   z-index: 99999;

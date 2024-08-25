@@ -2,7 +2,6 @@
   <CookieBanner v-if="showBanner" :class="{ bannerActive: showBanner }" @hideBanner="showBanner = false" @acceptBanner="handleCookieBanner(true)"/>
   <div :class="{ application: showBanner }">
     <NavBar :showMobileNav="showMobileNav" @toggle-menu="toggleMenu"></NavBar>
-    <div class="spacer"></div>
     <router-view/>
     <FooterComponent></FooterComponent>
     <div class="cursor-glow" ref="cursorGlow"></div>
@@ -74,10 +73,6 @@ export default {
   height: 100%;
   position: fixed;
   width: 100%;
-}
-
-.spacer {
-  height: 84px;
 }
 
 body {
@@ -153,6 +148,12 @@ body {
 
 .white-blue-gradient-4 {
   background: -webkit-linear-gradient(45deg, #e9e9e9, #e9e9e9, #e9e9e9, #9baae8, #7994ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.white-blue-gradient-5 {
+  background: -webkit-linear-gradient(45deg, #7994ff, #e9e9e9, #68afff, #e9e9e9, #9baae8);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }

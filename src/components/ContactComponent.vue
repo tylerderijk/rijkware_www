@@ -101,7 +101,7 @@ export default {
 <template>
   <div class="hero-wrapper">
     <h1 class="hero-title">Contact Us</h1>
-    <small>Do you have questions? We're here to help. (Scroll down for FAQ)</small>
+    <small class="hero-small">Scroll down for FAQ.</small>
   </div>
   <hr style="border: 1px solid rgba(233,233,233,0.3); width: 70%;">
   <div class="contact-main" v-bind="$attrs">
@@ -127,7 +127,7 @@ export default {
         <h3 class="contact-call-text">Can't wait for an e-mail reply?</h3>
         <a class="contact-call-card" href="tel:+31642068928">
           <PhoneIcon/>
-          <h4 class="phone-number"> +31 420 68 928</h4>
+          <h4 class="phone-number"> +31 6 420 68 928</h4>
         </a>
         <section class="section-qna">
           <h3>Frequently Asked Questions</h3>
@@ -361,7 +361,20 @@ summary {
   z-index: 1;
 }
 
+.hero-small {
+  color: gray;
+}
+
 @media (max-width: 768px) {
+  .hero-title {
+    font-size: 36px;
+  }
+  .hero-wrapper {
+    margin: 0;
+  }
+  hr {
+    display: none;
+  }
   .form {
     width: 90%;
   }
