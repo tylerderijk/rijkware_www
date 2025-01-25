@@ -338,6 +338,15 @@ a {
 .nav-item-small-text {
 font-weight: 200;
 }
+.blur-background {
+  height: auto;
+}
+
+@media (max-width: 820px) {
+  .blur-background {
+    height: 100vh;
+  }
+}
 
 @media (max-width: 820px) {
   .nav-item {
