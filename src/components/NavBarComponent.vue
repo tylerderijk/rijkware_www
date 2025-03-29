@@ -95,20 +95,17 @@ export default {
     <div class="navigationbar__mobile-wrapper" v-if="isMobile">
       <div class="navigationbar__mobile" v-show="showMobileNav">
         <ul class="navigationbar__mobile-list navigationbar__mobile-list--primary">
-          <li class="navigationbar__item">
+          <li class="navigationbar__item u-text-gradient--white-blue-5">
             <router-link to="/" @click="handleClick">About us</router-link>
           </li>
           <li class="navigationbar__item">
             <router-link to="manifesto" @click="handleClick">Manifesto</router-link>
           </li>
           <li class="navigationbar__item">
-            <router-link to="cases" @click="handleClick">Cases</router-link>
+            <router-link to="contact" @click="handleClick">Contact</router-link>
           </li>
           <li class="navigationbar__item">
-            <router-link to="people" @click="handleClick">People</router-link>
-          </li>
-          <li class="navigationbar__item u-text-gradient--white-blue-5">
-            <router-link to="contact" @click="handleClick">Contact</router-link>
+            <router-link to="contact" @click="handleClick">FAQ's</router-link>
           </li>
           <li>
             <div class="navigationbar__social" v-if="showMobileNav">
@@ -146,16 +143,16 @@ export default {
         <router-link class="u-text-gradient--white-blue-5 navigationbar__brand" to="/">Rijkware</router-link>
       </li>
       <li class="navigationbar__item">
+        <router-link to="manifesto">Why</router-link>
+      </li>
+      <li class="navigationbar__item">
         <router-link to="manifesto">Manifesto</router-link>
       </li>
       <li class="navigationbar__item">
-        <router-link to="cases">Cases</router-link>
+        <router-link to="cases">Contact</router-link>
       </li>
       <li class="navigationbar__item">
-        <router-link to="people">People</router-link>
-      </li>
-      <li class="navigationbar__item">
-        <router-link to="contact">Get in Touch</router-link>
+        <router-link to="people">FAQ's</router-link>
       </li>
     </ul>
   </nav>

@@ -84,16 +84,16 @@ export default {
                 <router-link to="/">About us</router-link>
               </li>
               <li>
-                <router-link to="/manifesto">Manifesto</router-link>
+                <router-link to="/manifesto">Why</router-link>
               </li>
               <li>
-                <router-link to="/cases">Cases</router-link>
+                <router-link to="/cases">Manifesto</router-link>
               </li>
               <li>
-                <router-link to="/people">People</router-link>
+                <router-link to="/people">Contact</router-link>
               </li>
               <li>
-                <router-link to="/contact">Contact</router-link>
+                <router-link to="/contact">FAQ's</router-link>
               </li>
             </ul>
           </div>
