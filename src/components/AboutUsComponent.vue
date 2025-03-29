@@ -225,9 +225,9 @@ export default {
 
     &-text {
       color: #f8f8f8;
-      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-family: "Lexend", Helvetica, Arial, sans-serif;
       font-size: 18px;
-      font-weight: 400;
+      font-weight: 200;
     }
 
     &-title {
@@ -278,7 +278,7 @@ export default {
 .why__container {
   margin-top: 0; /* Remove unnecessary margin to reduce gaps */
   padding: 48px 0; /* Adjust spacing */
-  background: linear-gradient(black, #010820, #000c35, #01061c, black);
+  background: linear-gradient(black, rgba(61, 78, 135, 0.22), rgba(61, 78, 135, 0.38), rgba(61, 78, 135, 0.1), black);
   width: 100%;
   margin-bottom: 84px;
 }

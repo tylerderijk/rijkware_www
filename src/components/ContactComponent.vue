@@ -101,7 +101,7 @@ export default {
 <template>
   <div class="contact-main" v-bind="$attrs">
     <div class="contact-wrapper">
-    <h3>Start the Conversation</h3>
+    <h2>Start the Conversation</h2>
       <form @submit.prevent="submitForm" class="form" ref="form">
         <div class="loader-form" ref="loader" v-if="this.sendingFormMessage">
           <div class="spinner-form"></div>
@@ -147,6 +147,11 @@ export default {
 </template>
 
 <style lang="scss" scoped>
+h3 {
+  color: #e9e9e9;
+  font-size: 24px;
+  margin-bottom: 12px;
+}
 .contact-main {
   display: flex;
   align-items: center;
@@ -208,6 +213,15 @@ summary {
   align-items: center;
   margin: 0;
   font-weight: 300;
+}
+
+details[open] .details-icon {
+  transform: rotate(90deg);
+  transition: transform 0.3s ease;
+}
+
+.details-icon {
+  transition: transform 0.3s ease;
 }
 
 .contact-call {
@@ -282,15 +296,9 @@ summary {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 50%;
+  width: 90%;
   margin: 24px 0;
-  padding: 28px 0;
-  border-radius: 12px;
-  background-color: rgba(255, 255, 255, 0.074);
-  border: 1px solid rgba(255, 255, 255, 0.222);
-  -webkit-backdrop-filter: blur(20px);
-  backdrop-filter: blur(20px);
-  max-width: 800px;
+  max-width: 1000px;
 }
 
 .form {
@@ -341,6 +349,7 @@ summary {
   border-radius: 8px;
   cursor: pointer;
   width: 100%;
+  transition: 0.4s ease;
 
   &:hover {
     font-weight: 600;
