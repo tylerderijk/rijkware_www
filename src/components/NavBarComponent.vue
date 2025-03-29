@@ -197,10 +197,11 @@ export default {
   }
 
   &__list {
-    opacity: 0.3;
+    opacity: 0.4;
     transition: all 350ms ease-out;
     padding: 0;
     display: flex;
+    margin-bottom: 0;
 
     &:hover {
       opacity: 1;
@@ -235,7 +236,7 @@ export default {
     display: flex;
     justify-content: center;
     cursor: pointer;
-    margin: 10px 2vw;
+    margin: 10px 36px;
     padding: 8px;
     font-weight: 300;
     font-size: 16px;

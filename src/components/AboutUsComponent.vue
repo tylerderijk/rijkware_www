@@ -185,7 +185,7 @@ export default {
     &::after {
       content: "";
       position: absolute;
-      top: 50%;
+      top: 40%;
       left: 50%;
       transform: translate(-10%, -50%);
       width: 90vh;
@@ -238,7 +238,7 @@ export default {
   }
 
   &__reasons {
-    max-width: 1500px;
+    max-width: 1000px;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -278,7 +278,7 @@ export default {
 .why__container {
   margin-top: 0; /* Remove unnecessary margin to reduce gaps */
   padding: 48px 0; /* Adjust spacing */
-  background: linear-gradient(black, rgba(61, 78, 135, 0.22), rgba(61, 78, 135, 0.38), rgba(61, 78, 135, 0.1), black);
+  background: linear-gradient(black, rgba(61, 78, 135, 0.02), rgba(61, 78, 135, 0.18), rgba(61, 78, 135, 0.1), black);
   width: 100%;
   margin-bottom: 84px;
 }

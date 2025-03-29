@@ -15,7 +15,8 @@ export default {
       contactForm: {
         message: "",
         email: "",
-        phone: ""
+        phone: "",
+        dataConsent: false
       },
       emailRegex: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
       formIsValid: false,
@@ -24,7 +25,7 @@ export default {
   },
   mounted() {
     anime({
-      targets: '.hero-title, .hero-wrapper small',
+      targets: '.contact__title, .contact__subtitle',
       translateY: [-20, 0],
       opacity: [0, 1],
       duration: 1000,
@@ -33,7 +34,7 @@ export default {
     });
 
     anime({
-      targets: '.contact-wrapper, .contact-call-card, .section-qna, .contact-call-text',
+      targets: '.contact__form-section, .contact__phone-card, .contact__faq, .contact__subtitle',
       translateY: [30, 0],
       opacity: [0, 1],
       duration: 1000,
@@ -42,7 +43,7 @@ export default {
     });
 
     anime({
-      targets: '.holder-qna',
+      targets: '.contact__faq-item',
       translateX: [-50, 0],
       opacity: [0, 1],
       duration: 1000,
@@ -51,8 +52,8 @@ export default {
     });
   },
   methods: {
-    validateEmail() {
-      this.formIsValid = this.emailRegex.test(this.contactForm.email);
+    validateForm() {
+      this.formIsValid = this.emailRegex.test(this.contactForm.email) && this.contactForm.dataConsent;
     },
     async submitForm() {
       if (this.formIsValid) {
@@ -91,7 +92,8 @@ export default {
       this.contactForm = {
         message: "",
         email: "",
-        phone: ""
+        phone: "",
+        dataConsent: false
       };
     }
   }
@@ -99,42 +101,46 @@ export default {
 </script>
 
 <template>
-  <div class="contact-main" v-bind="$attrs">
-    <div class="contact-wrapper">
-    <h2>Start the Conversation</h2>
-      <form @submit.prevent="submitForm" class="form" ref="form">
-        <div class="loader-form" ref="loader" v-if="this.sendingFormMessage">
-          <div class="spinner-form"></div>
+  <div class="contact" v-bind="$attrs">
+    <div class="contact__form-section">
+      <h2 class="contact__title">Start the Conversation</h2>
+      <form @submit.prevent="submitForm" class="contact__form" ref="form">
+        <div class="contact__loader" ref="loader" v-if="this.sendingFormMessage">
+          <div class="contact__spinner"></div>
         </div>
-        <div class="contact-container">
+        <div class="contact__form-container">
           <textarea v-model="contactForm.message" maxlength="500" placeholder="Write your message here. (required)"
-                    name="message" id="message" rows="5" class="fInput message" required></textarea>
-          <small>{{ contactForm.message.length }}/500</small>
-          <input v-model="contactForm.email" @blur="validateEmail" placeholder="E-Mail (required)" type="text"
-                 name="from_email" id="from_email" class="fInput email" required>
+                    name="message" id="message" rows="5" class="contact__input contact__input--message" required></textarea>
+          <small class="contact__char-count">{{ contactForm.message.length }}/500</small>
+          <input v-model="contactForm.email" @blur="validateForm" placeholder="E-Mail (required)" type="text"
+                 name="from_email" id="from_email" class="contact__input" required>
           <input name="from_phone" id="from_phone" v-model="contactForm.phone" placeholder="Phone Number" type="text"
-                 class="fInput email">
-          <input type="submit" value="Send Message" class="submit">
+                 class="contact__input">
+          <div class="contact__checkbox-container">
+            <input type="checkbox" id="dataConsent" name="dataConsent" v-model="contactForm.dataConsent" @change="validateForm" required class="contact__checkbox">
+            <label for="dataConsent" class="contact__checkbox-label">By submitting this form, you agree to Rijkware processing your data to respond to your inquiry.</label>
+          </div>
+          <button type="submit" class="contact__submit-btn">Send Message</button>
         </div>
       </form>
     </div>
-    <div class="contact-bottom-wrapper">
-      <div class="contact-call-wrapper">
-        <h3 class="contact-call-text">Can't wait for an e-mail reply?</h3>
-        <a class="contact-call-card" href="tel:+31642068928">
+    <div class="contact__info-section">
+      <div class="contact__info-container">
+        <h3 class="contact__subtitle">Can't wait for an e-mail reply?</h3>
+        <a class="contact__phone-card" href="tel:+31642068928">
           <PhoneIcon/>
-          <h4 class="phone-number"> +31 6 420 68 928</h4>
+          <h4 class="contact__phone-number">Give us a call</h4>
         </a>
-        <section class="section-qna">
-          <h3>Frequently Asked Questions</h3>
-          <details class="holder-qna" v-for="(faq, index) in lang.faqs" v-bind:key="index">
-            <summary>
-              <h3 class="title-faq-why">
+        <section class="contact__faq">
+          <h2 class="contact__title">Frequently Asked Questions</h2>
+          <details class="contact__faq-item" v-for="(faq, index) in lang.faqs" v-bind:key="index">
+            <summary class="contact__faq-summary">
+              <h3 class="contact__faq-question">
                 <FaqIcon/>
                 {{ faq["summary"] }}
               </h3>
             </summary>
-            <div class="text-why">
+            <div class="contact__faq-answer">
               <p>
                 {{ faq["text"] }}
               </p>
@@ -147,74 +153,280 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-h3 {
-  color: #e9e9e9;
-  font-size: 24px;
-  margin-bottom: 12px;
-}
-.contact-main {
+// Base styles
+.contact {
   display: flex;
-  align-items: center;
-  justify-content: center;
   flex-direction: column;
-}
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
 
-.contact-bottom-wrapper {
-  display: flex;
-  justify-content: center;
-}
+  &__title, &__subtitle {
+    font-family: "Quicksand", system-ui;
+    color: #e9e9e9;
+    text-align: left;
+    margin-bottom: 24px;
+    width: 100%;
+  }
 
-.section-qna {
-  margin: 84px 0 36px 0;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  max-width: 800px;
-  gap: 16px;
+  &__title {
+    font-size: 32px;
+    font-weight: 600;
+  }
 
-  &:has(.holder-qna:hover) {
-    .holder-qna:not(:hover) {
-      filter: brightness(50%);
+  &__subtitle {
+    font-size: 24px;
+    font-weight: 500;
+    margin-bottom: 20px;
+  }
+
+  // Form section
+  &__form-section {
+    width: 100%;
+    max-width: 800px;
+    margin: 32px auto;
+  }
+
+  &__form {
+    width: 100%;
+    position: relative;
+  }
+
+  &__form-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 20px;
+  }
+
+  &__input {
+    width: 100%;
+    border: 1px solid #5d5d5d;
+    border-radius: 8px;
+    background-color: #171717;
+    padding: 12px;
+    color: #e9e9e9;
+    transition: border 0.2s ease;
+    font-size: 16px;
+
+    &:focus {
+      border: 1px solid rgb(2, 58, 162);
+      outline: none;
+
+      &::placeholder {
+        color: rgb(0, 81, 255);
+      }
+    }
+
+    &--message {
+      min-height: 150px;
+      resize: vertical;
     }
   }
-}
 
-.holder-qna {
-  border-radius: 8px;
-  border: solid 1px #5d5d5d;
-  text-align: start;
-  width: 100%;
-  padding: 12px;
-  transition: all 350ms ease-in-out;
+  &__char-count {
+    align-self: flex-end;
+    color: #a0a0a0;
+    font-size: 14px;
+  }
 
-  &:hover {
+  &__checkbox-container {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-top: 8px;
+  }
+
+  &__checkbox {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 1px solid #5d5d5d;
+    border-radius: 4px;
+    background-color: #171717;
     cursor: pointer;
+    position: relative;
+    flex-shrink: 0;
+    margin-top: 2px;
+
+    &:checked {
+      background-color: rgb(0, 81, 255);
+      border-color: rgb(0, 81, 255);
+
+      &::after {
+        content: '';
+        position: absolute;
+        top: 2px;
+        left: 6px;
+        width: 6px;
+        height: 12px;
+        border: solid white;
+        border-width: 0 2px 2px 0;
+        transform: rotate(45deg);
+      }
+    }
+
+    &:focus {
+      outline: none;
+      border-color: rgb(2, 58, 162);
+    }
   }
 
-  &:focus {
-    outline: none;
+  &__checkbox-label {
+    margin-top: 2px;
+    font-size: 14px;
+    color: #e9e9e9;
+    font-weight: 200;
+    text-align: start;
+  }
+
+  &__submit-btn {
+    background-color: rgba(255, 255, 255, 0.074);
+    border: 1px solid rgba(255, 255, 255, 0.222);
+    font-weight: 300;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: fit-content;
+    padding: 12px 24px;
+
+    &:hover {
+      transform: translateY(-3px);
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    &:active {
+      transform: translateY(4px);
+    }
+  }
+
+  // Loader
+  &__loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    transition: opacity 0.5s;
+  }
+
+  &__spinner {
+    width: 50px;
+    height: 50px;
+    border: 5px solid #e7e7e7;
+    border-top: 5px solid transparent;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+
+  // Info section
+  &__info-section {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin: 0;
+  }
+
+  &__info-container {
+    width: 100%;
+    max-width: 800px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  &__phone-card {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    background-color: rgba(255, 255, 255, 0.074);
+    border: 1px solid rgba(255, 255, 255, 0.222);
+    border-radius: 12px;
+    padding: 12px 24px;
+    width: fit-content;
+    text-decoration: none;
+    color: inherit;
+    margin-bottom: 32px;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+  }
+
+  &__phone-number {
+    margin: 0;
+    font-size: 18px;
+    font-family: "Lexend", Helvetica, Arial, sans-serif;
+    font-weight: 300;
+  }
+
+  // FAQ section
+  &__faq {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin: 48px 0;
+  }
+
+  &__faq-item {
+    border-radius: 8px;
+    border: 1px solid #5d5d5d;
+    width: 100%;
+    padding: 16px;
+    transition: all 0.35s ease-in-out;
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  &__faq-summary {
+    display: flex;
+    align-items: center;
+  }
+
+  &__faq-question {
+    color: #e9e9e9;
+    display: flex;
+    align-items: center;
+    text-align: start;
+    gap: 16px;
+    margin: 0;
+    font-weight: 400;
+    font-size: 18px;
+  }
+
+  &__faq-answer {
+    color: #dedede;
+    padding: 16px 0 0 40px;
+    text-align: start;
+
+    p {
+      margin: 0;
+      line-height: 1.6;
+    }
+  }
+
+  // Hover effect for FAQ items
+  &__faq:has(&__faq-item:hover) &__faq-item:not(:hover) {
+    filter: brightness(50%);
   }
 }
 
-.text-why {
-  color: #dedede;
-  padding: 16px;
-}
-
-summary {
-  display: flex;
-  align-items: center;
-}
-
-.title-faq-why {
-  color: #e9e9e9;
-  gap: 16px;
-  display: flex;
-  align-items: center;
-  margin: 0;
-  font-weight: 300;
-}
-
+// Icon rotation
 details[open] .details-icon {
   transform: rotate(90deg);
   transition: transform 0.3s ease;
@@ -222,64 +434,6 @@ details[open] .details-icon {
 
 .details-icon {
   transition: transform 0.3s ease;
-}
-
-.contact-call {
-  &-wrapper {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    margin-bottom: 128px;
-  }
-
-  &-card {
-    color: inherit;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 18px;
-    background-color: rgba(255, 255, 255, 0.074);
-    border: 1px solid rgba(255, 255, 255, 0.222);
-    -webkit-backdrop-filter: blur(20px);
-    backdrop-filter: blur(20px);
-    border-radius: 12px;
-    padding: 8px 0;
-    width: 60%;
-    text-decoration: none;
-
-    &:hover {
-      transform: translateY(2px);
-    }
-
-    h4 {
-      font-size: large;
-    }
-  }
-}
-
-.loader-form {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.8);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 9999;
-  transition: opacity 0.5s;
-}
-
-.spinner-form {
-  width: 50px;
-  height: 50px;
-  border: 5px solid #e7e7e7;
-  border-top: 5px solid transparent;
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
 }
 
 @keyframes spin {
@@ -291,138 +445,34 @@ details[open] .details-icon {
   }
 }
 
-.contact-wrapper {
-  flex-direction: column;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 90%;
-  margin: 24px 0;
-  max-width: 1000px;
-}
-
-.form {
-  display: flex;
-  text-align: start;
-  flex-direction: column;
-  width: 90%;
-  height: fit-content;
-}
-
-.contact-container {
-  display: flex;
-  flex-direction: column;
-  align-items: end;
-  gap: 16px;
-  background-color: rgba(255, 0, 0, 0);
-}
-
-.fInput {
-  border: solid 1px #5d5d5d;
-  width: 100%;
-  border-radius: 8px;
-  background-color: #171717;
-  padding: 10px;
-  color: #e9e9e9;
-  transition: .1s;
-
-  &:focus {
-    border: 1px rgb(2, 58, 162) solid;
-    outline: none;
-
-    &::placeholder {
-      color: rgb(0, 81, 255);
-    }
-  }
-
-  &.message {
-    padding-bottom: 80px;
-  }
-}
-
-.submit {
-  background-color: black;
-  border: none;
-  height: 56px;
-  font-weight: 400;
-  padding: 7px 0;
-  border-radius: 8px;
-  cursor: pointer;
-  width: 100%;
-  transition: 0.4s ease;
-
-  &:hover {
-    font-weight: 600;
-    opacity: .9;
-  }
-
-  &:active {
-    transform: translateY(-12px);
-  }
-}
-
-.hero {
-  &-title {
-    font-size: 56px;
-  }
-
-  &-wrapper {
-    margin-top: 48px;
-    position: relative;
-    z-index: 1;
-  }
-
-  &-small {
-    color: gray;
-  }
-}
-
+// Media queries
 @media (max-width: 768px) {
-  .hero {
-    &-title {
-      font-size: 36px;
-    }
-
-    &-wrapper {
-      margin: 0;
-      width: 100%;
-    }
-  }
-
-  hr {
-    display: none;
-  }
-
-  .form {
-    width: 90%;
-  }
-
   .contact {
-    &-container {
-      align-items: center;
+    &__form-section,
+    &__info-container {
+      width: 90%;
+      padding: 24px 0;
     }
 
-    &-wrapper {
-      margin: 24px 0;
-      width: 95%;
+    &__title {
+      font-size: 28px;
     }
 
-    &-call {
-      &-wrapper {
-        width: 90vw;
-        margin-bottom: 64px;
-      }
-
-      &-card {
-        width: 90vw;
-      }
+    &__subtitle {
+      font-size: 22px;
     }
 
-    &-main {
-      margin: 0;
+    &__phone-card {
       width: 100%;
-      display: flex;
-      flex-direction: column;
+      max-width: none;
+    }
+
+    &__faq {
+      margin-bottom: 24px;
+    }
+
+    &__faq-answer {
+      padding: 16px 0 0 16px;
     }
   }
 }
