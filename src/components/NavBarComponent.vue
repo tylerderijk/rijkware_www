@@ -80,6 +80,22 @@ export default {
   },
   mounted() {
     window.addEventListener('resize', this.handleResize);
+
+    // Initially hide the navbar
+    const navbar = this.$el;
+    navbar.style.opacity = '0';
+    navbar.style.transform = 'translateY(-100%)';
+
+    // Make the navbar appear after 2 seconds
+    setTimeout(() => {
+      anime({
+        targets: navbar,
+        opacity: [0, 1],
+        translateY: ['-100%', '0%'],
+        duration: 1000,
+        easing: 'easeOutQuad'
+      });
+    }, 2000);
   },
   beforeUnmount() {
     window.removeEventListener('resize', this.handleResize);
