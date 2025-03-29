@@ -61,7 +61,7 @@ export default {
                 <a href="#about" @click="scrollToSection('about')">About us</a>
               </li>
               <li>
-                <a href="#manifesto" @click="scrollToSection('manifesto')">Why</a>
+                <a href="#why" @click="scrollToSection('manifesto')">Why</a>
               </li>
               <li>
                 <a href="#manifesto" @click="scrollToSection('manifesto')">Manifesto</a>
@@ -70,7 +70,7 @@ export default {
                 <a href="#contact" @click="scrollToSection('contact')">Contact</a>
               </li>
               <li>
-                <a href="#contact" @click="scrollToSection('contact')">FAQ's</a>
+                <a href="#faq" @click="scrollToSection('contact')">FAQ's</a>
               </li>
             </ul>
           </div>
@@ -302,6 +302,10 @@ a {
       box-shadow: white 0 1px;
       height: 100%;
       width: 100%;
+
+      @media (max-width: 1285px) {
+        box-shadow: none;
+      }
     }
 
     &-image {

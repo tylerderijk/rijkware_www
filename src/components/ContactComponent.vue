@@ -131,7 +131,7 @@ export default {
           <PhoneIcon/>
           <h4 class="contact__phone-number">Give us a call</h4>
         </a>
-        <section class="contact__faq">
+        <section id="faq" class="contact__faq">
           <h2 class="contact__title">Frequently Asked Questions</h2>
           <details class="contact__faq-item" v-for="(faq, index) in lang.faqs" v-bind:key="index">
             <summary class="contact__faq-summary">
@@ -184,7 +184,8 @@ export default {
   &__form-section {
     width: 100%;
     max-width: 860px;
-    margin: 32px auto;
+    margin: 0 auto 32px auto;
+    padding-top: 64px;
   }
 
   &__form {
@@ -375,6 +376,7 @@ export default {
     flex-direction: column;
     gap: 16px;
     margin: 48px 0;
+    padding-top: 56px;
   }
 
   &__faq-item {

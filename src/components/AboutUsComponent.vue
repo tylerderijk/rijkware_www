@@ -67,7 +67,6 @@ export default {
     this.updateHeroTextOpacity();
     this.updateHeroTextGradient();
 
-
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
@@ -91,8 +90,6 @@ export default {
 
     const whyTextsImg = document.querySelector('.why__image');
     observer.observe(whyTextsImg);
-
-    // Removed scroll event listener for pseudo-element animation as it's no longer needed
 
     window.addEventListener('scroll', this.updateHeroTextOpacity);
     window.addEventListener('scroll', this.updateHeroTextGradient);
@@ -136,7 +133,7 @@ export default {
         const offset = (scrollY / 10) + index * 20; // Adjust gradient movement
         text.style.backgroundPosition = `${offset}% 50%`;
       });
-    }
+    },
   }
 }
 </script>
@@ -144,7 +141,7 @@ export default {
 <style lang="scss" scoped>
 .hero {
   margin-top: -60px;
-  padding-bottom: 128px;
+  padding-bottom: 64px;
   overflow: hidden;
   display: flex;
   align-items: center;
@@ -167,40 +164,11 @@ export default {
     display: flex;
     flex-direction: column;
     z-index: 1;
-
-    &::before {
-      content: "";
-      position: absolute;
-      top: 10%;
-      right: 50%;
-      transform: translate(30%, -100%);
-      width: 85vh;
-      height: 85vh;
-      background: radial-gradient(circle, rgba(91, 113, 201, 0.2) 0%, rgba(0, 0, 0, 0) 60%);
-      filter: blur(150px);
-      z-index: -1;
-      pointer-events: none;
-      transition: transform 0.1s ease-out;
-    }
-
-    &::after {
-      content: "";
-      position: absolute;
-      top: 40%;
-      left: 50%;
-      transform: translate(-10%, -50%);
-      width: 85vh;
-      height: 85vh;
-      background: radial-gradient(circle, rgba(91, 113, 201, 0.2) 0%, rgba(0, 0, 0, 0) 60%);
-      filter: blur(150px);
-      z-index: -1;
-      pointer-events: none;
-      transition: transform 0.1s ease-out;
-    }
   }
 }
 
 .why {
+  padding-top: 48px;
 
   &__success-cases {
     margin-top: 24px;
@@ -279,7 +247,7 @@ export default {
 .why__container {
   margin-top: 0; /* Remove unnecessary margin to reduce gaps */
   padding: 48px 0; /* Adjust spacing */
-  background: linear-gradient(black, rgba(61, 78, 135, 0.02), rgba(61, 78, 135, 0.18), rgba(61, 78, 135, 0.1), transparent);
+  background: linear-gradient(transparent, rgba(61, 78, 135, 0.18), rgba(61, 78, 135, 0.18), rgba(61, 78, 135, 0.1), transparent);
   width: 100%;
   margin-bottom: 84px;
 }

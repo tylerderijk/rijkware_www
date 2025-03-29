@@ -48,7 +48,7 @@ export default {
 
 <style lang="scss" scoped>
 .manifesto {
-  margin-bottom: 128px;
+  padding: 48px 0;
   position: relative;
   background: linear-gradient(to bottom, transparent, rgba(61, 78, 135, 0.25), black);
   color: #e9e9e9;
@@ -91,20 +91,6 @@ export default {
     padding: 0 24px;
     position: relative;
     overflow-x: hidden;
-
-    &::before {
-      content: "";
-      position: absolute;
-      top: 50%;
-      right: 50%;
-      transform: translate(50%, -100%);
-      width: 70vh;
-      height: 70vh;
-      background: radial-gradient(circle, rgba(91, 113, 201, 0.3) 0%, rgba(0, 0, 0, 0) 60%);
-      filter: blur(150px);
-      z-index: -1;
-      pointer-events: none;
-    }
   }
 
   &__card {
