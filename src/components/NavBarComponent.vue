@@ -1,5 +1,6 @@
 <script>
 import anime from 'animejs';
+import { nextTick } from 'vue'
 import MenuIcon from "@/components/shorts/MenuIcon.vue";
 import MenuCloseIcon from "@/components/shorts/MenuCloseIcon.vue";
 import LinkedInIcon from "@/components/shorts/LinkedInIcon.vue";
@@ -35,33 +36,41 @@ export default {
       }
     },
     animateMenu() {
-      anime({
-        targets: ['.navigationbar__item'],
-        translateY: [5, 0],
-        opacity: [0, 1],
-        duration: 100,
-        easing: 'easeInOutQuad',
-        delay: anime.stagger(100)
-      })
-      anime({
-        targets: '.navigationbar__mobile',
-        opacity: [0, 1],
-        translateY: [400, 0],
-        easing: 'easeInOutQuad',
-        duration: 300,
-        begin: () => {
-          if (this.showMobileNav) {
-            this.$el.querySelector('.navigationbar__mobile').style.display = 'flex';
-            this.$el.querySelector('.navigationbar__logo').style.display = 'flex';
+      nextTick(() => {
+        anime({
+          targets: ['.navigationbar__item'],
+          translateY: [5, 0],
+          opacity: [0, 1],
+          duration: 100,
+          easing: 'easeInOutQuad',
+          delay: anime.stagger(100)
+        });
+
+        anime({
+          targets: '.navigationbar__mobile',
+          opacity: [0, 1],
+          translateY: [400, 0],
+          easing: 'easeInOutQuad',
+          duration: 300,
+          begin: () => {
+            const mobileEl = this.$el.querySelector('.navigationbar__mobile');
+            const logoEl = this.$el.querySelector('.navigationbar__logo');
+            if (this.showMobileNav && mobileEl && logoEl) {
+              mobileEl.style.display = 'flex';
+              logoEl.style.display = 'flex';
+            }
+          },
+          complete: () => {
+            const mobileEl = this.$el.querySelector('.navigationbar__mobile');
+            const logoEl = this.$el.querySelector('.navigationbar__logo');
+            if (!this.showMobileNav && mobileEl && logoEl) {
+              mobileEl.style.display = 'none';
+              logoEl.style.display = 'flex';
+            }
           }
-        },
-        complete: () => {
-          if (!this.showMobileNav) {
-            this.$el.querySelector('.navigationbar__mobile').style.display = 'none';
-            this.$el.querySelector('.navigationbar__logo').style.display = 'flex';
-          }
-        }
+        });
       });
+
     },
     handleResize() {
       if (window.innerWidth > 820 && !this.isMobile) {
@@ -82,12 +91,12 @@ export default {
   <nav :class="{ 'navigationbar--blur': showMobileNav }" class="navigationbar">
     <div class="navigationbar__logo-container">
       <div class="navigationbar__mobile-header" v-if="isMobile">
-        <router-link to="/rijkware" v-if="showMobileNav">
+        <a href="#" @click.prevent="handleClick" v-if="showMobileNav">
           <img src="../assets/RijkwareLogo-2024-v2-Long.png" class="navigationbar__logo d-inline-block align-top" alt="">
-        </router-link>
-        <router-link to="/rijkware" v-else>
+        </a>
+        <a href="#" @click.prevent="handleClick" v-else>
           <img src="../assets/RijkwareLogo-2024-v2.png" class="navigationbar__logo d-inline-block align-top" alt="">
-        </router-link>
+        </a>
         <button v-if="!showMobileNav" @click="handleClick" class="navigationbar__hamburger">
           <MenuIcon/>
         </button>
@@ -103,13 +112,16 @@ export default {
             <a href="#about" @click="handleClick('about')">About us</a>
           </li>
           <li class="navigationbar__item">
+            <a href="#why" @click="handleClick('why')">Why</a>
+          </li>
+          <li class="navigationbar__item">
             <a href="#manifesto" @click="handleClick('manifesto')">Manifesto</a>
           </li>
           <li class="navigationbar__item">
             <a href="#contact" @click="handleClick('contact')">Contact</a>
           </li>
           <li class="navigationbar__item">
-            <a href="#contact" @click="handleClick('contact')">FAQ's</a>
+            <a href="#faq" @click="handleClick('faq')">FAQ's</a>
           </li>
           <li>
             <div class="navigationbar__social" v-if="showMobileNav">
@@ -130,13 +142,13 @@ export default {
         </ul>
         <ul class="navigationbar__mobile-list navigationbar__mobile-list--secondary">
           <li class="navigationbar__item navigationbar__item--small">
-            <router-link to="terms-and-conditions" @click="handleClick" class="navigationbar__item-text--small">Terms & Conditions</router-link>
+            <router-link to="/terms-and-conditions" class="navigationbar__item-text--small">Terms & Conditions</router-link>
           </li>
           <li class="navigationbar__item navigationbar__item--small">
-            <router-link to="privacy-policy" @click="handleClick" class="navigationbar__item-text--small">Privacy Policy</router-link>
+            <a href="#" @click.prevent="handleClick" class="navigationbar__item-text--small">Privacy Policy</a>
           </li>
           <li class="navigationbar__item navigationbar__item--small">
-            <router-link to="cookies" @click="handleClick" class="navigationbar__item-text--small">Cookies</router-link>
+            <a href="#" @click.prevent="handleClick" class="navigationbar__item-text--small">Cookies</a>
           </li>
         </ul>
       </div>
@@ -147,7 +159,7 @@ export default {
         <a href="#about" class="u-text-gradient--white-blue-5 navigationbar__brand" @click="handleClick('about')">Rijkware</a>
       </li>
       <li class="navigationbar__item">
-        <a href="#manifesto" @click="handleClick('manifesto')">Why</a>
+        <a href="#why" @click="handleClick('manifesto')">Why</a>
       </li>
       <li class="navigationbar__item">
         <a href="#manifesto" @click="handleClick('manifesto')">Manifesto</a>
@@ -156,7 +168,7 @@ export default {
         <a href="#contact" @click="handleClick('contact')">Contact</a>
       </li>
       <li class="navigationbar__item">
-        <a href="#contact" @click="handleClick('contact')">FAQ's</a>
+        <a href="#faq" @click="handleClick('contact')">FAQ's</a>
       </li>
     </ul>
   </nav>

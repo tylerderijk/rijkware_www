@@ -39,7 +39,7 @@ export default {
             <div class="footer__top-text">
               <h2>Become a <br><span class="u-text-gradient--blue">Student Developer</span></h2>
               <h4>Find work related to the field you wish to grow in.</h4>
-              <router-link class="footer__contact-button" to="/contact">Contact Us</router-link>
+              <a href="#contact" class="footer__contact-button" @click.prevent="scrollToSection('contact')">Contact Us</a>
             </div>
           </div>
           <img alt="Students" src="../assets/PictureStudentDevs.jpg" class="footer__top-image">
@@ -80,13 +80,13 @@ export default {
                 <ExternalLinkSVG/>
               </a></li>
               <li>
-                <router-link to="/terms-and-conditions">Terms & Conditions</router-link>
+                <a href="#" @click.prevent>Terms & Conditions</a>
               </li>
               <li>
-                <router-link to="/privacy-policy">Privacy Policy</router-link>
+                <a href="#" @click.prevent>Privacy Policy</a>
               </li>
               <li>
-                <router-link to="/cookies">Cookies</router-link>
+                <a href="#" @click.prevent>Cookies</a>
               </li>
             </ul>
           </div>

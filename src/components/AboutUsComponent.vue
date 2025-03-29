@@ -12,7 +12,7 @@
       <h2 class="hero__text u-text-gradient--white-blue-3">{{ lang.hero_texts.subtitle3 }}</h2>
     </div>
   </div>
-  <section class="why">
+  <section class="why" id="why">
     <img src="../assets/WhyChooseRijkware.png" class="why__image" alt="Why Choose Rijkware?">
     <div class="why__container">
       <div class="why__reasons">

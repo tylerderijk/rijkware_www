@@ -37,29 +37,12 @@ export default {
     FooterComponent,
     CookieBanner,
   },
-  watch: {
-    $route(to) {
-      this.setBodyStyle(to);
-     }
-  },
   methods: {
     toggleMenu() {
       this.showMobileNav = !this.showMobileNav;
     },
-    setBodyStyle(route) {
-      const path = route.path;
-      if (path === '/' || path !== '/manifesto') {
-        document.body.style.backgroundColor = 'black';
-      } else if (path === '/manifesto') {
-        document.body.style.backgroundColor = '#e9e9e9';
-      }
-    },
-
-
   },
   mounted() {
-    this.setBodyStyle(this.$route);
-
     // Scroll to section if hash is present in URL
     if (window.location.hash) {
       const sectionId = window.location.hash.substring(1);
@@ -67,12 +50,9 @@ export default {
       if (element) {
         setTimeout(() => {
           element.scrollIntoView({ behavior: 'smooth' });
-        }, 500); // Small delay to ensure components are rendered
+        }, 500);
       }
     }
-  },
-  beforeUnmount() {
-    this.destroyScroll();
   },
 };
 </script>
