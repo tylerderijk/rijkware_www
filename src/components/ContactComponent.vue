@@ -20,7 +20,11 @@ export default {
       },
       emailRegex: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
       formIsValid: false,
-      sendingFormMessage: false
+      sendingFormMessage: false,
+      successMessage: '',
+      errorMessage: '',
+      showSuccessMessage: false,
+      showErrorMessage: false
     };
   },
   mounted() {
@@ -56,11 +60,21 @@ export default {
       this.formIsValid = this.emailRegex.test(this.contactForm.email) && this.contactForm.dataConsent;
     },
     async submitForm() {
+      // Reset messages
+      this.showSuccessMessage = false;
+      this.showErrorMessage = false;
+
       if (this.formIsValid) {
         this.sendingFormMessage = true;
         await this.postMessage();
       } else {
-        alert('Please enter a valid email address.');
+        this.errorMessage = 'Please enter a valid email address and accept the data processing consent.';
+        this.showErrorMessage = true;
+
+        // Auto-hide error message after 5 seconds
+        setTimeout(() => {
+          this.showErrorMessage = false;
+        }, 5000);
       }
     },
     async postMessage() {
@@ -77,12 +91,24 @@ export default {
           keys.public_key
       ).then(
           () => {
-            alert('Message sent, thank you for contacting us!');
+            this.successMessage = 'Message sent, thank you for contacting us!';
+            this.showSuccessMessage = true;
             this.clearFormFields();
+
+            // Auto-hide success message after 5 seconds
+            setTimeout(() => {
+              this.showSuccessMessage = false;
+            }, 5000);
           },
           (error) => {
             console.error('Error:', error);
-            alert('Failed to send message. Please try again.');
+            this.errorMessage = 'Failed to send message. Please try again.';
+            this.showErrorMessage = true;
+
+            // Auto-hide error message after 5 seconds
+            setTimeout(() => {
+              this.showErrorMessage = false;
+            }, 5000);
           }
       ).finally(() => {
         this.sendingFormMessage = false;
@@ -107,6 +133,12 @@ export default {
       <form @submit.prevent="submitForm" class="contact__form" ref="form">
         <div class="contact__loader" ref="loader" v-if="this.sendingFormMessage">
           <div class="contact__spinner"></div>
+        </div>
+        <div v-if="showSuccessMessage" class="contact__message contact__message--success">
+          {{ successMessage }}
+        </div>
+        <div v-if="showErrorMessage" class="contact__message contact__message--error">
+          {{ errorMessage }}
         </div>
         <div class="contact__form-container">
           <textarea v-model="contactForm.message" maxlength="500" placeholder="Write your message here. (required)"
@@ -314,7 +346,7 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 9999;
+    z-index: 1001;
     transition: opacity 0.5s;
   }
 
@@ -325,6 +357,27 @@ export default {
     border-top: 5px solid transparent;
     border-radius: 50%;
     animation: spin 1s linear infinite;
+  }
+
+  &__message {
+    padding: 12px 16px;
+    border-radius: 8px;
+    margin-bottom: 16px;
+    font-weight: 400;
+    text-align: left;
+    animation: fadeIn 0.3s ease-in-out;
+
+    &--success {
+      background-color: rgba(25, 135, 84, 0.2);
+      border: 1px solid rgba(25, 135, 84, 0.5);
+      color: #2dd4bf;
+    }
+
+    &--error {
+      background-color: rgba(220, 53, 69, 0.2);
+      border: 1px solid rgba(220, 53, 69, 0.5);
+      color: #f87171;
+    }
   }
 
   // Info section
@@ -444,6 +497,17 @@ details[open] .details-icon {
   }
   100% {
     transform: rotate(360deg);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 

@@ -61,7 +61,7 @@ export default {
                 <a href="#about" @click="scrollToSection('about')">About us</a>
               </li>
               <li>
-                <a href="#why" @click="scrollToSection('manifesto')">Why</a>
+                <a href="#why" @click="scrollToSection('why')">Why</a>
               </li>
               <li>
                 <a href="#manifesto" @click="scrollToSection('manifesto')">Manifesto</a>
@@ -70,7 +70,7 @@ export default {
                 <a href="#contact" @click="scrollToSection('contact')">Contact</a>
               </li>
               <li>
-                <a href="#faq" @click="scrollToSection('contact')">FAQ's</a>
+                <a href="#faq" @click="scrollToSection('faq')">FAQ's</a>
               </li>
             </ul>
           </div>
@@ -103,7 +103,7 @@ export default {
               <li><a target="_blank" href="https://www.facebook.com/rijkware">Facebook
                 <ExternalLinkSVG/>
               </a></li>
-              <li><a target="_blank" href="https://twitter.com/rijkware">X
+              <li><a target="_blank" href="https://twitter.com/rijkware">Twitter
                 <ExternalLinkSVG/>
               </a></li>
             </ul>

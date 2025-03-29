@@ -2,7 +2,9 @@
   <div id="about" class="hero">
     <video src="../assets/RijkwareLogoRenderTrans2.webm" id="rijkware-animation"
            class="hero__animation d-inline-block align-top"
-           autoplay loop muted playsinline oncontextmenu="return false;">
+           autoplay loop muted playsinline
+           aria-label="Rijkware Logo Animation" 
+           @contextmenu.prevent>
       Your browser does not support the video tag.
     </video>
     <div class="hero__text-container">
@@ -35,16 +37,6 @@ export default {
   data() {
     return {
       lang: AboutUsData,
-      slides: [
-        require("@/assets/project_greenoffice.png"),
-        require("@/assets/project_fridaymascara.png"),
-        require("@/assets/project_overpowered.png"),
-        require("@/assets/project_rembrandt.png"),
-        require("@/assets/project_auctioneer.png"),
-        require("@/assets/project_portfolio.png"),
-        require("@/assets/project_watnu.png"),
-        require("@/assets/projects_gradelister.png"),
-      ],
     }
   },
   mounted() {
@@ -91,14 +83,29 @@ export default {
     const whyTextsImg = document.querySelector('.why__image');
     observer.observe(whyTextsImg);
 
-    window.addEventListener('scroll', this.updateHeroTextOpacity);
-    window.addEventListener('scroll', this.updateHeroTextGradient);
+    // Use a single debounced scroll handler for better performance
+    this.debouncedScrollHandler = this.debounce(() => {
+      this.updateHeroTextOpacity();
+      this.updateHeroTextGradient();
+    }, 10);
+
+    window.addEventListener('scroll', this.debouncedScrollHandler);
   },
   beforeUnmount() {
-    window.removeEventListener('scroll', this.updateHeroTextOpacity);
-    window.removeEventListener('scroll', this.updateHeroTextGradient);
+    window.removeEventListener('scroll', this.debouncedScrollHandler);
   },
   methods: {
+    debounce(func, wait) {
+      let timeout;
+      return function executedFunction(...args) {
+        const later = () => {
+          clearTimeout(timeout);
+          func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+      };
+    },
     updateHeroTextOpacity() {
       const heroTexts = document.querySelectorAll('.hero__text');
       const windowCenter = window.innerHeight / 2;
@@ -140,13 +147,17 @@ export default {
 
 <style lang="scss" scoped>
 .hero {
-  margin-top: -60px;
+  padding-top: 0;
   padding-bottom: 64px;
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
+
+  &__animation {
+    max-width: fit-content;
+  }
 
   &__text {
     font-family: "Unbounded", system-ui;

@@ -1,7 +1,5 @@
 <template>
   <div class="app">
-    <CookieBanner v-if="showBanner" :class="{ 'app__banner--active': showBanner }" @hideBanner="showBanner = false"
-                  @acceptBanner="handleCookieBanner(true)"/>
     <div :class="{ 'app__content': showBanner }" class="app__content">
       <NavBar
           :showMobileNav="showMobileNav"
@@ -19,6 +17,8 @@
           @open-cookies="openCookiesModal"
       />
     </div>
+    <CookieBanner v-if="showBanner" :class="{ 'app__banner--active': showBanner }" @hideBanner="showBanner = false"
+                  @acceptBanner="handleCookieBanner(true)"/>
 
     <!-- Policy Modals -->
     <ModalComponent :show="showTermsModal" @close="closeTermsModal">
@@ -75,29 +75,44 @@ export default {
     toggleMenu() {
       this.showMobileNav = !this.showMobileNav;
     },
+    toggleModal(modalType) {
+      // Close all modals first
+      this.showTermsModal = false;
+      this.showPrivacyModal = false;
+      this.showCookiesModal = false;
+
+      // Open the requested modal
+      if (modalType === 'terms') {
+        this.showTermsModal = true;
+      } else if (modalType === 'privacy') {
+        this.showPrivacyModal = true;
+      } else if (modalType === 'cookies') {
+        this.showCookiesModal = true;
+      }
+    },
     openTermsModal() {
-      this.showPrivacyModal = false; // Close privacy modal if it's open
-      this.showCookiesModal = false; // Close cookies modal if it's open
-      this.showTermsModal = true;
+      this.toggleModal('terms');
     },
     closeTermsModal() {
-      this.showTermsModal = false;
+      this.toggleModal(null);
     },
     openPrivacyModal() {
-      this.showTermsModal = false; // Close terms modal if it's open
-      this.showCookiesModal = false; // Close cookies modal if it's open
-      this.showPrivacyModal = true;
+      this.toggleModal('privacy');
     },
     closePrivacyModal() {
-      this.showPrivacyModal = false;
+      this.toggleModal(null);
     },
     openCookiesModal() {
-      this.showPrivacyModal = false; // Close privacy modal if it's open
-      this.showTermsModal = false; // Close terms modal if it's open
-      this.showCookiesModal = true;
+      this.toggleModal('cookies');
     },
     closeCookiesModal() {
-      this.showCookiesModal = false;
+      this.toggleModal(null);
+    },
+    handleCookieBanner(accepted) {
+      this.showBanner = false;
+      if (accepted) {
+        localStorage.setItem('posthog_user_consent', 'true');
+      }
     },
   },
   mounted() {

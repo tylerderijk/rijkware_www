@@ -108,15 +108,15 @@ export default {
     <div class="navigationbar__logo-container">
       <div class="navigationbar__mobile-header" v-if="isMobile">
         <a href="#" @click.prevent="handleClick" v-if="showMobileNav">
-          <img src="../assets/RijkwareLogo-2024-v2-Long.png" class="navigationbar__logo d-inline-block align-top" alt="">
+          <img src="../assets/RijkwareLogo-2024-v2-Long.png" class="navigationbar__logo d-inline-block align-top" alt="Rijkware Logo">
         </a>
         <a href="#" @click.prevent="handleClick" v-else>
-          <img src="../assets/RijkwareLogo-2024-v2.png" class="navigationbar__logo d-inline-block align-top" alt="">
+          <img src="../assets/RijkwareLogo-2024-v2.png" class="navigationbar__logo d-inline-block align-top" alt="Rijkware Logo">
         </a>
-        <button v-if="!showMobileNav" @click="handleClick" class="navigationbar__hamburger">
+        <button v-if="!showMobileNav" @click="handleClick" class="navigationbar__hamburger" aria-label="Open menu">
           <MenuIcon/>
         </button>
-        <button v-else @click="handleClick" class="navigationbar__hamburger">
+        <button v-else @click="handleClick" class="navigationbar__hamburger" aria-label="Close menu">
           <MenuCloseIcon/>
         </button>
       </div>
@@ -147,10 +147,10 @@ export default {
               <a href="https://www.linkedin.com/company/rijkware" target="_blank" class="navigationbar__social-icon">
                 <LinkedInIcon :employee-name="'Rijkware'"/>
               </a>
-              <a href="https://www.facebook.com/cerclair" target="_blank" class="navigationbar__social-icon">
+              <a href="https://www.facebook.com/rijkware" target="_blank" class="navigationbar__social-icon">
                 <FacebookIcon :employee-name="'Rijkware'"/>
               </a>
-              <a href="https://www.x.com/rijkware/" target="_blank" class="navigationbar__social-icon">
+              <a href="https://twitter.com/rijkware" target="_blank" class="navigationbar__social-icon">
                 <XIcon :employee-name="'Rijkware'"/>
               </a>
             </div>
@@ -175,7 +175,7 @@ export default {
         <a href="#about" class="u-text-gradient--white-blue-5 navigationbar__brand" @click="handleClick('about')">Rijkware</a>
       </li>
       <li class="navigationbar__item">
-        <a href="#why" @click="handleClick('manifesto')">Why</a>
+        <a href="#why" @click="handleClick('why')">Why</a>
       </li>
       <li class="navigationbar__item">
         <a href="#manifesto" @click="handleClick('manifesto')">Manifesto</a>
@@ -184,7 +184,7 @@ export default {
         <a href="#contact" @click="handleClick('contact')">Contact</a>
       </li>
       <li class="navigationbar__item">
-        <a href="#faq" @click="handleClick('contact')">FAQ's</a>
+        <a href="#faq" @click="handleClick('faq')">FAQ's</a>
       </li>
     </ul>
   </nav>
@@ -192,7 +192,7 @@ export default {
 <style lang="scss" scoped>
 .navigationbar {
   top: 0;
-  z-index: 99999;
+  z-index: 1000;
   display: flex;
   align-content: center;
   justify-content: center;
