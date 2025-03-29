@@ -8,7 +8,7 @@ import FacebookIcon from "@/components/shorts/FacebookIcon.vue";
 import XIcon from "@/components/shorts/XIcon.vue";
 
 export default {
-  name: "NavBar",
+  name: "NavigationBar",
   components: {MenuCloseIcon, MenuIcon, InstagramIcon, LinkedInIcon, FacebookIcon, XIcon },
   props: {
     showMobileNav: Boolean
@@ -29,7 +29,7 @@ export default {
     },
     animateMenu() {
       anime({
-        targets: ['.navbar__item'],
+        targets: ['.navigationbar__item'],
         translateY: [5, 0],
         opacity: [0, 1],
         duration: 100,
@@ -37,21 +37,21 @@ export default {
         delay: anime.stagger(100)
       })
       anime({
-        targets: '.navbar__mobile',
+        targets: '.navigationbar__mobile',
         opacity: [0, 1],
         translateY: [400, 0],
         easing: 'easeInOutQuad',
         duration: 300,
         begin: () => {
           if (this.showMobileNav) {
-            this.$el.querySelector('.navbar__mobile').style.display = 'flex';
-            this.$el.querySelector('.navbar__logo').style.display = 'flex';
+            this.$el.querySelector('.navigationbar__mobile').style.display = 'flex';
+            this.$el.querySelector('.navigationbar__logo').style.display = 'flex';
           }
         },
         complete: () => {
           if (!this.showMobileNav) {
-            this.$el.querySelector('.navbar__mobile').style.display = 'none';
-            this.$el.querySelector('.navbar__logo').style.display = 'flex';
+            this.$el.querySelector('.navigationbar__mobile').style.display = 'none';
+            this.$el.querySelector('.navigationbar__logo').style.display = 'flex';
           }
         }
       });
@@ -72,96 +72,96 @@ export default {
 </script>
 
 <template>
-  <nav :class="{ 'navbar--blur': showMobileNav }" class="navbar">
-    <div class="navbar__logo-container">
-      <div class="navbar__mobile-header" v-if="isMobile">
+  <nav :class="{ 'navigationbar--blur': showMobileNav }" class="navigationbar">
+    <div class="navigationbar__logo-container">
+      <div class="navigationbar__mobile-header" v-if="isMobile">
         <router-link to="/rijkware" v-if="showMobileNav">
-          <img src="../assets/RijkwareLogo-2024-v2-Long.png" class="navbar__logo d-inline-block align-top" alt="">
+          <img src="../assets/RijkwareLogo-2024-v2-Long.png" class="navigationbar__logo d-inline-block align-top" alt="">
         </router-link>
         <router-link to="/rijkware" v-else>
-          <img src="../assets/RijkwareLogo-2024-v2.png" class="navbar__logo d-inline-block align-top" alt="">
+          <img src="../assets/RijkwareLogo-2024-v2.png" class="navigationbar__logo d-inline-block align-top" alt="">
         </router-link>
-        <button v-if="!showMobileNav" @click="handleClick" class="navbar__hamburger">
+        <button v-if="!showMobileNav" @click="handleClick" class="navigationbar__hamburger">
           <MenuIcon/>
         </button>
-        <button v-else @click="handleClick" class="navbar__hamburger">
+        <button v-else @click="handleClick" class="navigationbar__hamburger">
           <MenuCloseIcon/>
         </button>
       </div>
 <!--      <router-link v-else to="/rijkware">-->
-<!--        <img src="../assets/RijkwareLogo-2024-v2.png" class="navbar__logo d-inline-block align-top" alt="">-->
+<!--        <img src="../assets/RijkwareLogo-2024-v2.png" class="navigationbar__logo d-inline-block align-top" alt="">-->
 <!--      </router-link>-->
     </div>
-    <div class="navbar__mobile-wrapper" v-if="isMobile">
-      <div class="navbar__mobile" v-show="showMobileNav">
-        <ul class="navbar__mobile-list navbar__mobile-list--primary">
-          <li class="navbar__item">
+    <div class="navigationbar__mobile-wrapper" v-if="isMobile">
+      <div class="navigationbar__mobile" v-show="showMobileNav">
+        <ul class="navigationbar__mobile-list navigationbar__mobile-list--primary">
+          <li class="navigationbar__item">
             <router-link to="/" @click="handleClick">About us</router-link>
           </li>
-          <li class="navbar__item">
+          <li class="navigationbar__item">
             <router-link to="manifesto" @click="handleClick">Manifesto</router-link>
           </li>
-          <li class="navbar__item">
+          <li class="navigationbar__item">
             <router-link to="cases" @click="handleClick">Cases</router-link>
           </li>
-          <li class="navbar__item">
+          <li class="navigationbar__item">
             <router-link to="people" @click="handleClick">People</router-link>
           </li>
-          <li class="navbar__item u-text-gradient--white-blue-5">
+          <li class="navigationbar__item u-text-gradient--white-blue-5">
             <router-link to="contact" @click="handleClick">Contact</router-link>
           </li>
           <li>
-            <div class="navbar__social" v-if="showMobileNav">
-              <a href="https://www.instagram.com/rijkware/" target="_blank" class="navbar__social-icon">
+            <div class="navigationbar__social" v-if="showMobileNav">
+              <a href="https://www.instagram.com/rijkware/" target="_blank" class="navigationbar__social-icon">
                 <InstagramIcon :employee-name="'Rijkware'"/>
               </a>
-              <a href="https://www.linkedin.com/company/rijkware" target="_blank" class="navbar__social-icon">
+              <a href="https://www.linkedin.com/company/rijkware" target="_blank" class="navigationbar__social-icon">
                 <LinkedInIcon :employee-name="'Rijkware'"/>
               </a>
-              <a href="https://www.facebook.com/cerclair" target="_blank" class="navbar__social-icon">
+              <a href="https://www.facebook.com/cerclair" target="_blank" class="navigationbar__social-icon">
                 <FacebookIcon :employee-name="'Rijkware'"/>
               </a>
-              <a href="https://www.x.com/rijkware/" target="_blank" class="navbar__social-icon">
+              <a href="https://www.x.com/rijkware/" target="_blank" class="navigationbar__social-icon">
                 <XIcon :employee-name="'Rijkware'"/>
               </a>
             </div>
           </li>
         </ul>
-        <ul class="navbar__mobile-list navbar__mobile-list--secondary">
-          <li class="navbar__item navbar__item--small">
-            <router-link to="terms-and-conditions" @click="handleClick" class="navbar__item-text--small">Terms & Conditions</router-link>
+        <ul class="navigationbar__mobile-list navigationbar__mobile-list--secondary">
+          <li class="navigationbar__item navigationbar__item--small">
+            <router-link to="terms-and-conditions" @click="handleClick" class="navigationbar__item-text--small">Terms & Conditions</router-link>
           </li>
-          <li class="navbar__item navbar__item--small">
-            <router-link to="privacy-policy" @click="handleClick" class="navbar__item-text--small">Privacy Policy</router-link>
+          <li class="navigationbar__item navigationbar__item--small">
+            <router-link to="privacy-policy" @click="handleClick" class="navigationbar__item-text--small">Privacy Policy</router-link>
           </li>
-          <li class="navbar__item navbar__item--small">
-            <router-link to="cookies" @click="handleClick" class="navbar__item-text--small">Cookies</router-link>
+          <li class="navigationbar__item navigationbar__item--small">
+            <router-link to="cookies" @click="handleClick" class="navigationbar__item-text--small">Cookies</router-link>
           </li>
         </ul>
       </div>
 
     </div>
-    <ul class="navbar__list" v-else>
-      <li class="navbar__item">
-        <router-link class="u-text-gradient--white-blue-5 navbar__brand" to="/">Rijkware</router-link>
+    <ul class="navigationbar__list" v-else>
+      <li class="navigationbar__item">
+        <router-link class="u-text-gradient--white-blue-5 navigationbar__brand" to="/">Rijkware</router-link>
       </li>
-      <li class="navbar__item">
+      <li class="navigationbar__item">
         <router-link to="manifesto">Manifesto</router-link>
       </li>
-      <li class="navbar__item">
+      <li class="navigationbar__item">
         <router-link to="cases">Cases</router-link>
       </li>
-      <li class="navbar__item">
+      <li class="navigationbar__item">
         <router-link to="people">People</router-link>
       </li>
-      <li class="navbar__item">
+      <li class="navigationbar__item">
         <router-link to="contact">Get in Touch</router-link>
       </li>
     </ul>
   </nav>
 </template>
 <style lang="scss" scoped>
-.navbar {
+.navigationbar {
   top: 0;
   z-index: 99999;
   display: flex;

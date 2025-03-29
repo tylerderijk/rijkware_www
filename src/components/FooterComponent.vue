@@ -331,6 +331,7 @@ a {
       filter: grayscale(30%);
       border-radius: 8px 8px 8px 0;
       max-height: 500px;
+      margin-bottom: -2px;
     }
   }
 

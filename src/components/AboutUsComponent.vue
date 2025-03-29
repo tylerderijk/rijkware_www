@@ -1,6 +1,7 @@
 <template>
   <div class="hero">
-    <video src="../assets/RijkwareLogoRenderTrans2.webm" id="rijkware-animation" class="hero__animation d-inline-block align-top"
+    <video src="../assets/RijkwareLogoRenderTrans2.webm" id="rijkware-animation"
+           class="hero__animation d-inline-block align-top"
            autoplay loop muted playsinline oncontextmenu="return false;">
       Your browser does not support the video tag.
     </video>
@@ -142,7 +143,6 @@ export default {
 
 <style lang="scss" scoped>
 .hero {
-  margin-bottom: 128px;
   padding-bottom: 128px;
   overflow: hidden;
   display: flex;
@@ -153,7 +153,7 @@ export default {
   &__text {
     font-family: "Unbounded", system-ui;
     font-weight: 300;
-    padding: 56px 0;
+    padding: 56px 24px;
     max-width: 760px;
     text-align: start;
     transition: opacity 0.5s ease-in-out, background-position 0.3s ease-in-out;
@@ -200,6 +200,7 @@ export default {
 }
 
 .why {
+
   &__success-cases {
     margin-top: 24px;
     display: flex;
@@ -208,6 +209,8 @@ export default {
 
   &__image {
     margin: 36px 0;
+    width: 100%;
+    max-width: 500px;
   }
 
   &__reason {
@@ -217,12 +220,14 @@ export default {
     display: flex;
     justify-content: center;
     flex-direction: column;
-    padding: 0 84px;
+    padding: 0 48px;
+    margin: 8px 0;
 
     &-text {
-      font-family: "Lexend", Helvetica, Arial, sans-serif;
+      color: #f8f8f8;
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
       font-size: 18px;
-      font-weight: 200;
+      font-weight: 400;
     }
 
     &-title {
@@ -270,7 +275,7 @@ export default {
   transition: height 3s ease-in-out; /* Smoothly transitions height */
 }
 
-.why-section {
+.why__container {
   margin-top: 0; /* Remove unnecessary margin to reduce gaps */
   padding: 48px 0; /* Adjust spacing */
   background: linear-gradient(black, #010820, #000c35, #01061c, black);
@@ -326,9 +331,12 @@ small {
     }
   }
 
-  .why-reason {
-    flex-basis: 100%;
-    max-width: 100%;
+  .why {
+    &__reason {
+      flex-basis: 100%;
+      max-width: 100%;
+    }
   }
+
 }
 </style>
