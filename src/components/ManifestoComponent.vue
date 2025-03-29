@@ -50,7 +50,7 @@ export default {
 .manifesto {
   padding: 48px 0;
   position: relative;
-  background: linear-gradient(to bottom, transparent, rgba(61, 78, 135, 0.25), black);
+  background: linear-gradient(to bottom, transparent, black, rgba(61, 78, 135, 0.12), black);
   color: #e9e9e9;
 
   @media (max-width: 768px) {
