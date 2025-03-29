@@ -5,6 +5,7 @@
     <div :class="{ 'app__content': showBanner }" class="app__content">
       <NavBar :showMobileNav="showMobileNav" @toggle-menu="toggleMenu"></NavBar>
       <AboutUsComponent/>
+      <ManifestoComponent/>
       <ContactComponent/>
       <FooterComponent/>
     </div>
@@ -17,6 +18,7 @@ import NavBar from "@/components/NavBarComponent.vue";
 import FooterComponent from "@/components/FooterComponent.vue";
 import AboutUsComponent from "@/components/AboutUsComponent.vue";
 import ContactComponent from "@/components/ContactComponent.vue";
+import ManifestoComponent from "@/components/ManifestoComponent.vue";
 
 export default {
   name: 'App',
@@ -31,6 +33,7 @@ export default {
     ContactComponent,
     NavBar,
     AboutUsComponent,
+    ManifestoComponent,
     FooterComponent,
     CookieBanner,
   },
