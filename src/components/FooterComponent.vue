@@ -4,6 +4,7 @@ import ExternalLinkSVG from "@/components/shorts/ExternalLinkSVG.vue";
 export default {
   name: "FooterComponent",
   components: { ExternalLinkSVG },
+  emits: ['open-terms', 'open-privacy', 'open-cookies'],
   data() {
     return {
       currentPhoneImage: require("../assets/WatNuMOCKEPS.png"),
@@ -80,13 +81,13 @@ export default {
                 <ExternalLinkSVG/>
               </a></li>
               <li>
-                <a href="#" @click.prevent>Terms & Conditions</a>
+                <a href="#" @click.prevent="$emit('open-terms')">Terms & Conditions</a>
               </li>
               <li>
-                <a href="#" @click.prevent>Privacy Policy</a>
+                <a href="#" @click.prevent="$emit('open-privacy')">Privacy Policy</a>
               </li>
               <li>
-                <a href="#" @click.prevent>Cookies</a>
+                <a href="#" @click.prevent="$emit('open-cookies')">Cookies</a>
               </li>
             </ul>
           </div>

@@ -53,6 +53,10 @@ export default {
   background: linear-gradient(to bottom, transparent, rgba(61, 78, 135, 0.25), black);
   color: #e9e9e9;
 
+  @media (max-width: 768px) {
+    margin-bottom: 64px;
+  }
+
   &__header {
     text-align: center;
     margin-bottom: 48px;
@@ -86,6 +90,7 @@ export default {
     margin: 0 auto;
     padding: 0 24px;
     position: relative;
+    overflow-x: hidden;
 
     &::before {
       content: "";
@@ -112,7 +117,9 @@ export default {
     box-shadow: 0 4px 24px rgba(0, 0, 0, 0.2);
 
     @media (max-width: 768px) {
-      padding: 24px 16px;
+      padding: 16px 16px;
+      width: 100%;
+      margin-top: 12px;
     }
   }
 

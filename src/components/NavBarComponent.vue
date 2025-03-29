@@ -14,7 +14,7 @@ export default {
   props: {
     showMobileNav: Boolean
   },
-  emits: ['toggle-menu'],
+  emits: ['toggle-menu', 'open-terms', 'open-privacy', 'open-cookies'],
   computed: {
     isMobile() {
       return /Mobi|Android/i.test(navigator.userAgent);
@@ -142,13 +142,13 @@ export default {
         </ul>
         <ul class="navigationbar__mobile-list navigationbar__mobile-list--secondary">
           <li class="navigationbar__item navigationbar__item--small">
-            <router-link to="/terms-and-conditions" class="navigationbar__item-text--small">Terms & Conditions</router-link>
+            <a href="#" @click.prevent="$emit('open-terms')" class="navigationbar__item-text--small">Terms & Conditions</a>
           </li>
           <li class="navigationbar__item navigationbar__item--small">
-            <a href="#" @click.prevent="handleClick" class="navigationbar__item-text--small">Privacy Policy</a>
+            <a href="#" @click.prevent="$emit('open-privacy')" class="navigationbar__item-text--small">Privacy Policy</a>
           </li>
           <li class="navigationbar__item navigationbar__item--small">
-            <a href="#" @click.prevent="handleClick" class="navigationbar__item-text--small">Cookies</a>
+            <a href="#" @click.prevent="$emit('open-cookies')" class="navigationbar__item-text--small">Cookies</a>
           </li>
         </ul>
       </div>

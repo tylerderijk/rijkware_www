@@ -3,12 +3,35 @@
     <CookieBanner v-if="showBanner" :class="{ 'app__banner--active': showBanner }" @hideBanner="showBanner = false"
                   @acceptBanner="handleCookieBanner(true)"/>
     <div :class="{ 'app__content': showBanner }" class="app__content">
-      <NavBar :showMobileNav="showMobileNav" @toggle-menu="toggleMenu"></NavBar>
+      <NavBar 
+        :showMobileNav="showMobileNav" 
+        @toggle-menu="toggleMenu"
+        @open-terms="openTermsModal" 
+        @open-privacy="openPrivacyModal" 
+        @open-cookies="openCookiesModal"
+      ></NavBar>
       <AboutUsComponent/>
       <ManifestoComponent/>
       <ContactComponent/>
-      <FooterComponent/>
+      <FooterComponent 
+        @open-terms="openTermsModal" 
+        @open-privacy="openPrivacyModal" 
+        @open-cookies="openCookiesModal"
+      />
     </div>
+
+    <!-- Policy Modals -->
+    <ModalComponent :show="showTermsModal" @close="closeTermsModal">
+      <TermsAndConditions />
+    </ModalComponent>
+
+    <ModalComponent :show="showPrivacyModal" @close="closePrivacyModal">
+      <PrivacyPolicy @open-cookies="openCookiesModal" />
+    </ModalComponent>
+
+    <ModalComponent :show="showCookiesModal" @close="closeCookiesModal">
+      <CookiesPolicy />
+    </ModalComponent>
   </div>
 </template>
 
@@ -19,6 +42,10 @@ import FooterComponent from "@/components/FooterComponent.vue";
 import AboutUsComponent from "@/components/AboutUsComponent.vue";
 import ContactComponent from "@/components/ContactComponent.vue";
 import ManifestoComponent from "@/components/ManifestoComponent.vue";
+import ModalComponent from "@/components/shorts/ModalComponent.vue";
+import TermsAndConditions from "@/components/TermsAndConditions.vue";
+import PrivacyPolicy from "@/components/PrivacyPolicy.vue";
+import CookiesPolicy from "@/components/CookiesPolicy.vue";
 
 export default {
   name: 'App',
@@ -26,7 +53,10 @@ export default {
     return {
       showMobileNav: false,
       isMobile: false,
-      showBanner: !localStorage.getItem('posthog_user_consent')
+      showBanner: !localStorage.getItem('posthog_user_consent'),
+      showTermsModal: false,
+      showPrivacyModal: false,
+      showCookiesModal: false
     };
   },
   components: {
@@ -36,10 +66,38 @@ export default {
     ManifestoComponent,
     FooterComponent,
     CookieBanner,
+    ModalComponent,
+    TermsAndConditions,
+    PrivacyPolicy,
+    CookiesPolicy,
   },
   methods: {
     toggleMenu() {
       this.showMobileNav = !this.showMobileNav;
+    },
+    openTermsModal() {
+      this.showPrivacyModal = false; // Close privacy modal if it's open
+      this.showCookiesModal = false; // Close cookies modal if it's open
+      this.showTermsModal = true;
+    },
+    closeTermsModal() {
+      this.showTermsModal = false;
+    },
+    openPrivacyModal() {
+      this.showTermsModal = false; // Close terms modal if it's open
+      this.showCookiesModal = false; // Close cookies modal if it's open
+      this.showPrivacyModal = true;
+    },
+    closePrivacyModal() {
+      this.showPrivacyModal = false;
+    },
+    openCookiesModal() {
+      this.showPrivacyModal = false; // Close privacy modal if it's open
+      this.showTermsModal = false; // Close terms modal if it's open
+      this.showCookiesModal = true;
+    },
+    closeCookiesModal() {
+      this.showCookiesModal = false;
     },
   },
   mounted() {

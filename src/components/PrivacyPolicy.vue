@@ -1,5 +1,5 @@
 <script setup>
-
+defineEmits(['open-cookies']);
 </script>
 
 <template>
@@ -12,7 +12,7 @@
         <li>Personal identification information (Name, email address, phone number, etc.)</li>
         <li>Log data (IP address, browser type, pages visited, time spent on those pages, etc.)</li>
         <li>Cookies and usage data</li>
-        <li>For more information, please refer to <router-link to="/cookies">the cookies page.</router-link></li>
+        <li>For more information, please refer to <a href="#" @click.prevent="$emit('open-cookies')">the cookies policy.</a></li>
       </ul>
 
       <h2>How We Use Your Information</h2>

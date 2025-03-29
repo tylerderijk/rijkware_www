@@ -6,9 +6,6 @@ import Manifesto from "@/components/ManifestoComponent.vue";
 import Cases from "@/components/CasesComponent.vue";
 import People from "@/components/PeopleComponent.vue";
 import Contact from "@/components/ContactComponent.vue";
-import TermsAndConditions from "@/components/TermsAndConditions.vue";
-import PrivacyPolicy from "@/components/PrivacyPolicy.vue";
-import Cookies from "@/components/CookiesPolicy.vue";
 import posthogPlugin from './plugins/posthog.js';
 
 const router = createRouter({
@@ -19,9 +16,7 @@ const router = createRouter({
         { path: '/cases', component: Cases },
         { path: '/people', component: People },
         { path: '/contact', component: Contact },
-        { path: '/terms-and-conditions', component: TermsAndConditions },
-        { path: '/privacy-policy', component: PrivacyPolicy },
-        { path: '/cookies', component: Cookies },
+        // Routes for policy pages removed as they are now displayed as modals
         { path: '/:pathMatch(.*)*', redirect: '/' },
     ],
 
