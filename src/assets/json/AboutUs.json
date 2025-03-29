@@ -42,5 +42,14 @@
       "description": "Details are extensively discussed and agreed upon. We only offer the achievable."
     }
   ],
-  "cases_link_text": "Read some of our success stories in "
+  "cases_link_text": "Read some of our success stories in ",
+  "slides": [
+    "@/assets/project_greenoffice.png",
+    "@/assets/project_fridaymascara.png",
+    "@/assets/project_auctioneer.png",
+    "@/assets/project_overpowered.png",
+    "@/assets/project_portfolio.png",
+    "@/assets/project_rembrandt.png",
+    "@/assets/project_watnu.png"
+  ]
 }

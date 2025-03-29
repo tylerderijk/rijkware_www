@@ -1,0 +1,44 @@
+{
+  "team": [
+    {
+      "name": "Tyler de Rijk",
+      "role": "Founder",
+      "image": "TylerRijkwareInspired2024.png",
+      "socials": {
+        "linkedin": "https://www.linkedin.com/in/tylerderijk",
+        "instagram": "https://www.instagram.com/tylerdeRijk",
+        "email": "tderijk@rijkware.nl"
+      }
+    },
+    {
+      "name": "Vlad Milosteanu",
+      "role": "Public Relations",
+      "image": "VladMugshot2024.png",
+      "socials": {
+        "linkedin": "https://www.linkedin.com/in/vlad-milosteanu-a66687184/",
+        "instagram": "https://www.instagram.com/vladmilosteanu",
+        "email": "vmilosteanu@rijkware.nl"
+      }
+    },
+    {
+      "name": "Samy Farahat",
+      "role": "Software Engineer",
+      "image": "SamyRijkwareInspired2024.png",
+      "socials": {
+        "linkedin": "https://www.linkedin.com/in/samyfarahat",
+        "instagram": "https://www.instagram.com/_samyf/",
+        "email": "samyfarahat2003@gmail.com"
+      }
+    },
+    {
+      "name": "Rehan Choudrey",
+      "role": "Digital Marketeer",
+      "image": "RehanRijkwareInspired2024.png",
+      "socials": {
+        "linkedin": "https://www.linkedin.com/in/rehan-choudrey-68960b290/",
+        "instagram": "https://www.instagram.com/rehancyr/",
+        "email": "rchroudrey@rijkware.nl"
+      }
+    }
+  ]
+}

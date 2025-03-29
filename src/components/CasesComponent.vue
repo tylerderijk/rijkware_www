@@ -1,31 +1,31 @@
 <template>
-  <div class="hero-wrapper">
-    <h1 class="hero-title">{{ lang.hero_title }}</h1>
-    <small>{{ lang.hero_subtitle }}</small>
+  <div class="cases-hero">
+    <h1 class="cases-hero__title">{{ lang.hero_title }}</h1>
+    <small class="cases-hero__subtitle">{{ lang.hero_subtitle }}</small>
   </div>
   <hr style="border: 1px solid rgba(233,233,233,0.3); width: 60%;">
-  <div class="container">
-    <div id="cards">
+  <div class="cases">
+    <div class="cases__list">
       <div v-for="caseItem in lang.cases"
            :key="caseItem.title"
-           class="card"
+           class="cases__card"
            @click="toggleCard(caseItem)"
            @mousemove="updateMousePosition"
            @mouseenter="caseItem.isHovered = true"
            @mouseleave="caseItem.isHovered = false">
         <img :src="getImgUrl(caseItem.isHovered ? caseItem.image : caseItem.logo)"
              v-if="!caseItem.isClicked && !isMobile"
-             class="case-image"
+             class="cases__card-image"
              :alt="`${caseItem.title}`">
         <img :src="getImgUrl(caseItem.image)"
              v-if="!caseItem.isClicked && isMobile"
-             class="case-image case-image-mobile"
+             class="cases__card-image cases__card-image--mobile"
              :alt="`${caseItem.title}`">
-        <small class="case-click-me" v-if="!caseItem.isClicked && !isMobile">Click me</small>
-        <div class="case-texts">
-          <h2 v-if="caseItem.isClicked" class="case-title blue-gradient">{{ caseItem.title }}</h2>
-          <p v-if="caseItem.isClicked" class="case-description">{{ caseItem.description }}</p>
-          <p v-if="caseItem.isClicked" class="case-small">{{ caseItem.extra }} </p>
+        <small class="cases__card-hint" v-if="!caseItem.isClicked && !isMobile">Click me</small>
+        <div class="cases__card-content">
+          <h2 v-if="caseItem.isClicked" class="cases__card-title u-text-gradient--blue">{{ caseItem.title }}</h2>
+          <p v-if="caseItem.isClicked" class="cases__card-description">{{ caseItem.description }}</p>
+          <p v-if="caseItem.isClicked" class="cases__card-extra">{{ caseItem.extra }} </p>
         </div>
       </div>
     </div>
@@ -93,8 +93,8 @@ export default {
 
       let card = event.currentTarget;
 
-      if (!card || !card.classList || !card.classList.contains('card')) {
-        card = event.target.closest('.card');
+      if (!card || !card.classList || !card.classList.contains('cases__card')) {
+        card = event.target.closest('.cases__card');
       }
 
       if (card) {
@@ -115,12 +115,12 @@ export default {
 }
 </script>
 <style scoped>
-.card:hover::before {
+.cases__card:hover::before {
   opacity: 1;
 }
 
-.card::before,
-.card::after {
+.cases__card::before,
+.cases__card::after {
   border-radius: inherit;
   content: "";
   height: 100%;
@@ -132,7 +132,7 @@ export default {
   width: 100%;
 }
 
-.card::before {
+.cases__card::before {
   background: radial-gradient(
       800px circle at var(--mouse-x) var(--mouse-y),
       rgba(185, 201, 255, 0.16),
@@ -141,7 +141,7 @@ export default {
   z-index: 3;
 }
 
-.card::after {
+.cases__card::after {
   background: radial-gradient(
       600px circle at var(--mouse-x) var(--mouse-y),
       rgba(255, 255, 255, 0.4),
@@ -154,34 +154,34 @@ export default {
 
 
 
-.case-description {
+.cases__card-description {
   font-size: medium;
   margin: 12px 0;
   text-align: start;
 }
 
-.case-title {
+.cases__card-title {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   text-align: start;
 }
 
-.case-small {
+.cases__card-extra {
   text-align: start;
   font-size: small;
   color: gray;
 }
 
-.case-texts {
+.cases__card-content {
   padding: 16px;
 }
 
 
-.container {
+.cases {
   display: flex;
   justify-content: center;
 }
 
-#cards {
+.cases__list {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
@@ -190,7 +190,7 @@ export default {
   width: calc(100% - 20px);
 }
 
-.card {
+.cases__card {
   background-color: rgba(255, 255, 255, 0.02);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 8px;
@@ -204,14 +204,14 @@ export default {
   overflow: hidden;
   flex-direction: column;
 }
-.card::before {
+.cases__card::before {
   border-radius: inherit;
 }
 
 
 
 
-.case-image {
+.cases__card-image {
   padding: 24px;
   max-width: 100%;
   max-height: 100%;
@@ -219,73 +219,73 @@ export default {
   transition: all 0.3s ease-in-out;
 }
 
-.case-image:hover {
+.cases__card-image:hover {
   padding: 12px;
 }
 
-.case-image-mobile {
+.cases__card-image--mobile {
   padding: 0;
 }
-.case-image-mobile:hover {
+.cases__card-image--mobile:hover {
   padding: 0;
 }
 
-.case-click-me {
+.cases__card-hint {
   opacity: 0;
   transition: transform 0.4s ease-out;
 }
 
-.card:hover .case-click-me {
+.cases__card:hover .cases__card-hint {
   transform: translateY(-30%);
   opacity: 1;
 }
 
-.case-title {
+.cases__card-title {
   color: white;
   font-size: 24px;
   opacity: 0;
   transition: opacity 0.3s ease-out;
 }
 
-.card:hover .case-image {
+.cases__card:hover .cases__card-image {
   opacity: 0.8;
 }
 
-.card .case-title {
+.cases__card .cases__card-title {
   opacity: 1;
 }
 
-.hero-title {
+.cases-hero__title {
   font-size: 56px;
 }
 
-.hero-wrapper {
+.cases-hero {
   margin-top: 48px;
   position: relative;
   z-index: 1;
 }
 
-.container {
+.cases {
   margin-bottom: 64px;
 }
 
 @media (max-width: 768px) {
-  .hero-title {
+  .cases-hero__title {
     font-size: 36px;
   }
   hr {
     display: none;
   }
-  .hero-wrapper {
+  .cases-hero {
     margin-top: 0;
     margin-bottom: 12px;
   }
 
-  .case-image {
+  .cases__card-image {
     margin: 36px;
   }
 
-  .card {
+  .cases__card {
     height: fit-content;
   }
 }

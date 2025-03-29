@@ -1,32 +1,25 @@
 <template>
-  <div class="hero-wrapper">
-    <video src="../assets/RijkwareLogoRenderTrans2.webm" id="rijkware-animation" class="d-inline-block align-top" autoplay loop muted playsinline oncontextmenu="return false;">
+  <div class="hero">
+    <video src="../assets/RijkwareLogoRenderTrans2.webm" id="rijkware-animation" class="hero__animation d-inline-block align-top"
+           autoplay loop muted playsinline oncontextmenu="return false;">
       Your browser does not support the video tag.
     </video>
-    <div class="hero-text_wrapper">
-      <h2 class="hero-text white-blue-gradient-1">{{ lang.hero_texts.title }}</h2>
-      <h2 class="hero-text white-blue-gradient-2">{{ lang.hero_texts.subtitle1 }}</h2>
-      <h2 class="hero-text white-blue-gradient-3">{{ lang.hero_texts.subtitle2 }}</h2>
-      <h2 class="hero-text white-blue-gradient-4">{{ lang.hero_texts.subtitle3 }}</h2>
-      <small>{{ lang.hero_texts.manifesto_link_text }}
-        <router-link class="hero-text-manifesto" to="manifesto">Manifesto</router-link>.
-      </small>
+    <div class="hero__text-container">
+      <h2 class="hero__text u-text-gradient--white-blue-5">{{ lang.hero_texts.title }}</h2>
+      <h2 class="hero__text u-text-gradient--white-blue-5">{{ lang.hero_texts.subtitle1 }}</h2>
+      <h2 class="hero__text u-text-gradient--white-blue-5">{{ lang.hero_texts.subtitle2 }}</h2>
+      <h2 class="hero__text u-text-gradient--white-blue-3">{{ lang.hero_texts.subtitle3 }}</h2>
     </div>
   </div>
-  <section class="why-section">
-    <img src="../assets/WhyChooseRijkware.png" class="why-texts-img" alt="Why Choose Rijkware?">
-    <div class="why-wrapper">
-      <div class="why-reason-wrapper">
-        <div class="why-reason" v-for="reason in lang.reasons" :key="reason.title">
-          <h2 class="why-reason-title">{{ reason.title }}</h2>
-          <p class="why-reason-text">{{ reason.description }}</p>
+  <section class="why">
+    <img src="../assets/WhyChooseRijkware.png" class="why__image" alt="Why Choose Rijkware?">
+    <div class="why__container">
+      <div class="why__reasons">
+        <div class="why__reason" v-for="reason in lang.reasons" :key="reason.title">
+          <h2 class="why__reason-title">{{ reason.title }}</h2>
+          <p class="why__reason-text">{{ reason.description }}</p>
         </div>
       </div>
-    </div>
-    <div class="why-success-cases">
-      <small>{{ lang.cases_link_text }}
-        <router-link class="hero-text-manifesto" to="cases">Cases</router-link>.
-      </small>
     </div>
   </section>
 </template>
@@ -37,21 +30,32 @@ import anime from 'animejs';
 
 export default {
   name: 'AboutUs',
+  components: {},
   data() {
     return {
-      lang: AboutUsData
+      lang: AboutUsData,
+      slides: [
+        require("@/assets/project_greenoffice.png"),
+        require("@/assets/project_fridaymascara.png"),
+        require("@/assets/project_overpowered.png"),
+        require("@/assets/project_rembrandt.png"),
+        require("@/assets/project_auctioneer.png"),
+        require("@/assets/project_portfolio.png"),
+        require("@/assets/project_watnu.png"),
+        require("@/assets/projects_gradelister.png"),
+      ],
     }
   },
   mounted() {
     anime({
       targets: '#rijkware-animation',
-      height: ['80vh','50vh'],
-      duration: 3500,
+      minHeight: ['90vh', '50vh'],
+      duration: 3000,
       easing: 'easeInOutQuad'
     });
 
     anime({
-      targets: '.hero-text',
+      targets: '.hero__text',
       translateY: [-20, 0],
       opacity: [0, 1],
       duration: 1000,
@@ -60,26 +64,45 @@ export default {
     });
 
     this.updateHeroTextOpacity();
+    this.updateHeroTextGradient();
 
-    window.addEventListener('scroll', this.updateHeroTextOpacity);
 
-    const whyReasons = document.querySelectorAll('.why-reason');
-    whyReasons.forEach((reason) => {
-      reason.style.opacity = 0;
-      reason.style.transition = 'opacity 2s';
-      window.addEventListener('scroll', () => {
-        if (reason.getBoundingClientRect().top < window.innerHeight) {
-          reason.style.opacity = 1;
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          anime({
+            targets: entry.target,
+            opacity: [0, 1],
+            scale: [0.9, 1],
+            translateY: [20, 0],
+            duration: 750,
+            easing: 'easeOutQuad',
+          });
+          observer.unobserve(entry.target);
         }
       });
     });
+
+    const whyReasons = document.querySelectorAll('.why__reason');
+    whyReasons.forEach((reason) => {
+      observer.observe(reason);
+    });
+
+    const whyTextsImg = document.querySelector('.why__image');
+    observer.observe(whyTextsImg);
+
+    // Removed scroll event listener for pseudo-element animation as it's no longer needed
+
+    window.addEventListener('scroll', this.updateHeroTextOpacity);
+    window.addEventListener('scroll', this.updateHeroTextGradient);
   },
   beforeUnmount() {
     window.removeEventListener('scroll', this.updateHeroTextOpacity);
+    window.removeEventListener('scroll', this.updateHeroTextGradient);
   },
   methods: {
     updateHeroTextOpacity() {
-      const heroTexts = document.querySelectorAll('.hero-text');
+      const heroTexts = document.querySelectorAll('.hero__text');
       const windowCenter = window.innerHeight / 2;
 
       let closestElement = null;
@@ -103,22 +126,35 @@ export default {
           text.style.opacity = 0.3;
         }
       });
+    },
+    updateHeroTextGradient() {
+      const heroTexts = document.querySelectorAll('.hero__text');
+      const scrollY = window.scrollY;
+
+      heroTexts.forEach((text, index) => {
+        const offset = (scrollY / 10) + index * 20; // Adjust gradient movement
+        text.style.backgroundPosition = `${offset}% 50%`;
+      });
     }
   }
 }
 </script>
 
 <style scoped>
-.hero-text {
+.hero__text {
   font-family: "Unbounded", system-ui;
   font-weight: 300;
   padding: 56px 0;
   max-width: 760px;
   text-align: start;
-  transition: opacity 0.3s ease-in-out;
+  transition: opacity 0.5s ease-in-out, background-position 0.3s ease-in-out;
+  background-size: 200%; /* Enable movement of gradient */
+  background-position: 0% 50%;
 }
 
-.hero-wrapper {
+.hero {
+  margin-bottom: 128px;
+  padding-bottom: 128px;
   overflow: hidden;
   display: flex;
   align-items: center;
@@ -126,41 +162,68 @@ export default {
   flex-direction: column;
 }
 
-.hero-text_wrapper {
+.hero__text-container {
+  position: relative;
   display: flex;
   flex-direction: column;
+  z-index: 1;
 }
 
-.why-success-cases {
+.hero__text-container::before {
+  content: "";
+  position: absolute;
+  top: 10%;
+  right: 50%;
+  transform: translate(30%, -100%);
+  width: 90vh;
+  height: 90vh;
+  background: radial-gradient(circle, rgba(91, 113, 201, 0.5) 0%, rgba(0, 0, 0, 0) 60%);
+  filter: blur(150px);
+  z-index: -1;
+  pointer-events: none;
+  transition: transform 0.1s ease-out;
+}
+
+.hero__text-container::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-10%, -50%);
+  width: 90vh;
+  height: 90vh;
+  background: radial-gradient(circle, rgba(91, 113, 201, 0.3) 0%, rgba(0, 0, 0, 0) 60%);
+  filter: blur(150px);
+  z-index: -1;
+  pointer-events: none;
+  transition: transform 0.1s ease-out;
+}
+
+.why__success-cases {
   margin-top: 24px;
   display: flex;
   justify-content: center;
 }
 
 
-.why-texts-img {
+.why__image {
   margin: 36px 0;
 }
 
-.why-section {
-  margin-top: 128px;
-  height: 1200px;
-  background: linear-gradient(black, #040e33, #081548, #000933, black);
-}
 
-.why-reason-text {
+.why__reason-text {
   font-family: "Lexend", Helvetica, Arial, sans-serif;
   font-size: 18px;
   font-weight: 200;
 }
 
-.why-reason-title {
+.why__reason-title {
   font-family: "Unbounded", system-ui;
   font-size: 28px;
   font-weight: 400;
 }
 
-.why-reason-wrapper {
+.why__reasons {
   max-width: 1500px;
   display: flex;
   flex-wrap: wrap;
@@ -169,7 +232,7 @@ export default {
   gap: 20px;
 }
 
-.why-reason {
+.why__reason {
   flex-basis: calc(50% - 20px);
   max-width: 500px;
   text-align: start;
@@ -179,7 +242,7 @@ export default {
   padding: 0 84px;
 }
 
-.why-wrapper {
+.why__container {
   position: relative;
   text-align: center;
   justify-content: center;
@@ -189,12 +252,32 @@ export default {
 }
 
 
-
-#rijkware-animation {
-  max-height: fit-content;
-  min-height: 50vh;
+.hero-wrapper {
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  min-height: 90vh; /* Ensures the space is reserved */
+  position: relative;
+  transition: min-height 0.5s ease-in-out; /* Smooth transition */
 }
 
+#rijkware-animation {
+  height: 50vh; /* Final height */
+  min-height: 50vh;
+  width: 100%;
+  object-fit: cover; /* Ensures the video scales correctly */
+  transition: height 3s ease-in-out; /* Smoothly transitions height */
+}
+
+.why-section {
+  margin-top: 0; /* Remove unnecessary margin to reduce gaps */
+  padding: 48px 0; /* Adjust spacing */
+  background: linear-gradient(black, #010820, #000c35, #01061c, black);
+  width: 100%;
+  margin-bottom: 84px;
+}
 
 
 small {
@@ -221,22 +304,33 @@ small {
   .why-texts-img {
     width: 100%;
   }
+
   .CTA {
     max-width: 90vw;
   }
+
   .CTA-wrapper {
     margin-bottom: 156px;
   }
+
   .hero-text_wrapper {
     max-width: 90vw;
   }
+
   .hero-text {
     font-size: 24px;
 
   }
+
   .why-reason {
     flex-basis: 100%;
     max-width: 100%;
   }
+
+  .hero-text_wrapper::after {
+    transform: translate(-40%, -50%);
+    background: radial-gradient(circle, rgba(91, 113, 201, 0.4) 0%, rgba(0, 0, 0, 0) 70%);
+  }
+
 }
 </style>

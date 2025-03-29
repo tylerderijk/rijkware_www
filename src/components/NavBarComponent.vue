@@ -29,7 +29,7 @@ export default {
     },
     animateMenu() {
       anime({
-        targets: ['.nav-item'],
+        targets: ['.navbar__item'],
         translateY: [5, 0],
         opacity: [0, 1],
         duration: 100,
@@ -37,21 +37,21 @@ export default {
         delay: anime.stagger(100)
       })
       anime({
-        targets: '.mobile-nav',
+        targets: '.navbar__mobile',
         opacity: [0, 1],
         translateY: [400, 0],
         easing: 'easeInOutQuad',
         duration: 300,
         begin: () => {
           if (this.showMobileNav) {
-            this.$el.querySelector('.mobile-nav').style.display = 'flex';
-            this.$el.querySelector('.rijkware-logo').style.display = 'flex';
+            this.$el.querySelector('.navbar__mobile').style.display = 'flex';
+            this.$el.querySelector('.navbar__logo').style.display = 'flex';
           }
         },
         complete: () => {
           if (!this.showMobileNav) {
-            this.$el.querySelector('.mobile-nav').style.display = 'none';
-            this.$el.querySelector('.rijkware-logo').style.display = 'flex';
+            this.$el.querySelector('.navbar__mobile').style.display = 'none';
+            this.$el.querySelector('.navbar__logo').style.display = 'flex';
           }
         }
       });
@@ -72,129 +72,109 @@ export default {
 </script>
 
 <template>
-  <nav :class="{ 'blur-background': showMobileNav }">
-    <div class="logo-hamburger">
-      <div class="mobile-nav-header" v-if="isMobile">
+  <nav :class="{ 'navbar--blur': showMobileNav }" class="navbar">
+    <div class="navbar__logo-container">
+      <div class="navbar__mobile-header" v-if="isMobile">
         <router-link to="/rijkware" v-if="showMobileNav">
-          <img src="../assets/RijkwareLogo-2024-v2-Long.png" class="rijkware-logo d-inline-block align-top" alt="">
+          <img src="../assets/RijkwareLogo-2024-v2-Long.png" class="navbar__logo d-inline-block align-top" alt="">
         </router-link>
         <router-link to="/rijkware" v-else>
-          <img src="../assets/RijkwareLogo-2024-v2.png" class="rijkware-logo d-inline-block align-top" alt="">
+          <img src="../assets/RijkwareLogo-2024-v2.png" class="navbar__logo d-inline-block align-top" alt="">
         </router-link>
-        <button v-if="!showMobileNav" @click="handleClick" class="hamburger-button">
+        <button v-if="!showMobileNav" @click="handleClick" class="navbar__hamburger">
           <MenuIcon/>
         </button>
-        <button v-else @click="handleClick" class="hamburger-button">
+        <button v-else @click="handleClick" class="navbar__hamburger">
           <MenuCloseIcon/>
         </button>
       </div>
-      <router-link v-else to="/rijkware">
-        <img src="../assets/RijkwareLogo-2024-v2.png" class="rijkware-logo d-inline-block align-top" alt="">
-      </router-link>
+<!--      <router-link v-else to="/rijkware">-->
+<!--        <img src="../assets/RijkwareLogo-2024-v2.png" class="navbar__logo d-inline-block align-top" alt="">-->
+<!--      </router-link>-->
     </div>
-    <div class="mobile-nav-wrapper" v-if="isMobile">
-      <div class="mobile-nav" v-show="showMobileNav">
-        <ul class="mobile-nav-ul mobile-nav-ul-first">
-          <li class="nav-item">
+    <div class="navbar__mobile-wrapper" v-if="isMobile">
+      <div class="navbar__mobile" v-show="showMobileNav">
+        <ul class="navbar__mobile-list navbar__mobile-list--primary">
+          <li class="navbar__item">
             <router-link to="/" @click="handleClick">About us</router-link>
           </li>
-          <li class="nav-item">
+          <li class="navbar__item">
             <router-link to="manifesto" @click="handleClick">Manifesto</router-link>
           </li>
-          <li class="nav-item">
+          <li class="navbar__item">
             <router-link to="cases" @click="handleClick">Cases</router-link>
           </li>
-          <li class="nav-item">
+          <li class="navbar__item">
             <router-link to="people" @click="handleClick">People</router-link>
           </li>
-          <li class="nav-item white-blue-gradient-5">
+          <li class="navbar__item u-text-gradient--white-blue-5">
             <router-link to="contact" @click="handleClick">Contact</router-link>
           </li>
           <li>
-            <div class="social-media-icons" v-if="showMobileNav">
-              <a href="https://www.instagram.com/rijkware/" target="_blank" class="social-media-icon">
+            <div class="navbar__social" v-if="showMobileNav">
+              <a href="https://www.instagram.com/rijkware/" target="_blank" class="navbar__social-icon">
                 <InstagramIcon :employee-name="'Rijkware'"/>
               </a>
-              <a href="https://www.linkedin.com/company/rijkware" target="_blank" class="social-media-icon">
+              <a href="https://www.linkedin.com/company/rijkware" target="_blank" class="navbar__social-icon">
                 <LinkedInIcon :employee-name="'Rijkware'"/>
               </a>
-              <a href="https://www.facebook.com/cerclair" target="_blank" class="social-media-icon">
+              <a href="https://www.facebook.com/cerclair" target="_blank" class="navbar__social-icon">
                 <FacebookIcon :employee-name="'Rijkware'"/>
               </a>
-              <a href="https://www.x.com/rijkware/" target="_blank" class="social-media-icon">
+              <a href="https://www.x.com/rijkware/" target="_blank" class="navbar__social-icon">
                 <XIcon :employee-name="'Rijkware'"/>
               </a>
             </div>
           </li>
         </ul>
-        <ul class="mobile-nav-ul mobile-nav-ul-second">
-          <li class="nav-item nav-item-small">
-            <router-link to="terms-and-conditions" @click="handleClick" class="nav-item-small-text">Terms & Conditions</router-link>
+        <ul class="navbar__mobile-list navbar__mobile-list--secondary">
+          <li class="navbar__item navbar__item--small">
+            <router-link to="terms-and-conditions" @click="handleClick" class="navbar__item-text--small">Terms & Conditions</router-link>
           </li>
-          <li class="nav-item nav-item-small">
-            <router-link to="privacy-policy" @click="handleClick" class="nav-item-small-text">Privacy Policy</router-link>
+          <li class="navbar__item navbar__item--small">
+            <router-link to="privacy-policy" @click="handleClick" class="navbar__item-text--small">Privacy Policy</router-link>
           </li>
-          <li class="nav-item nav-item-small">
-            <router-link to="cookies" @click="handleClick" class="nav-item-small-text">Cookies</router-link>
+          <li class="navbar__item navbar__item--small">
+            <router-link to="cookies" @click="handleClick" class="navbar__item-text--small">Cookies</router-link>
           </li>
         </ul>
       </div>
 
     </div>
-    <ul class="navbar-nav" v-else>
-      <li class="nav-item">
-        <router-link to="/">About</router-link>
+    <ul class="navbar__list" v-else>
+      <li class="navbar__item">
+        <router-link class="u-text-gradient--white-blue-5 navbar__brand" to="/">Rijkware</router-link>
       </li>
-      <li class="nav-item">
+      <li class="navbar__item">
         <router-link to="manifesto">Manifesto</router-link>
       </li>
-      <li class="nav-item">
+      <li class="navbar__item">
         <router-link to="cases">Cases</router-link>
       </li>
-      <li class="nav-item">
+      <li class="navbar__item">
         <router-link to="people">People</router-link>
       </li>
-      <li class="nav-item contact-li">
-        <router-link to="contact" class="contact">Contact Us</router-link>
+      <li class="navbar__item">
+        <router-link to="contact">Get in Touch</router-link>
       </li>
     </ul>
   </nav>
 </template>
 <style scoped>
-.social-media-icons {
+.navbar__social {
   margin-top: 48px;
   width: fit-content;
 }
-.social-media-icon {
+.navbar__social-icon {
   color: #c2c2c2;
   padding: 12px 12px 0 0;
 }
-.navbar-nav:hover .contact {
+.navbar__list:hover .contact {
   opacity: 1;
 }
 
-.nav-item:hover:not {
+.navbar__item:hover:not {
   opacity: 1;
-}
-
-.contact:hover {
-  box-shadow: 0 0 10px 0 rgba(0, 94, 255, 0.25);
-}
-
-.contact {
-  opacity: 0.5;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 18px;
-  background: linear-gradient(-45deg, black, #0474ff, #500bff, black);
-  padding: 0px 12px;
-  background-size: 400% 400%;
-  animation: gradient 8s ease infinite;
-  transition: all 300ms ease-in-out;
-  margin: 0 -12px;
-
 }
 
 @keyframes gradient {
@@ -209,26 +189,26 @@ export default {
   }
 }
 
-.logo-hamburger {
+.navbar__logo-container {
   display: flex;
   justify-content: space-between;
 }
 
-.navbar-nav {
+.navbar__list {
   opacity: 0.3;
   transition: all 350ms ease-out;
 }
 
-.navbar-nav:hover {
+.navbar__list:hover {
   opacity: 1;
 }
 
-.navbar-nav, .mobile-nav-ul {
+.navbar__list, .navbar__mobile-list {
   padding: 0;
   display: flex;
 }
 
-nav {
+.navbar {
   top: 0;
   z-index: 99999;
   display: flex;
@@ -241,7 +221,7 @@ nav {
   -webkit-backdrop-filter: blur(6px);
 }
 
-.blur-background {
+.navbar--blur {
   height: 100vh;
 }
 
@@ -249,7 +229,22 @@ ul {
   list-style-type: none;
 }
 
-.nav-item {
+.navbar__brand {
+  font-size: 18px;
+  font-weight: 400;
+  background: linear-gradient(90deg, white, #237bff, white);
+  background-size: 200%;
+  background-position: 0% 50%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  transition: background-position 0.5s ease;
+}
+
+.navbar__brand:hover {
+  background-position: 100% 50%;
+}
+
+.navbar__item {
   color: #f6f6f6;
   display: flex;
   justify-content: center;
@@ -257,20 +252,20 @@ ul {
   margin: 10px 2vw;
   padding: 8px;
   font-weight: 300;
-  font-size: 20px;
+  font-size: 16px;
   transition: all 100ms ease-in-out;
 }
 
-.nav-item:hover {
+.navbar__item:hover {
   opacity: 1;
-  transform: translateY(-4px);
+  transform: translateY(-1px);
 }
 
-.navbar-nav:hover .contact {
+.navbar__list:hover .contact {
   opacity: 1;
 }
 
-.nav-item:active {
+.navbar__item:active {
   transform: translateY(0px);
 }
 
@@ -279,21 +274,21 @@ a {
   text-decoration: none;
 }
 
-.rijkware-logo {
+.navbar__logo {
   cursor: pointer;
   height: 36px;
   margin: 24px 48px 0 0;
   opacity: 0.9;
 }
 
-.mobile-nav-header {
+.navbar__mobile-header {
   width: 100vw;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.hamburger-button {
+.navbar__hamburger {
   display: none;
   cursor: pointer;
   font-size: 42px;
@@ -302,17 +297,17 @@ a {
   color: #e9e9e9;
 }
 
-.mobile-nav-wrapper {
+.navbar__mobile-wrapper {
   height: 100%;
   width: 100vw;
 }
 
-.mobile-nav-ul-first:first-child {
+.navbar__mobile-list--primary:first-child {
   padding-left: 16px;
   width: 80%;
 }
 
-.mobile-nav {
+.navbar__mobile {
   height: 50%;
   margin-top: 28px;
   flex-direction: row;
@@ -322,34 +317,34 @@ a {
   transition: opacity 350ms ease-in-out;
 }
 
-.mobile-nav-ul {
+.navbar__mobile-list {
   width: 100%;
   flex-direction: column;
 }
 
-.mobile-nav-ul-second {
+.navbar__mobile-list--secondary {
   font-size: 90px;
 }
 
-.nav-item-small {
+.navbar__item--small {
   color: #8c8c8c;
 }
 
-.nav-item-small-text {
-font-weight: 200;
+.navbar__item-text--small {
+  font-weight: 200;
 }
-.blur-background {
+.navbar--blur {
   height: auto;
 }
 
 @media (max-width: 820px) {
-  .blur-background {
+  .navbar--blur {
     height: 100vh;
   }
 }
 
 @media (max-width: 820px) {
-  .nav-item {
+  .navbar__item {
     font-weight: 400;
     margin: 0;
     font-size: 21px;
@@ -358,25 +353,25 @@ font-weight: 200;
     text-align: start;
   }
 
-  .nav-item:hover {
+  .navbar__item:hover {
     transform: none;
   }
 
-  .rijkware-logo {
+  .navbar__logo {
     margin: 16px;
     height: 24px;
   }
 
-  nav {
+  .navbar {
     flex-direction: column;
     background: rgba(0, 0, 0, 0.6);
   }
 
-  .hamburger-button {
+  .navbar__hamburger {
     display: block;
   }
 
-  .navbar-nav {
+  .navbar__list {
     display: none;
   }
 }

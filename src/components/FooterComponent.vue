@@ -50,36 +50,36 @@ export default {
 }
 </script>
 <template>
-  <div>
-    <div class="footer-hero-wrapper">
-      <div class="footer-hero-cover"></div>
-      <img class="footer-hero-iphone" alt="iPhone showcasing WatNu iOS app" :src="currentPhoneImage">
-      <img class="footer-hero-laptop" alt="Laptop showcasing Rijkware website" :src="currentLaptopImage">
+  <div class="footer">
+    <div class="footer__hero">
+      <div class="footer__hero-cover"></div>
+      <img class="footer__hero-iphone" alt="iPhone showcasing WatNu iOS app" :src="currentPhoneImage">
+      <img class="footer__hero-laptop" alt="Laptop showcasing Rijkware website" :src="currentLaptopImage">
     </div>
-    <div class="footer-container">
-      <div class="footer-wrapper">
-        <section class="footer-top">
-          <div class="footer-top-text-wrapper">
-            <div class="footer-top-text">
-              <h2>Become a <br><span class="blue-gradient">Student Developer</span></h2>
+    <div class="footer__container">
+      <div class="footer__wrapper">
+        <section class="footer__top">
+          <div class="footer__top-text-container">
+            <div class="footer__top-text">
+              <h2>Become a <br><span class="u-text-gradient--blue">Student Developer</span></h2>
               <h4>Find work related to the field you wish to grow in.</h4>
-              <router-link class="contact-button" to="/contact">Contact Us</router-link>
+              <router-link class="footer__contact-button" to="/contact">Contact Us</router-link>
             </div>
           </div>
-          <img alt="Students" src="../assets/PictureStudentDevs.jpg" class="footer-top-image">
+          <img alt="Students" src="../assets/PictureStudentDevs.jpg" class="footer__top-image">
         </section>
       </div>
-      <div class="footer-ending">
+      <div class="footer__ending">
 
-        <div class="footer-bottom-wrapper">
-          <div class="footer-bottom-identity">
-            <img alt="Rijkware" src="../assets/RijkwareLogo-2024-v2.png" class="footer-bottom-logo">
+        <div class="footer__bottom">
+          <div class="footer__bottom-identity">
+            <img alt="Rijkware" src="../assets/RijkwareLogo-2024-v2.png" class="footer__bottom-logo">
             <h3>Rijkware</h3>
-            <h3 class="blue-gradient footer-bottom-identity-text">Student<br>Developers</h3>
+            <h3 class="u-text-gradient--blue footer__bottom-identity-text">Student<br>Developers</h3>
           </div>
           <div>
-            <small class="footer-bottom-small">Company</small>
-            <ul class="footer-bottom-ul">
+            <small class="footer__bottom-label">Company</small>
+            <ul class="footer__bottom-list">
               <li>
                 <router-link to="/">About us</router-link>
               </li>
@@ -98,8 +98,8 @@ export default {
             </ul>
           </div>
           <div>
-            <small class="footer-bottom-small">Legal</small>
-            <ul class="footer-bottom-ul">
+            <small class="footer__bottom-label">Legal</small>
+            <ul class="footer__bottom-list">
               <li><a target="_blank" href="https://www.kvk.nl/bestellen/#/77829115000045497664">KvK - CoC
                 <ExternalLinkSVG/>
               </a></li>
@@ -115,8 +115,8 @@ export default {
             </ul>
           </div>
           <div>
-            <small class="footer-bottom-small">Follow us</small>
-            <ul class="footer-bottom-ul">
+            <small class="footer__bottom-label">Follow us</small>
+            <ul class="footer__bottom-list">
               <li><a target="_blank" href="https://www.instagram.com/rijkware/">Instagram
                 <ExternalLinkSVG/>
               </a></li>
@@ -132,26 +132,26 @@ export default {
             </ul>
           </div>
           <div>
-            <small class="footer-bottom-small">Help</small>
-            <ul class="footer-bottom-ul">
-              <li class="footer-help">
-                <small class="footer-help-tag">For support/contact</small><br>
-                <span class="footer-help-value"><a target="_blank" href="mailto:contact@rijkware.nl">contact@rijkware.nl</a></span>
+            <small class="footer__bottom-label">Help</small>
+            <ul class="footer__bottom-list">
+              <li class="footer__help-item">
+                <small class="footer__help-label">For support/contact</small><br>
+                <span class="footer__help-value"><a target="_blank" href="mailto:contact@rijkware.nl">contact@rijkware.nl</a></span>
               </li>
-              <li class="footer-help">
-                <small class="footer-help-tag">Mobile (Dutch)</small><br>
-                <span class="footer-help-value"><a target="_blank" href="tel:+31642068928">+31 6 420 68 928</a></span>
+              <li class="footer__help-item">
+                <small class="footer__help-label">Mobile (Dutch)</small><br>
+                <span class="footer__help-value"><a target="_blank" href="tel:+31642068928">+31 6 420 68 928</a></span>
               </li>
-              <li class="footer-help">
-                <small class="footer-help-tag">Address</small><br>
+              <li class="footer__help-item">
+                <small class="footer__help-label">Address</small><br>
                 <span
-                    class="footer-help-value">Gelrestraat 84<br>1079MZ Amsterdam<br>North-Holland, the Netherlands</span>
+                    class="footer__help-value">Gelrestraat 84<br>1079MZ Amsterdam<br>North-Holland, the Netherlands</span>
               </li>
             </ul>
           </div>
         </div>
-        <div class="footer-credits-wrapper">
-          <div class="footer-credits">
+        <div class="footer__credits-container">
+          <div class="footer__credits">
             <h5>Rijkware | Hire Student Developers</h5>
             <small>
               Copyright © Rijkware | Gelrestraat 84, 1079MZ Amsterdam, the Netherlands | VAT, tax code, and number of
@@ -177,13 +177,13 @@ a:hover {
   color: #cbcbcb;
 }
 
-.footer-hero-wrapper {
+.footer__hero {
   position: relative;
   padding-top: 48px;
   background-color: black;
 }
 
-.footer-hero-cover {
+.footer__hero-cover {
   position: absolute;
   z-index: 1;
   bottom: 0;
@@ -193,8 +193,8 @@ a:hover {
   background: linear-gradient(transparent, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.99), black);
 }
 
-.footer-hero-iphone,
-.footer-hero-laptop {
+.footer__hero-iphone,
+.footer__hero-laptop {
   position: relative;
   height: 600px;
 }

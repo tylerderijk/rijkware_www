@@ -99,13 +99,9 @@ export default {
 </script>
 
 <template>
-  <div class="hero-wrapper">
-    <h1 class="hero-title">Contact Us</h1>
-    <small class="hero-small">Scroll down for FAQ.</small>
-  </div>
-  <hr style="border: 1px solid rgba(233,233,233,0.3); width: 70%;">
   <div class="contact-main" v-bind="$attrs">
     <div class="contact-wrapper">
+    <h3>Start the Conversation</h3>
       <form @submit.prevent="submitForm" class="form" ref="form">
         <div class="loader-form" ref="loader" v-if="this.sendingFormMessage">
           <div class="spinner-form"></div>

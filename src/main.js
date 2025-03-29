@@ -25,13 +25,13 @@ const router = createRouter({
         { path: '/:pathMatch(.*)*', redirect: '/' },
     ],
 
-    // Scroll back to top on navigation change
-    scrollBehavior(to, from, savedPosition) {
-        if (savedPosition) {
-            return savedPosition;
-        }
-        return { left: 0, top: 0 };
-    }
+    // // Scroll back to top on navigation change
+    // scrollBehavior(to, from, savedPosition) {
+    //     if (savedPosition) {
+    //         return savedPosition;
+    //     }
+    //     return { left: 0, top: 0 };
+    // }
 })
 const app = createApp(App);
 app.use(posthogPlugin).use(router).mount('#app')

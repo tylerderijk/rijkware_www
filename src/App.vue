@@ -1,10 +1,13 @@
 <template>
-  <CookieBanner v-if="showBanner" :class="{ bannerActive: showBanner }" @hideBanner="showBanner = false" @acceptBanner="handleCookieBanner(true)"/>
-  <div :class="{ application: showBanner }">
-    <NavBar :showMobileNav="showMobileNav" @toggle-menu="toggleMenu"></NavBar>
-    <router-view/>
-    <FooterComponent></FooterComponent>
-    <div class="cursor-glow" ref="cursorGlow"></div>
+  <div class="app">
+    <CookieBanner v-if="showBanner" :class="{ 'app__banner--active': showBanner }" @hideBanner="showBanner = false"
+                  @acceptBanner="handleCookieBanner(true)"/>
+    <div :class="{ 'app__content': showBanner }" class="app__content">
+      <NavBar :showMobileNav="showMobileNav" @toggle-menu="toggleMenu"></NavBar>
+      <AboutUsComponent/>
+      <ContactComponent/>
+      <FooterComponent/>
+    </div>
   </div>
 </template>
 
@@ -12,6 +15,8 @@
 import CookieBanner from "@/components/shorts/CookieBanner.vue";
 import NavBar from "@/components/NavBarComponent.vue";
 import FooterComponent from "@/components/FooterComponent.vue";
+import AboutUsComponent from "@/components/AboutUsComponent.vue";
+import ContactComponent from "@/components/ContactComponent.vue";
 
 export default {
   name: 'App',
@@ -23,23 +28,20 @@ export default {
     };
   },
   components: {
+    ContactComponent,
     NavBar,
+    AboutUsComponent,
     FooterComponent,
     CookieBanner,
   },
   watch: {
     $route(to) {
       this.setBodyStyle(to);
-    }
+     }
   },
   methods: {
     toggleMenu() {
       this.showMobileNav = !this.showMobileNav;
-      if (this.showMobileNav) {
-        document.body.classList.add('no-scroll');
-      } else {
-        document.body.classList.remove('no-scroll');
-      }
     },
     setBodyStyle(route) {
       const path = route.path;
@@ -49,26 +51,29 @@ export default {
         document.body.style.backgroundColor = '#e9e9e9';
       }
     },
+
+
   },
   mounted() {
-    document.body.classList.remove('no-scroll');
     this.setBodyStyle(this.$route);
-  },
+   },
   beforeUnmount() {
+    this.destroyScroll();
   },
 };
 </script>
 
-
 <style>
-.bannerActive {
+.app__banner--active {
   display: block;
 }
-.application {
+
+.app__content {
   transition: all 0.5s ease-in-out;
   transform: translateY(0px);
 }
-.no-scroll {
+
+.app__no-scroll {
   overflow: hidden;
   height: 100%;
   position: fixed;
@@ -79,7 +84,7 @@ body {
   background-color: black;
 }
 
-#app {
+.app {
   letter-spacing: 0.5px;
   font-family: Lexend, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -90,18 +95,19 @@ body {
   position: relative;
 }
 
-.title-animation-wrapper {
+.app__title-animation-container {
   position: relative;
   text-align: center;
   display: inline-block;
 }
 
-#title-animation {
+.app__title-animation {
   width: 100%;
   display: block;
+  filter: contrast(0%) blur(5px);
 }
 
-.title-animation-header {
+.app__title-animation-header {
   text-shadow: #191919 1px 1px 20px;
   font-family: "Quicksand", system-ui;
   font-size: 56px;
@@ -112,51 +118,49 @@ body {
   transform: translate(-50%, -50%);
 }
 
-#title-animation {
-  filter: contrast(0%) blur(5px);
-}
-
-.grey-gradient {
+.u-text-gradient--grey {
   background: -webkit-linear-gradient(180deg, #ffffff, #bebebe);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-.blue-gradient {
+.u-text-gradient--blue {
   background: -webkit-linear-gradient(180deg, #5B71C9, #8193DC);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-.white-blue-gradient-1 {
+.u-text-gradient--white-blue-1 {
   background: -webkit-linear-gradient(45deg, #9baae8, #7994ff, #e9e9e9, #e9e9e9, #e9e9e9);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-.white-blue-gradient-2 {
+.u-text-gradient--white-blue-2 {
   background: -webkit-linear-gradient(45deg, #e9e9e9, #9baae8, #7994ff, #e9e9e9, #e9e9e9);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-.white-blue-gradient-3 {
+.u-text-gradient--white-blue-3 {
   background: -webkit-linear-gradient(45deg, #e9e9e9, #e9e9e9, #9baae8, #7994ff, #e9e9e9);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-.white-blue-gradient-4 {
+.u-text-gradient--white-blue-4 {
   background: -webkit-linear-gradient(45deg, #e9e9e9, #e9e9e9, #e9e9e9, #9baae8, #7994ff);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-.white-blue-gradient-5 {
+.u-text-gradient--white-blue-5 {
   background: -webkit-linear-gradient(45deg, #7994ff, #e9e9e9, #68afff, #e9e9e9, #9baae8);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
-
+ html {
+  scroll-behavior: smooth;
+ }
 
 </style>
