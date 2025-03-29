@@ -191,6 +191,7 @@ export default {
   flex-direction: column;
   width: 100%;
   max-width: 1200px;
+  padding-top: 36px;
   margin: 0 auto 96px auto;
 
   &__title, &__subtitle {

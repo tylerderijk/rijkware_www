@@ -1,7 +1,7 @@
 <template>
   <div class="cookie-banner">
     <div class="cookie-banner-content">
-      <button class="close-button" @click="acceptCookies">x</button>
+      <button class="close-button" @click="closeBanner">x</button>
       <p>By using this website, you agree to our use of cookies. We use cookies to provide you with a great experience and to help our website run effectively. <a href="#" class="cookies-read-more" @click.prevent="openCookiesInfo"> Read more.</a></p>
       <div class="cookie-banner-buttons">
         <button class="cookie-button cookie-button-accept" @click="acceptCookies">Accept</button>
@@ -15,18 +15,73 @@
 export default {
   name: 'CookieBanner',
   methods: {
+    closeBanner() {
+      try {
+        console.log("[CookieBanner] User closed the banner without accepting/declining");
+        // Just hide the banner without setting any localStorage values
+        this.$emit('hideBanner');
+      } catch (e) {
+        console.error("[CookieBanner] Error in closeBanner:", e);
+        // Still hide the banner even if there's an error
+        this.$emit('hideBanner');
+      }
+    },
     acceptCookies() {
-      localStorage.setItem('posthog_user_consent', 'accepted');
-      this.$posthog.opt_in_capturing();
-      this.$emit('hideBanner');
+      try {
+        console.log("[CookieBanner] User accepted cookies");
+        localStorage.setItem('posthog_user_consent', 'accepted');
+
+        // Safely call PostHog methods
+        try {
+          if (this.$posthog && typeof this.$posthog.opt_in_capturing === 'function') {
+            console.log("[CookieBanner] Calling PostHog opt_in_capturing");
+            this.$posthog.opt_in_capturing();
+          } else {
+            console.warn("[CookieBanner] PostHog not available or opt_in_capturing not a function");
+          }
+        } catch (e) {
+          console.error("[CookieBanner] Error calling PostHog opt_in_capturing:", e);
+        }
+
+        this.$emit('hideBanner');
+        this.$emit('acceptBanner');
+      } catch (e) {
+        console.error("[CookieBanner] Error in acceptCookies:", e);
+        // Still hide the banner even if there's an error
+        this.$emit('hideBanner');
+      }
     },
     declineCookies() {
-      localStorage.setItem('posthog_user_consent', 'declined');
-      this.$posthog.opt_out_capturing();
-      this.$emit('hideBanner');
+      try {
+        console.log("[CookieBanner] User declined cookies");
+        localStorage.setItem('posthog_user_consent', 'declined');
+
+        // Safely call PostHog methods
+        try {
+          if (this.$posthog && typeof this.$posthog.opt_out_capturing === 'function') {
+            console.log("[CookieBanner] Calling PostHog opt_out_capturing");
+            this.$posthog.opt_out_capturing();
+          } else {
+            console.warn("[CookieBanner] PostHog not available or opt_out_capturing not a function");
+          }
+        } catch (e) {
+          console.error("[CookieBanner] Error calling PostHog opt_out_capturing:", e);
+        }
+
+        this.$emit('hideBanner');
+      } catch (e) {
+        console.error("[CookieBanner] Error in declineCookies:", e);
+        // Still hide the banner even if there's an error
+        this.$emit('hideBanner');
+      }
     },
     openCookiesInfo() {
-      this.$emit('open-cookies');
+      try {
+        console.log("[CookieBanner] Opening cookies info");
+        this.$emit('open-cookies');
+      } catch (e) {
+        console.error("[CookieBanner] Error in openCookiesInfo:", e);
+      }
     }
   }
 }

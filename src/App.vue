@@ -50,10 +50,21 @@ import CookiesPolicy from "@/components/CookiesPolicy.vue";
 export default {
   name: 'App',
   data() {
+    // Safely check localStorage for user consent
+    let userConsent = null;
+    try {
+      userConsent = localStorage.getItem('posthog_user_consent');
+      console.log("[App] User consent from localStorage:", userConsent);
+    } catch (e) {
+      console.error("[App] Error accessing localStorage:", e);
+      // Default to showing the banner if localStorage is inaccessible
+      userConsent = null;
+    }
+
     return {
       showMobileNav: false,
       isMobile: false,
-      showBanner: !localStorage.getItem('posthog_user_consent'),
+      showBanner: !userConsent, // Show banner if userConsent is null, undefined, or empty string
       showTermsModal: false,
       showPrivacyModal: false,
       showCookiesModal: false
@@ -109,22 +120,56 @@ export default {
       this.toggleModal(null);
     },
     handleCookieBanner(accepted) {
+      console.log("[App] Handling cookie banner, accepted:", accepted);
       this.showBanner = false;
+
       if (accepted) {
-        localStorage.setItem('posthog_user_consent', 'true');
+        try {
+          console.log("[App] Setting posthog_user_consent to 'accepted' in localStorage");
+          localStorage.setItem('posthog_user_consent', 'accepted');
+        } catch (e) {
+          console.error("[App] Error setting localStorage:", e);
+          // Continue even if localStorage fails - the banner will still be hidden
+        }
       }
     },
   },
   mounted() {
-    // Scroll to section if hash is present in URL
-    if (window.location.hash) {
-      const sectionId = window.location.hash.substring(1);
-      const element = document.getElementById(sectionId);
-      if (element) {
-        setTimeout(() => {
-          element.scrollIntoView({behavior: 'smooth'});
-        }, 500);
+    try {
+      console.log("[App] Component mounted");
+
+      // Safely check for hash in URL and scroll to section
+      try {
+        if (window.location && window.location.hash) {
+          const sectionId = window.location.hash.substring(1);
+          console.log("[App] Found hash in URL, scrolling to section:", sectionId);
+
+          try {
+            const element = document.getElementById(sectionId);
+            if (element) {
+              console.log("[App] Found element with id:", sectionId);
+              setTimeout(() => {
+                try {
+                  element.scrollIntoView({behavior: 'smooth'});
+                  console.log("[App] Scrolled to element");
+                } catch (e) {
+                  console.error("[App] Error scrolling to element:", e);
+                }
+              }, 500);
+            } else {
+              console.warn("[App] Element with id not found:", sectionId);
+            }
+          } catch (e) {
+            console.error("[App] Error finding element by id:", e);
+          }
+        } else {
+          console.log("[App] No hash found in URL");
+        }
+      } catch (e) {
+        console.error("[App] Error accessing window.location:", e);
       }
+    } catch (e) {
+      console.error("[App] Unexpected error in mounted hook:", e);
     }
   },
 };
