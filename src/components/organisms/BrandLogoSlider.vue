@@ -42,7 +42,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 /* General Reset */
 * {
   margin: 0;
@@ -66,21 +66,21 @@ export default {
   padding: 60px 0;
   white-space: nowrap;
   position: relative;
+
+  &:hover .logos-slide {
+    animation-play-state: paused;
+  }
 }
 
 /* Sliding Animation for Each Row */
 .logos-slide {
   display: inline-block;
   animation: slide 30s linear infinite;
-}
 
-.logos-slide img {
-  height: 150px;
-  margin: 0 40px;
-}
-
-.logos:hover .logos-slide {
-  animation-play-state: paused;
+  img {
+    height: 150px;
+    margin: 0 40px;
+  }
 }
 
 .gradient {
@@ -90,15 +90,15 @@ export default {
   width: 20%;
   z-index: 2;
   pointer-events: none;
-}
 
-.gradient-left {
-  left: 0;
-  background: linear-gradient(to right, black, transparent);
-}
+  &-left {
+    left: 0;
+    background: linear-gradient(to right, black, transparent);
+  }
 
-.gradient-right {
-  right: 0;
-  background: linear-gradient(to left, black, transparent);
+  &-right {
+    right: 0;
+    background: linear-gradient(to left, black, transparent);
+  }
 }
 </style>

@@ -67,11 +67,10 @@ export default {
   </div>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
 .waves-bottom {
   margin-bottom: -8px;
 }
-
 
 .header {
   position: absolute;
@@ -88,28 +87,30 @@ export default {
   margin-bottom: -7px;
 }
 
-.parallax > use {
-  animation: move-forever 25s cubic-bezier(.55, .5, .45, .5) infinite;
-}
+.parallax {
+  > use {
+    animation: move-forever 25s cubic-bezier(.55, .5, .45, .5) infinite;
 
-.parallax > use:nth-child(1) {
-  animation-delay: -9s;
-  animation-duration: 14s;
-}
+    &:nth-child(1) {
+      animation-delay: -9s;
+      animation-duration: 14s;
+    }
 
-.parallax > use:nth-child(2) {
-  animation-delay: -17s;
-  animation-duration: 20s;
-}
+    &:nth-child(2) {
+      animation-delay: -17s;
+      animation-duration: 20s;
+    }
 
-.parallax > use:nth-child(3) {
-  animation-delay: -2s;
-  animation-duration: 26s;
-}
+    &:nth-child(3) {
+      animation-delay: -2s;
+      animation-duration: 26s;
+    }
 
-.parallax > use:nth-child(4) {
-  animation-delay: -15s;
-  animation-duration: 40s;
+    &:nth-child(4) {
+      animation-delay: -15s;
+      animation-duration: 40s;
+    }
+  }
 }
 
 @keyframes move-forever {
@@ -121,42 +122,66 @@ export default {
   }
 }
 
+.manifesto {
+  &-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: start;
+    flex-direction: column;
+    margin-top: 6px;
+    width: 100%;
+  }
 
-.manifesto-wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: start;
-  flex-direction: column;
-  margin-top: 6px;
-  width: 100%;
+  &-card {
+    background-color: rgba(229, 229, 229, 0.01);
+    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
+    border-radius: 0.7rem;
+    padding: 16px;
+  }
+
+  &-text {
+    font-weight: 350;
+    font-size: x-large;
+    width: fit-content;
+    max-width: 800px;
+    margin: 36px 0;
+
+    &:first-child {
+      @media (max-width: 768px) {
+        margin-top: 0;
+      }
+    }
+
+    @media (max-width: 768px) {
+      font-size: 20px;
+      text-align: start;
+      padding: 5vw;
+      margin: 16px 0;
+    }
+  }
 }
 
-.manifesto-card {
-  background-color: rgba(229, 229, 229, 0.01);
-  -webkit-backdrop-filter: blur(20px);
-  backdrop-filter: blur(20px);
-  border-radius: 0.7rem;
-  padding: 16px;
-}
+.hero {
+  &-title {
+    font-size: 56px;
 
-.manifesto-text {
+    @media (max-width: 768px) {
+      font-size: 36px;
+    }
+  }
 
-  font-weight: 350;
-  font-size: x-large;
-  width: fit-content;
-  max-width: 800px;
-  margin: 36px 0;
-}
+  &-wrapper {
+    margin-top: 48px;
+    position: relative;
+    z-index: 1;
 
-.hero-title {
-  font-size: 56px;
-}
-
-.hero-wrapper {
-  margin-top: 48px;
-  position: relative;
-  z-index: 1;
+    @media (max-width: 768px) {
+      margin-top: 0;
+      width: 100%;
+    }
+  }
 }
 
 * {
@@ -164,25 +189,8 @@ export default {
 }
 
 @media (max-width: 768px) {
-  .hero-title {
-    font-size: 36px;
-  }
   hr {
     display: none;
-  }
-  .manifesto-text:first-child {
-    margin-top: 0;
-  }
-  .manifesto-text {
-    font-size: 20px;
-    text-align: start;
-    padding: 5vw;
-    margin: 16px 0;
-  }
-
-  .hero-wrapper {
-    margin-top: 0;
-    width: 100%;
   }
 
   .waves {

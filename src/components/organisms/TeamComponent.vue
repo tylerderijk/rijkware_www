@@ -48,71 +48,72 @@ onMounted(() => {
 });
 </script>
 
-<style scoped>
-.team-container {
-  display: grid;
-  grid-template-columns: repeat(4, auto);
-  place-items: center;
-  gap: 36px 56px;
-  width: 100%;
-  justify-content: center;
-}
+<style lang="scss" scoped>
+.team {
+  &-container {
+    display: grid;
+    grid-template-columns: repeat(4, auto);
+    place-items: center;
+    gap: 36px 56px;
+    width: 100%;
+    justify-content: center;
 
-.team-card {
-  background: #191919;
-  height: 420px;
-  width: 300px;
-  border-radius: 12px;
-  box-shadow: 20px 20px 60px #000000, -20px -20px 60px #000000;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-}
-
-.team-image {
-  height: 80%;
-  width: 100%;
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-  border-bottom: 2px solid white;
-}
-
-.team-description {
-  text-align: center;
-  font-family: Helvetica, Arial, sans-serif;
-}
-
-.team-description-name {
-  margin-bottom: 2px;
-  font-size: 18px;
-  font-weight: 400;
-  color: white;
-}
-
-.team-description-role {
-  font-size: 14px;
-  color: #5b71c9;
-}
-
-.team-description-socials {
-  margin: 8px 0;
-}
-.team-description-socials a {
-  color: inherit;
-  margin: 8px 12px;
-}
-
-@media (max-width: 768px) {
-  .team-container {
-    grid-template-columns: 1fr;
-    padding: 24px;
-    transform: scale(0.9);
+    @media (max-width: 768px) {
+      grid-template-columns: 1fr;
+      padding: 24px;
+      transform: scale(0.9);
+    }
   }
 
-  .team-card {
+  &-card {
+    background: #191919;
+    height: 420px;
+    width: 300px;
+    border-radius: 12px;
+    box-shadow: 20px 20px 60px #000000, -20px -20px 60px #000000;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+
+    @media (max-width: 768px) {
+      width: 100%;
+      height: 500px;
+    }
+  }
+
+  &-image {
+    height: 80%;
     width: 100%;
-    height: 500px;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    border-bottom: 2px solid white;
+  }
+
+  &-description {
+    text-align: center;
+    font-family: Helvetica, Arial, sans-serif;
+
+    &-name {
+      margin-bottom: 2px;
+      font-size: 18px;
+      font-weight: 400;
+      color: white;
+    }
+
+    &-role {
+      font-size: 14px;
+      color: #5b71c9;
+    }
+
+    &-socials {
+      margin: 8px 0;
+
+      a {
+        color: inherit;
+        margin: 8px 12px;
+      }
+    }
   }
 }
 </style>

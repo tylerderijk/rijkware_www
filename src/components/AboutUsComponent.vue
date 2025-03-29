@@ -140,18 +140,7 @@ export default {
 }
 </script>
 
-<style scoped>
-.hero__text {
-  font-family: "Unbounded", system-ui;
-  font-weight: 300;
-  padding: 56px 0;
-  max-width: 760px;
-  text-align: start;
-  transition: opacity 0.5s ease-in-out, background-position 0.3s ease-in-out;
-  background-size: 200%; /* Enable movement of gradient */
-  background-position: 0% 50%;
-}
-
+<style lang="scss" scoped>
 .hero {
   margin-bottom: 128px;
   padding-bottom: 128px;
@@ -160,97 +149,107 @@ export default {
   align-items: center;
   justify-content: center;
   flex-direction: column;
+
+  &__text {
+    font-family: "Unbounded", system-ui;
+    font-weight: 300;
+    padding: 56px 0;
+    max-width: 760px;
+    text-align: start;
+    transition: opacity 0.5s ease-in-out, background-position 0.3s ease-in-out;
+    background-size: 200%; /* Enable movement of gradient */
+    background-position: 0% 50%;
+  }
+
+  &__text-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    z-index: 1;
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 10%;
+      right: 50%;
+      transform: translate(30%, -100%);
+      width: 90vh;
+      height: 90vh;
+      background: radial-gradient(circle, rgba(91, 113, 201, 0.5) 0%, rgba(0, 0, 0, 0) 60%);
+      filter: blur(150px);
+      z-index: -1;
+      pointer-events: none;
+      transition: transform 0.1s ease-out;
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-10%, -50%);
+      width: 90vh;
+      height: 90vh;
+      background: radial-gradient(circle, rgba(91, 113, 201, 0.3) 0%, rgba(0, 0, 0, 0) 60%);
+      filter: blur(150px);
+      z-index: -1;
+      pointer-events: none;
+      transition: transform 0.1s ease-out;
+    }
+  }
 }
 
-.hero__text-container {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  z-index: 1;
+.why {
+  &__success-cases {
+    margin-top: 24px;
+    display: flex;
+    justify-content: center;
+  }
+
+  &__image {
+    margin: 36px 0;
+  }
+
+  &__reason {
+    flex-basis: calc(50% - 20px);
+    max-width: 500px;
+    text-align: start;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding: 0 84px;
+
+    &-text {
+      font-family: "Lexend", Helvetica, Arial, sans-serif;
+      font-size: 18px;
+      font-weight: 200;
+    }
+
+    &-title {
+      font-family: "Unbounded", system-ui;
+      font-size: 28px;
+      font-weight: 400;
+    }
+  }
+
+  &__reasons {
+    max-width: 1500px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: start;
+    gap: 20px;
+  }
+
+  &__container {
+    position: relative;
+    text-align: center;
+    justify-content: center;
+    display: flex;
+    width: 100%;
+    height: fit-content;
+  }
 }
-
-.hero__text-container::before {
-  content: "";
-  position: absolute;
-  top: 10%;
-  right: 50%;
-  transform: translate(30%, -100%);
-  width: 90vh;
-  height: 90vh;
-  background: radial-gradient(circle, rgba(91, 113, 201, 0.5) 0%, rgba(0, 0, 0, 0) 60%);
-  filter: blur(150px);
-  z-index: -1;
-  pointer-events: none;
-  transition: transform 0.1s ease-out;
-}
-
-.hero__text-container::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-10%, -50%);
-  width: 90vh;
-  height: 90vh;
-  background: radial-gradient(circle, rgba(91, 113, 201, 0.3) 0%, rgba(0, 0, 0, 0) 60%);
-  filter: blur(150px);
-  z-index: -1;
-  pointer-events: none;
-  transition: transform 0.1s ease-out;
-}
-
-.why__success-cases {
-  margin-top: 24px;
-  display: flex;
-  justify-content: center;
-}
-
-
-.why__image {
-  margin: 36px 0;
-}
-
-
-.why__reason-text {
-  font-family: "Lexend", Helvetica, Arial, sans-serif;
-  font-size: 18px;
-  font-weight: 200;
-}
-
-.why__reason-title {
-  font-family: "Unbounded", system-ui;
-  font-size: 28px;
-  font-weight: 400;
-}
-
-.why__reasons {
-  max-width: 1500px;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: start;
-  gap: 20px;
-}
-
-.why__reason {
-  flex-basis: calc(50% - 20px);
-  max-width: 500px;
-  text-align: start;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  padding: 0 84px;
-}
-
-.why__container {
-  position: relative;
-  text-align: center;
-  justify-content: center;
-  display: flex;
-  width: 100%;
-  height: fit-content;
-}
-
 
 .hero-wrapper {
   overflow: hidden;
@@ -279,7 +278,6 @@ export default {
   margin-bottom: 84px;
 }
 
-
 small {
   margin-top: 24px;
   display: flex;
@@ -293,11 +291,13 @@ small {
   text-underline-offset: 4px;
 }
 
-.why-success-cases .hero-text-manifesto {
-  margin-left: 4px;
-  color: #c2c2c2;
-  text-decoration: underline;
-  text-underline-offset: 4px;
+.why-success-cases {
+  .hero-text-manifesto {
+    margin-left: 4px;
+    color: #c2c2c2;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
 }
 
 @media (max-width: 768px) {
@@ -307,30 +307,28 @@ small {
 
   .CTA {
     max-width: 90vw;
-  }
 
-  .CTA-wrapper {
-    margin-bottom: 156px;
-  }
-
-  .hero-text_wrapper {
-    max-width: 90vw;
+    &-wrapper {
+      margin-bottom: 156px;
+    }
   }
 
   .hero-text {
     font-size: 24px;
 
+    &_wrapper {
+      max-width: 90vw;
+
+      &::after {
+        transform: translate(-40%, -50%);
+        background: radial-gradient(circle, rgba(91, 113, 201, 0.4) 0%, rgba(0, 0, 0, 0) 70%);
+      }
+    }
   }
 
   .why-reason {
     flex-basis: 100%;
     max-width: 100%;
   }
-
-  .hero-text_wrapper::after {
-    transform: translate(-40%, -50%);
-    background: radial-gradient(circle, rgba(91, 113, 201, 0.4) 0%, rgba(0, 0, 0, 0) 70%);
-  }
-
 }
 </style>

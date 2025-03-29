@@ -97,116 +97,124 @@ onMounted(() => {
 });
 </script>
 
-<style scoped>
-.people-href-mailto:hover {
-  font-weight: 500;
-}
-.people-href-mailto {
-  cursor: pointer;
-  color: inherit;
-  text-decoration: none;
-  transition: all 100ms ease-in-out;
+<style lang="scss" scoped>
+.people {
+  &-href-mailto {
+    cursor: pointer;
+    color: inherit;
+    text-decoration: none;
+    transition: all 100ms ease-in-out;
+
+    &:hover {
+      font-weight: 500;
+    }
+  }
+
+  &-social {
+    cursor: pointer;
+    color: inherit;
+    padding: 6px 12px 0 0;
+
+    &:hover {
+      color: inherit;
+    }
+  }
+
+  &-socials {
+    color: #989898;
+    margin-top: 8px;
+  }
+
+  &-description {
+    max-width: 600px;
+    text-align: start;
+    padding-left: 28px;
+    display: flex;
+    align-items: start;
+    justify-content: center;
+    flex-direction: column;
+    width: 90%;
+
+    h3 {
+      // Empty rule preserved from original CSS
+    }
+
+    span {
+      color: #989898;
+    }
+
+    @media (max-width: 768px) {
+      padding-left: 0;
+    }
+  }
+
+  &-image {
+    z-index: 1111111;
+    width: 200px;
+    border-radius: 50%;
+
+    @media (max-width: 768px) {
+      width: 100px;
+    }
+  }
+
+  &-wrapper {
+    display: flex;
+    flex-direction: row;
+    margin: 28px 0;
+
+    @media (max-width: 768px) {
+      flex-direction: column;
+    }
+  }
+
+  &-article {
+    margin: 36px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    width: 800px;
+
+    @media (max-width: 768px) {
+      width: 90vw;
+    }
+  }
+
+  &-section {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+  }
 }
 
-.people-social {
-  cursor: pointer;
-  color: inherit;
-  padding: 6px 12px 0 0;
-}
+.hero {
+  &-title {
+    font-size: 56px;
 
-.people-social:hover {
-  color: inherit;
-}
+    @media (max-width: 768px) {
+      font-size: 36px;
+    }
+  }
 
-.people-socials {
-  color: #989898;
-  margin-top: 8px;
-}
+  &-wrapper {
+    margin-top: 48px;
+    position: relative;
+    z-index: 1;
 
-.people-description h3 {
-}
-
-.people-description span {
-  color: #989898;
-}
-
-.people-description {
-  max-width: 600px;
-  text-align: start;
-  padding-left: 28px;
-  display: flex;
-  align-items: start;
-  justify-content: center;
-  flex-direction: column;
-  width: 90%;
-}
-
-.people-image {
-  z-index: 1111111;
-  width: 200px;
-  border-radius: 50%;
-}
-
-.people-wrapper {
-  display: flex;
-  flex-direction: row;
-  margin: 28px 0;
-}
-
-.people-article {
-  margin: 36px 0;
-  display: flex;
-  flex-direction: column;
-  align-items: start;
-  width: 800px;
-}
-
-.people-section {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-}
-
-.hero-title {
-  font-size: 56px;
-}
-
-.hero-wrapper {
-  margin-top: 48px;
-  position: relative;
-  z-index: 1;
+    @media (max-width: 768px) {
+      margin-top: 0px;
+      width: 100%;
+    }
+  }
 }
 
 @media (max-width: 768px) {
-  .hero-title {
-    font-size: 36px;
-  }
   hr {
     display: none;
   }
+
   h2 {
     text-align: start;
-  }
-
-  .people-article {
-    width: 90vw;
-  }
-
-  .people-description {
-    padding-left: 0;
-  }
-
-  .people-image {
-    width: 100px;
-  }
-
-  .people-wrapper {
-    flex-direction: column;
-  }
-
-  .hero-wrapper {
-    margin-top: 0px;
-    width: 100%;
   }
 }
 </style>

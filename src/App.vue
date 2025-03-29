@@ -63,27 +63,7 @@ export default {
 };
 </script>
 
-<style>
-.app__banner--active {
-  display: block;
-}
-
-.app__content {
-  transition: all 0.5s ease-in-out;
-  transform: translateY(0px);
-}
-
-.app__no-scroll {
-  overflow: hidden;
-  height: 100%;
-  position: fixed;
-  width: 100%;
-}
-
-body {
-  background-color: black;
-}
-
+<style lang="scss">
 .app {
   letter-spacing: 0.5px;
   font-family: Lexend, Helvetica, Arial, sans-serif;
@@ -93,74 +73,97 @@ body {
   color: #e9e9e9;
   box-sizing: border-box;
   position: relative;
+
+  &__banner--active {
+    display: block;
+  }
+
+  &__content {
+    transition: all 0.5s ease-in-out;
+    transform: translateY(0px);
+  }
+
+  &__no-scroll {
+    overflow: hidden;
+    height: 100%;
+    position: fixed;
+    width: 100%;
+  }
+
+  &__title-animation {
+    &-container {
+      position: relative;
+      text-align: center;
+      display: inline-block;
+    }
+
+    width: 100%;
+    display: block;
+    filter: contrast(0%) blur(5px);
+
+    &-header {
+      text-shadow: #191919 1px 1px 20px;
+      font-family: "Quicksand", system-ui;
+      font-size: 56px;
+      font-weight: 700;
+      position: absolute;
+      top: 40%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
 }
 
-.app__title-animation-container {
-  position: relative;
-  text-align: center;
-  display: inline-block;
+body {
+  background-color: black;
 }
 
-.app__title-animation {
-  width: 100%;
-  display: block;
-  filter: contrast(0%) blur(5px);
+.u-text-gradient {
+  &--grey {
+    background: -webkit-linear-gradient(180deg, #ffffff, #bebebe);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  &--blue {
+    background: -webkit-linear-gradient(180deg, #5B71C9, #8193DC);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  &--white-blue-1 {
+    background: -webkit-linear-gradient(45deg, #9baae8, #7994ff, #e9e9e9, #e9e9e9, #e9e9e9);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  &--white-blue-2 {
+    background: -webkit-linear-gradient(45deg, #e9e9e9, #9baae8, #7994ff, #e9e9e9, #e9e9e9);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  &--white-blue-3 {
+    background: -webkit-linear-gradient(45deg, #e9e9e9, #e9e9e9, #9baae8, #7994ff, #e9e9e9);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  &--white-blue-4 {
+    background: -webkit-linear-gradient(45deg, #e9e9e9, #e9e9e9, #e9e9e9, #9baae8, #7994ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  &--white-blue-5 {
+    background: -webkit-linear-gradient(45deg, #7994ff, #e9e9e9, #68afff, #e9e9e9, #9baae8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
 }
 
-.app__title-animation-header {
-  text-shadow: #191919 1px 1px 20px;
-  font-family: "Quicksand", system-ui;
-  font-size: 56px;
-  font-weight: 700;
-  position: absolute;
-  top: 40%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
-.u-text-gradient--grey {
-  background: -webkit-linear-gradient(180deg, #ffffff, #bebebe);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.u-text-gradient--blue {
-  background: -webkit-linear-gradient(180deg, #5B71C9, #8193DC);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.u-text-gradient--white-blue-1 {
-  background: -webkit-linear-gradient(45deg, #9baae8, #7994ff, #e9e9e9, #e9e9e9, #e9e9e9);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.u-text-gradient--white-blue-2 {
-  background: -webkit-linear-gradient(45deg, #e9e9e9, #9baae8, #7994ff, #e9e9e9, #e9e9e9);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.u-text-gradient--white-blue-3 {
-  background: -webkit-linear-gradient(45deg, #e9e9e9, #e9e9e9, #9baae8, #7994ff, #e9e9e9);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.u-text-gradient--white-blue-4 {
-  background: -webkit-linear-gradient(45deg, #e9e9e9, #e9e9e9, #e9e9e9, #9baae8, #7994ff);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.u-text-gradient--white-blue-5 {
-  background: -webkit-linear-gradient(45deg, #7994ff, #e9e9e9, #68afff, #e9e9e9, #9baae8);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
- html {
+html {
   scroll-behavior: smooth;
- }
+}
 
 </style>

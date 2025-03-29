@@ -146,17 +146,19 @@ export default {
   </div>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
 .contact-main {
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
 }
+
 .contact-bottom-wrapper {
   display: flex;
   justify-content: center;
 }
+
 .section-qna {
   margin: 84px 0 36px 0;
   display: flex;
@@ -164,6 +166,12 @@ export default {
   flex-direction: column;
   max-width: 800px;
   gap: 16px;
+
+  &:has(.holder-qna:hover) {
+    .holder-qna:not(:hover) {
+      filter: brightness(50%);
+    }
+  }
 }
 
 .holder-qna {
@@ -173,19 +181,14 @@ export default {
   width: 100%;
   padding: 12px;
   transition: all 350ms ease-in-out;
-}
 
-.holder-qna:hover {
-  cursor: pointer;
-}
+  &:hover {
+    cursor: pointer;
+  }
 
-.holder-qna:focus {
-  outline: none;
-}
-
-.section-qna:has(.holder-qna:hover)
-.holder-qna:not(:hover) {
-  filter: brightness(50%);
+  &:focus {
+    outline: none;
+  }
 }
 
 .text-why {
@@ -207,37 +210,39 @@ summary {
   font-weight: 300;
 }
 
-.contact-call-wrapper {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  margin-bottom: 128px;
-}
+.contact-call {
+  &-wrapper {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin-bottom: 128px;
+  }
 
-.contact-call-card h4 {
-  font-size: large;
-}
+  &-card {
+    color: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    background-color: rgba(255, 255, 255, 0.074);
+    border: 1px solid rgba(255, 255, 255, 0.222);
+    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
+    border-radius: 12px;
+    padding: 8px 0;
+    width: 60%;
+    text-decoration: none;
 
-.contact-call-card {
-  color: inherit;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 18px;
-  background-color: rgba(255, 255, 255, 0.074);
-  border: 1px solid rgba(255, 255, 255, 0.222);
-  -webkit-backdrop-filter: blur(20px);
-  backdrop-filter: blur(20px);
-  border-radius: 12px;
-  padding: 8px 0;
-  width: 60%;
-  text-decoration: none;
-}
+    &:hover {
+      transform: translateY(2px);
+    }
 
-.contact-call-card:hover {
-  transform: translateY(2px);
+    h4 {
+      font-size: large;
+    }
+  }
 }
 
 .loader-form {
@@ -312,19 +317,19 @@ summary {
   padding: 10px;
   color: #e9e9e9;
   transition: .1s;
-}
 
-.fInput:focus {
-  border: 1px rgb(2, 58, 162) solid;
-  outline: none;
-}
+  &:focus {
+    border: 1px rgb(2, 58, 162) solid;
+    outline: none;
 
-.fInput:focus::placeholder {
-  color: rgb(0, 81, 255);
-}
+    &::placeholder {
+      color: rgb(0, 81, 255);
+    }
+  }
 
-.fInput.message {
-  padding-bottom: 80px;
+  &.message {
+    padding-bottom: 80px;
+  }
 }
 
 .submit {
@@ -336,76 +341,80 @@ summary {
   border-radius: 8px;
   cursor: pointer;
   width: 100%;
+
+  &:hover {
+    font-weight: 600;
+    opacity: .9;
+  }
+
+  &:active {
+    transform: translateY(-12px);
+  }
 }
 
-.submit:hover {
-  font-weight: 600;
-  opacity: .9;
-}
+.hero {
+  &-title {
+    font-size: 56px;
+  }
 
-.submit:active {
-  transform: translateY(-12px);
-}
+  &-wrapper {
+    margin-top: 48px;
+    position: relative;
+    z-index: 1;
+  }
 
-.hero-title {
-  font-size: 56px;
-}
-
-.hero-wrapper {
-  margin-top: 48px;
-  position: relative;
-  z-index: 1;
-}
-
-.hero-small {
-  color: gray;
+  &-small {
+    color: gray;
+  }
 }
 
 @media (max-width: 768px) {
-  .hero-title {
-    font-size: 36px;
+  .hero {
+    &-title {
+      font-size: 36px;
+    }
+
+    &-wrapper {
+      margin: 0;
+      width: 100%;
+    }
   }
-  .hero-wrapper {
-    margin: 0;
-  }
+
   hr {
     display: none;
   }
+
   .form {
     width: 90%;
   }
 
-  .contact-container {
-    align-items: center;
-  }
+  .contact {
+    &-container {
+      align-items: center;
+    }
 
-  .contact-wrapper {
-    margin: 64px 0;
-  }
+    &-wrapper {
+      margin: 24px 0;
+      width: 95%;
+    }
 
-  .hero-wrapper {
-    width: 100%;
-  }
+    &-call {
+      &-wrapper {
+        width: 90vw;
+        margin-bottom: 64px;
+      }
 
-  .contact-call-wrapper {
-    width: 90vw;
-    margin-bottom: 64px;
-  }
+      &-card {
+        width: 90vw;
+      }
+    }
 
-  .contact-call-card {
-    width: 90vw;
-  }
-
-  .contact-wrapper {
-    margin: 24px 0;
-    width: 95%;
-  }
-
-  .contact-main {
-    margin: 0;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
+    &-main {
+      margin: 0;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+    }
   }
 }
 </style>

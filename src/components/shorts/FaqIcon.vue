@@ -10,7 +10,7 @@
   </svg>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
 .details-icon {
   height: 24px;
   width: 24px;

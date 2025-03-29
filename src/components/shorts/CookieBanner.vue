@@ -29,32 +29,58 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .cookies-read-more {
   color: #106691;
   text-decoration: none;
 }
 
-.cookie-banner {
-  position: fixed;
-  z-index: 99999;
-  height: fit-content;
-  color: #e1e1e1;
-  padding: 18px 0;
-  background-color: rgba(255, 255, 255, 0.074);
-  width: 100%;
-  -webkit-backdrop-filter: blur(20px);
-  backdrop-filter: blur(12px);
-  top: 0;
-  left: 0;
+.cookie {
+  &-banner {
+    position: fixed;
+    z-index: 99999;
+    height: fit-content;
+    color: #e1e1e1;
+    padding: 18px 0;
+    background-color: rgba(255, 255, 255, 0.074);
+    width: 100%;
+    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(12px);
+    top: 0;
+    left: 0;
+
+    &-content {
+      position: relative;
+    }
+
+    &-buttons {
+      // Empty rule for consistency
+    }
+  }
+
+  &-button {
+    color: dimgray;
+    margin: 0 8px;
+    padding: 4px 12px;
+    border-radius: 6px;
+    background: transparent;
+    cursor: pointer;
+    border: none;
+    transition: all 0.3s;
+
+    &-accept:first-child {
+      background: #24b924;
+      color: black;
+    }
+  }
 }
 
 p {
   padding: 0 48px;
-}
 
-.cookie-banner-content {
-  position: relative;
+  @media (max-width: 768px) {
+    padding: 6px;
+  }
 }
 
 .close-button {
@@ -66,34 +92,16 @@ p {
   color: #757575;
   font-size: 16px;
   cursor: pointer;
-}
 
-.cookie-button {
-  color: dimgray;
-  margin: 0 8px;
-  padding: 4px 12px;
-  border-radius: 6px;
-  background: transparent;
-  cursor: pointer;
-  border: none;
-  transition: all 0.3s;
-}
-
-.cookie-button-accept:first-child {
-  background: #24b924;
-  color: black;
+  @media (max-width: 768px) {
+    display: none;
+  }
 }
 
 @media (max-width: 768px) {
-  p {
-    padding: 6px;
-  }
   button {
     border-radius: 4px;
     padding: 4px 12px;
-  }
-  .close-button {
-    display: none;
   }
 }
 

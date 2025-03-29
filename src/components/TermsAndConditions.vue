@@ -39,23 +39,17 @@
   </div>
 </template>
 
-<style scoped>
-.hero-title {
-  font-size: 56px;
-}
+<style lang="scss" scoped>
+.hero {
+  &-title {
+    font-size: 56px;
+  }
 
-.hero-wrapper {
-  margin-top: 48px;
-  position: relative;
-  z-index: 1;
-}
-
-.content-wrapper {
-  padding: 28px;
-  margin-top: 24px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  &-wrapper {
+    margin-top: 48px;
+    position: relative;
+    z-index: 1;
+  }
 }
 
 .content {
@@ -63,17 +57,25 @@
   text-align: start;
   display: flex;
   flex-direction: column;
-}
 
-.content-wrapper h2 {
-  margin-top: 16px;
-}
+  &-wrapper {
+    padding: 28px;
+    margin-top: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-.content-wrapper p, .content-wrapper ul {
-  margin-bottom: 16px;
-}
+    h2 {
+      margin-top: 16px;
+    }
 
-.content-wrapper ul {
-  margin-left: 20px;
+    p, ul {
+      margin-bottom: 16px;
+    }
+
+    ul {
+      margin-left: 20px;
+    }
+  }
 }
 </style>

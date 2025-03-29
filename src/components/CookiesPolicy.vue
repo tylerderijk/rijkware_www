@@ -65,27 +65,29 @@
 
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
 .content {
   max-width: 800px;
   text-align: start;
   display: flex;
   flex-direction: column;
 }
-.hero-title {
-  font-size: 36px;
-}
-.hero-wrapper {
-  margin: 0;
-}
-hr {
-  display: none;
+
+.hero {
+  &-title {
+    font-size: 36px;
+  }
+
+  &-wrapper {
+    margin: 0;
+    margin-top: 48px;
+    position: relative;
+    z-index: 1;
+  }
 }
 
-.hero-wrapper {
-  margin-top: 48px;
-  position: relative;
-  z-index: 1;
+hr {
+  display: none;
 }
 
 .content-wrapper {
@@ -94,18 +96,18 @@ hr {
   display: flex;
   align-items: center;
   justify-content: center;
-}
 
-.content-wrapper h2,
-.content-wrapper h3 {
-  margin-top: 16px;
-}
+  h2,
+  h3 {
+    margin-top: 16px;
+  }
 
-.content-wrapper ul {
-  margin-left: 20px;
-}
+  ul {
+    margin-left: 20px;
+  }
 
-.content-wrapper p {
-  margin-bottom: 16px;
+  p {
+    margin-bottom: 16px;
+  }
 }
 </style>

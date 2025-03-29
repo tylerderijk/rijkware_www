@@ -117,7 +117,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 /* General Reset */
 * {
   margin: 0;
@@ -130,53 +130,55 @@ body {
 }
 
 /* Wrapper for the Entire Slider */
-.slider-wrapper {
-  position: relative;
-  overflow: hidden;
-  width: 100%;
-  height: 100%; /* Full height */
-  background: black;
-}
+.slider {
+  &-wrapper {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    height: 100%; /* Full height */
+    background: black;
+  }
 
-/* Container for Rows */
-.slider-container {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-}
+  /* Container for Rows */
+  &-container {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+  }
 
-/* Individual Row for Horizontal Slides */
-.slider-row {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  flex: 1;
-  width: 100%;
-  transition: animation-play-state 0.3s ease;
-}
+  /* Individual Row for Horizontal Slides */
+  &-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex: 1;
+    width: 100%;
+    transition: animation-play-state 0.3s ease;
+  }
 
-/* Sliding Animation */
-.slider-track {
-  display: flex;
-  flex-direction: row;
-  transition: transform 0.5s ease-in-out;
-}
+  /* Sliding Animation */
+  &-track {
+    display: flex;
+    flex-direction: row;
+    transition: transform 0.5s ease-in-out;
+  }
 
-/* Each Slide Item */
-.slider-item {
-  width: 300px;
-  height: 200px;
-  margin: 0 36px;
-}
+  /* Each Slide Item */
+  &-item {
+    width: 300px;
+    height: 200px;
+    margin: 0 36px;
 
-.slider-item img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 12px;
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 12px;
+    }
+  }
 }
 
 /* Gradient Effect for Left and Right */
@@ -187,15 +189,15 @@ body {
   width: 250px;
   z-index: 2;
   pointer-events: none;
-}
 
-.gradient-left {
-  left: 0;
-  background: linear-gradient(to right, black, transparent);
-}
+  &-left {
+    left: 0;
+    background: linear-gradient(to right, black, transparent);
+  }
 
-.gradient-right {
-  right: 0;
-  background: linear-gradient(to left, black, transparent);
+  &-right {
+    right: 0;
+    background: linear-gradient(to left, black, transparent);
+  }
 }
 </style>

@@ -9,7 +9,7 @@
   </svg>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
 svg {
   opacity: 0.8;
 }
