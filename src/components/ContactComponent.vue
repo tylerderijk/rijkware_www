@@ -159,7 +159,7 @@ export default {
   flex-direction: column;
   width: 100%;
   max-width: 1200px;
-  margin: 0 auto;
+  margin: 0 auto 96px auto;
 
   &__title, &__subtitle {
     font-family: "Quicksand", system-ui;
@@ -183,7 +183,7 @@ export default {
   // Form section
   &__form-section {
     width: 100%;
-    max-width: 800px;
+    max-width: 860px;
     margin: 32px auto;
   }
 
@@ -336,7 +336,7 @@ export default {
 
   &__info-container {
     width: 100%;
-    max-width: 800px;
+    max-width: 860px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;

@@ -238,7 +238,7 @@ export default {
   }
 
   &__reasons {
-    max-width: 85%;
+    max-width: 975px;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
