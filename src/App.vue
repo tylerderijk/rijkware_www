@@ -3,34 +3,34 @@
     <CookieBanner v-if="showBanner" :class="{ 'app__banner--active': showBanner }" @hideBanner="showBanner = false"
                   @acceptBanner="handleCookieBanner(true)"/>
     <div :class="{ 'app__content': showBanner }" class="app__content">
-      <NavBar 
-        :showMobileNav="showMobileNav" 
-        @toggle-menu="toggleMenu"
-        @open-terms="openTermsModal" 
-        @open-privacy="openPrivacyModal" 
-        @open-cookies="openCookiesModal"
-      ></NavBar>
+      <NavBar
+          :showMobileNav="showMobileNav"
+          @toggle-menu="toggleMenu"
+          @open-terms="openTermsModal"
+          @open-privacy="openPrivacyModal"
+          @open-cookies="openCookiesModal"
+      />
       <AboutUsComponent/>
       <ManifestoComponent/>
       <ContactComponent/>
-      <FooterComponent 
-        @open-terms="openTermsModal" 
-        @open-privacy="openPrivacyModal" 
-        @open-cookies="openCookiesModal"
+      <FooterComponent
+          @open-terms="openTermsModal"
+          @open-privacy="openPrivacyModal"
+          @open-cookies="openCookiesModal"
       />
     </div>
 
     <!-- Policy Modals -->
     <ModalComponent :show="showTermsModal" @close="closeTermsModal">
-      <TermsAndConditions />
+      <TermsAndConditions/>
     </ModalComponent>
 
     <ModalComponent :show="showPrivacyModal" @close="closePrivacyModal">
-      <PrivacyPolicy @open-cookies="openCookiesModal" />
+      <PrivacyPolicy @open-cookies="openCookiesModal"/>
     </ModalComponent>
 
     <ModalComponent :show="showCookiesModal" @close="closeCookiesModal">
-      <CookiesPolicy />
+      <CookiesPolicy/>
     </ModalComponent>
   </div>
 </template>
@@ -107,7 +107,7 @@ export default {
       const element = document.getElementById(sectionId);
       if (element) {
         setTimeout(() => {
-          element.scrollIntoView({ behavior: 'smooth' });
+          element.scrollIntoView({behavior: 'smooth'});
         }, 500);
       }
     }
@@ -128,11 +128,6 @@ export default {
 
   &__banner--active {
     display: block;
-  }
-
-  &__content {
-    transition: all 0.5s ease-in-out;
-    transform: translateY(0px);
   }
 
   &__no-scroll {

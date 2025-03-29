@@ -143,6 +143,7 @@ export default {
 
 <style lang="scss" scoped>
 .hero {
+  margin-top: -60px;
   padding-bottom: 128px;
   overflow: hidden;
   display: flex;
@@ -173,9 +174,9 @@ export default {
       top: 10%;
       right: 50%;
       transform: translate(30%, -100%);
-      width: 90vh;
-      height: 90vh;
-      background: radial-gradient(circle, rgba(91, 113, 201, 0.5) 0%, rgba(0, 0, 0, 0) 60%);
+      width: 85vh;
+      height: 85vh;
+      background: radial-gradient(circle, rgba(91, 113, 201, 0.2) 0%, rgba(0, 0, 0, 0) 60%);
       filter: blur(150px);
       z-index: -1;
       pointer-events: none;
@@ -188,9 +189,9 @@ export default {
       top: 40%;
       left: 50%;
       transform: translate(-10%, -50%);
-      width: 90vh;
-      height: 90vh;
-      background: radial-gradient(circle, rgba(91, 113, 201, 0.3) 0%, rgba(0, 0, 0, 0) 60%);
+      width: 85vh;
+      height: 85vh;
+      background: radial-gradient(circle, rgba(91, 113, 201, 0.2) 0%, rgba(0, 0, 0, 0) 60%);
       filter: blur(150px);
       z-index: -1;
       pointer-events: none;
