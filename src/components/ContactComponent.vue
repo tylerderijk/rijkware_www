@@ -101,7 +101,7 @@ export default {
 </script>
 
 <template>
-  <div class="contact" v-bind="$attrs">
+  <div id="contact" class="contact" v-bind="$attrs">
     <div class="contact__form-section">
       <h2 class="contact__title">Start the Conversation</h2>
       <form @submit.prevent="submitForm" class="contact__form" ref="form">

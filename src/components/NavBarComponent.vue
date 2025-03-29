@@ -23,9 +23,16 @@ export default {
     }
   },
   methods: {
-    handleClick() {
+    handleClick(sectionId) {
       this.animateMenu();
       this.$emit('toggle-menu');
+
+      if (sectionId) {
+        const element = document.getElementById(sectionId);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      }
     },
     animateMenu() {
       anime({
@@ -88,24 +95,21 @@ export default {
           <MenuCloseIcon/>
         </button>
       </div>
-<!--      <router-link v-else to="/rijkware">-->
-<!--        <img src="../assets/RijkwareLogo-2024-v2.png" class="navigationbar__logo d-inline-block align-top" alt="">-->
-<!--      </router-link>-->
     </div>
     <div class="navigationbar__mobile-wrapper" v-if="isMobile">
       <div class="navigationbar__mobile" v-show="showMobileNav">
         <ul class="navigationbar__mobile-list navigationbar__mobile-list--primary">
           <li class="navigationbar__item u-text-gradient--white-blue-5">
-            <router-link to="/" @click="handleClick">About us</router-link>
+            <a href="#about" @click="handleClick('about')">About us</a>
           </li>
           <li class="navigationbar__item">
-            <router-link to="manifesto" @click="handleClick">Manifesto</router-link>
+            <a href="#manifesto" @click="handleClick('manifesto')">Manifesto</a>
           </li>
           <li class="navigationbar__item">
-            <router-link to="contact" @click="handleClick">Contact</router-link>
+            <a href="#contact" @click="handleClick('contact')">Contact</a>
           </li>
           <li class="navigationbar__item">
-            <router-link to="contact" @click="handleClick">FAQ's</router-link>
+            <a href="#contact" @click="handleClick('contact')">FAQ's</a>
           </li>
           <li>
             <div class="navigationbar__social" v-if="showMobileNav">
@@ -140,19 +144,19 @@ export default {
     </div>
     <ul class="navigationbar__list" v-else>
       <li class="navigationbar__item">
-        <router-link class="u-text-gradient--white-blue-5 navigationbar__brand" to="/">Rijkware</router-link>
+        <a href="#about" class="u-text-gradient--white-blue-5 navigationbar__brand" @click="handleClick('about')">Rijkware</a>
       </li>
       <li class="navigationbar__item">
-        <router-link to="manifesto">Why</router-link>
+        <a href="#manifesto" @click="handleClick('manifesto')">Why</a>
       </li>
       <li class="navigationbar__item">
-        <router-link to="manifesto">Manifesto</router-link>
+        <a href="#manifesto" @click="handleClick('manifesto')">Manifesto</a>
       </li>
       <li class="navigationbar__item">
-        <router-link to="cases">Contact</router-link>
+        <a href="#contact" @click="handleClick('contact')">Contact</a>
       </li>
       <li class="navigationbar__item">
-        <router-link to="people">FAQ's</router-link>
+        <a href="#contact" @click="handleClick('contact')">FAQ's</a>
       </li>
     </ul>
   </nav>

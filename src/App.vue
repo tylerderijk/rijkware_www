@@ -59,7 +59,18 @@ export default {
   },
   mounted() {
     this.setBodyStyle(this.$route);
-   },
+
+    // Scroll to section if hash is present in URL
+    if (window.location.hash) {
+      const sectionId = window.location.hash.substring(1);
+      const element = document.getElementById(sectionId);
+      if (element) {
+        setTimeout(() => {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }, 500); // Small delay to ensure components are rendered
+      }
+    }
+  },
   beforeUnmount() {
     this.destroyScroll();
   },

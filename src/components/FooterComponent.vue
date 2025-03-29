@@ -10,42 +10,18 @@ export default {
       currentLaptopImage: require("../assets/project_overpowered.png")
     };
   },
-  watch: {
-    '$route'() {
-      this.setFooterImages();
-    }
-  },
   methods: {
     getImageUrl(imageName) {
       return require(`@/assets/${imageName}`);
     },
-    setFooterImages() {
-      switch (this.$route.path) {
-        case "/manifesto":
-          this.currentLaptopImage = this.getImageUrl("project_auctioneer.png");
-          this.currentPhoneImage = this.getImageUrl("WatNuMOCKEPS_3.png");
-          break;
-        case "/cases":
-          this.currentLaptopImage = this.getImageUrl("project_greenoffice.png");
-          this.currentPhoneImage = this.getImageUrl("WatNuMOCKEPS_2.png");
-          break;
-        case "/people":
-          this.currentLaptopImage = this.getImageUrl("project_rembrandt.png");
-          this.currentPhoneImage = this.getImageUrl("WatNuMOCKEPS_4.png");
-          break;
-        case "/contact":
-          this.currentLaptopImage = this.getImageUrl("project_fridaymascara.png");
-          this.currentPhoneImage = this.getImageUrl("WatNuMOCKEPS_2.png");
-          break;
-        case "/terms-and-conditions":
-          this.currentLaptopImage = this.getImageUrl("project_portfolio.png");
-          break;
-        default:
-          this.currentLaptopImage = this.getImageUrl("project_overpowered.png");
-          this.currentPhoneImage = this.getImageUrl("WatNuMOCKEPS.png");
-          break;
+    scrollToSection(sectionId) {
+      if (sectionId) {
+        const element = document.getElementById(sectionId);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
       }
-    }
+    },
   }
 }
 </script>
@@ -81,19 +57,19 @@ export default {
             <small class="footer__bottom-label">Company</small>
             <ul class="footer__bottom-list">
               <li>
-                <router-link to="/">About us</router-link>
+                <a href="#about" @click="scrollToSection('about')">About us</a>
               </li>
               <li>
-                <router-link to="/manifesto">Why</router-link>
+                <a href="#manifesto" @click="scrollToSection('manifesto')">Why</a>
               </li>
               <li>
-                <router-link to="/cases">Manifesto</router-link>
+                <a href="#manifesto" @click="scrollToSection('manifesto')">Manifesto</a>
               </li>
               <li>
-                <router-link to="/people">Contact</router-link>
+                <a href="#contact" @click="scrollToSection('contact')">Contact</a>
               </li>
               <li>
-                <router-link to="/contact">FAQ's</router-link>
+                <a href="#contact" @click="scrollToSection('contact')">FAQ's</a>
               </li>
             </ul>
           </div>

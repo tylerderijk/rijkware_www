@@ -1,5 +1,5 @@
 <template>
-  <div class="hero">
+  <div id="about" class="hero">
     <video src="../assets/RijkwareLogoRenderTrans2.webm" id="rijkware-animation"
            class="hero__animation d-inline-block align-top"
            autoplay loop muted playsinline oncontextmenu="return false;">

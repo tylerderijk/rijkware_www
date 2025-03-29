@@ -32,7 +32,7 @@ export default {
 </script>
 
 <template>
-  <div class="manifesto">
+  <div id="manifesto" class="manifesto">
     <div class="manifesto__header">
       <h2 class="manifesto__title u-text-gradient--white-blue-3">{{ lang.hero_title }}</h2>
       <p class="manifesto__subtitle">{{ lang.hero_subtitle }}</p>
