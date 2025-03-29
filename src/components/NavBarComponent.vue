@@ -188,6 +188,10 @@ export default {
     &-icon {
       color: #c2c2c2;
       padding: 12px 12px 0 0;
+
+      @media (max-width: 820px) {
+        padding: 0 8px 0 0;
+      }
     }
   }
 
