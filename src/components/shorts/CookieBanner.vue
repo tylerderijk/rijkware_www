@@ -2,7 +2,7 @@
   <div class="cookie-banner">
     <div class="cookie-banner-content">
       <button class="close-button" @click="acceptCookies">x</button>
-      <p>By using this website, you agree to our use of cookies. We use cookies to provide you with a great experience and to help our website run effectively. <router-link class="cookies-read-more" to="/cookies"> Read more.</router-link></p>
+      <p>By using this website, you agree to our use of cookies. We use cookies to provide you with a great experience and to help our website run effectively. <a href="#" class="cookies-read-more" @click.prevent="openCookiesInfo"> Read more.</a></p>
       <div class="cookie-banner-buttons">
         <button class="cookie-button cookie-button-accept" @click="acceptCookies">Accept</button>
         <button class="cookie-button" @click="declineCookies">Deny</button>
@@ -24,6 +24,9 @@ export default {
       localStorage.setItem('posthog_user_consent', 'declined');
       this.$posthog.opt_out_capturing();
       this.$emit('hideBanner');
+    },
+    openCookiesInfo() {
+      this.$emit('open-cookies');
     }
   }
 }

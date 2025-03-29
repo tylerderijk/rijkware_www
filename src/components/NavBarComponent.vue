@@ -17,7 +17,7 @@ export default {
   emits: ['toggle-menu', 'open-terms', 'open-privacy', 'open-cookies'],
   computed: {
     isMobile() {
-      return /Mobi|Android/i.test(navigator.userAgent);
+      return window.innerWidth <= 820 || /Mobi|Android/i.test(navigator.userAgent);
     },
     currentPath() {
       return this.$route.path;
@@ -80,6 +80,11 @@ export default {
   },
   mounted() {
     window.addEventListener('resize', this.handleResize);
+
+    // Update isMobile on window resize
+    window.addEventListener('resize', () => {
+      this.$forceUpdate(); // Force update to recalculate computed properties
+    });
 
     // Initially hide the navbar
     const navbar = this.$el;
@@ -227,6 +232,12 @@ export default {
   &__logo-container {
     display: flex;
     justify-content: space-between;
+
+    @media (max-width: 820px) {
+      width: 100%;
+      padding: 0;
+      margin: 0;
+    }
   }
 
   &__list {
@@ -311,10 +322,12 @@ export default {
     height: 36px;
     margin: 24px 48px 0 0;
     opacity: 0.9;
+    display: block;
 
     @media (max-width: 820px) {
-      margin: 16px;
+      margin: 16px 0;
       height: 24px;
+      display: block;
     }
   }
 
@@ -332,6 +345,7 @@ export default {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      padding: 0 16px;
     }
 
     &-wrapper {
@@ -363,6 +377,7 @@ export default {
     background: none;
     border: none;
     color: #e9e9e9;
+    padding: 8px;
 
     @media (max-width: 820px) {
       display: block;

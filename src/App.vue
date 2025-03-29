@@ -18,7 +18,7 @@
       />
     </div>
     <CookieBanner v-if="showBanner" :class="{ 'app__banner--active': showBanner }" @hideBanner="showBanner = false"
-                  @acceptBanner="handleCookieBanner(true)"/>
+                  @acceptBanner="handleCookieBanner(true)" @open-cookies="openCookiesModal"/>
 
     <!-- Policy Modals -->
     <ModalComponent :show="showTermsModal" @close="closeTermsModal">
