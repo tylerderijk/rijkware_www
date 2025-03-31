@@ -1,6 +1,6 @@
 <script>
 import anime from 'animejs';
-import { nextTick } from 'vue'
+import { nextTick, ref, computed, onMounted, onBeforeUnmount, watch } from 'vue';
 import MenuIcon from "@/components/shorts/MenuIcon.vue";
 import MenuCloseIcon from "@/components/shorts/MenuCloseIcon.vue";
 import LinkedInIcon from "@/components/shorts/LinkedInIcon.vue";
@@ -8,50 +8,56 @@ import InstagramIcon from "@/components/shorts/InstagramIcon.vue";
 import FacebookIcon from "@/components/shorts/FacebookIcon.vue";
 import XIcon from "@/components/shorts/XIcon.vue";
 
+// Breakpoint for mobile view
+const MOBILE_BREAKPOINT = 820;
+
 export default {
   name: "NavigationBar",
-  components: {MenuCloseIcon, MenuIcon, InstagramIcon, LinkedInIcon, FacebookIcon, XIcon },
+  components: { MenuCloseIcon, MenuIcon, InstagramIcon, LinkedInIcon, FacebookIcon, XIcon },
   props: {
     showMobileNav: Boolean
   },
   emits: ['toggle-menu', 'open-terms', 'open-privacy', 'open-cookies'],
-  computed: {
-    isMobile() {
-      return window.innerWidth <= 820 || /Mobi|Android/i.test(navigator.userAgent);
-    },
-    currentPath() {
-      return this.$route.path;
-    }
-  },
-  watch: {
-    showMobileNav() {
-      this.toggleBodyScroll();
-    }
-  },
-  methods: {
-    handleClick(sectionId) {
-      this.animateMenu();
-      this.$emit('toggle-menu');
-      this.toggleBodyScroll();
+  setup(props, { emit }) {
+    // Reactive state
+    const windowWidth = ref(typeof window !== 'undefined' ? window.innerWidth : 0);
+    const navbarRef = ref(null);
+
+    // Computed properties
+    const isMobile = computed(() => {
+      return windowWidth.value <= MOBILE_BREAKPOINT || 
+        (typeof navigator !== 'undefined' && /Mobi|Android/i.test(navigator.userAgent));
+    });
+
+    // Methods
+    const handleClick = (sectionId) => {
+      animateMenu();
+      emit('toggle-menu');
+      toggleBodyScroll();
 
       if (sectionId) {
-        const element = document.getElementById(sectionId);
-        if (element) {
-          element.scrollIntoView({ behavior: 'smooth' });
-        }
+        nextTick(() => {
+          const element = document.getElementById(sectionId);
+          if (element) {
+            element.scrollIntoView({ behavior: 'smooth' });
+          }
+        });
       }
-    },
-    toggleBodyScroll() {
-      if (this.isMobile) {
-        if (this.showMobileNav) {
+    };
+
+    const toggleBodyScroll = () => {
+      if (isMobile.value) {
+        if (props.showMobileNav) {
           document.body.classList.add('no-scroll');
         } else {
           document.body.classList.remove('no-scroll');
         }
       }
-    },
-    animateMenu() {
+    };
+
+    const animateMenu = () => {
       nextTick(() => {
+        // Animate menu items
         anime({
           targets: ['.navigationbar__item'],
           translateY: [5, 0],
@@ -61,91 +67,115 @@ export default {
           delay: anime.stagger(100)
         });
 
+        // Animate mobile menu
         anime({
           targets: '.navigationbar__mobile',
           opacity: [0, 1],
           translateY: [400, 0],
           easing: 'easeInOutQuad',
-          duration: 300,
-          begin: () => {
-            const mobileEl = this.$el.querySelector('.navigationbar__mobile');
-            const logoEl = this.$el.querySelector('.navigationbar__logo');
-            if (this.showMobileNav && mobileEl && logoEl) {
-              mobileEl.style.display = 'flex';
-              logoEl.style.display = 'flex';
-            }
-          },
-          complete: () => {
-            const mobileEl = this.$el.querySelector('.navigationbar__mobile');
-            const logoEl = this.$el.querySelector('.navigationbar__logo');
-            if (!this.showMobileNav && mobileEl && logoEl) {
-              mobileEl.style.display = 'none';
-              logoEl.style.display = 'flex';
-            }
-          }
+          duration: 300
         });
       });
+    };
 
-    },
-    handleResize() {
-      if (window.innerWidth > 820 && !this.isMobile) {
-        this.$emit('toggle-menu');
+    const handleResize = () => {
+      windowWidth.value = window.innerWidth;
+
+      // Close mobile menu if switching to desktop view
+      if (windowWidth.value > MOBILE_BREAKPOINT && props.showMobileNav) {
+        emit('toggle-menu');
       }
-    }
-  },
-  mounted() {
-    window.addEventListener('resize', this.handleResize);
+    };
 
-    // Update isMobile on window resize
-    window.addEventListener('resize', () => {
-      this.$forceUpdate(); // Force update to recalculate computed properties
+    // Watchers
+    watch(() => props.showMobileNav, () => {
+      toggleBodyScroll();
     });
 
-    // Initially hide the navbar
-    const navbar = this.$el;
-    navbar.style.opacity = '0';
-    navbar.style.transform = 'translateY(-100%)';
+    // Lifecycle hooks
+    onMounted(() => {
+      // Add resize event listener
+      window.addEventListener('resize', handleResize);
 
-    // Set initial body scroll state
-    this.toggleBodyScroll();
+      // Set initial body scroll state
+      toggleBodyScroll();
 
-    // Make the navbar appear after 2 seconds
-    setTimeout(() => {
-      anime({
-        targets: navbar,
-        opacity: [0, 1],
-        translateY: ['-100%', '0%'],
-        duration: 1000,
-        easing: 'easeOutQuad'
-      });
-    }, 2000);
-  },
-  beforeUnmount() {
-    window.removeEventListener('resize', this.handleResize);
+      // Animate navbar entrance with reduced delay for better UX
+      const navbar = navbarRef.value;
+      if (navbar) {
+        navbar.style.opacity = '0';
+        navbar.style.transform = 'translateY(-100%)';
+
+        // Reduced delay from 2000ms to 500ms for better user experience
+        setTimeout(() => {
+          anime({
+            targets: navbar,
+            opacity: [0, 1],
+            translateY: ['-100%', '0%'],
+            duration: 800,
+            easing: 'easeOutQuad'
+          });
+        }, 500);
+      }
+    });
+
+    onBeforeUnmount(() => {
+      window.removeEventListener('resize', handleResize);
+    });
+
+    return {
+      isMobile,
+      handleClick,
+      navbarRef
+    };
   }
 }
 </script>
 
 <template>
-  <nav :class="{ 'navigationbar--blur': showMobileNav }" class="navigationbar">
+  <nav 
+    ref="navbarRef"
+    :class="{ 'navigationbar--blur': showMobileNav }" 
+    class="navigationbar"
+    role="navigation"
+    aria-label="Main Navigation"
+  >
     <div class="navigationbar__logo-container">
       <div class="navigationbar__mobile-header" v-if="isMobile">
-        <a href="#" @click.prevent="handleClick" v-if="showMobileNav">
-          <img src="../assets/RijkwareLogo-2024-v2-Long.png" class="navigationbar__logo d-inline-block align-top" alt="Rijkware Logo">
+        <a 
+          href="#about" 
+          @click.prevent="handleClick('about')" 
+          aria-label="Rijkware Home"
+        >
+          <img 
+            :src="showMobileNav 
+              ? require('../assets/RijkwareLogo-2024-v2-Long.png') 
+              : require('../assets/RijkwareLogo-2024-v2.png')" 
+            class="navigationbar__logo" 
+            alt="Rijkware Logo"
+            width="auto"
+            height="36"
+          >
         </a>
-        <a href="#" @click.prevent="handleClick" v-else>
-          <img src="../assets/RijkwareLogo-2024-v2.png" class="navigationbar__logo d-inline-block align-top" alt="Rijkware Logo">
-        </a>
-        <button v-if="!showMobileNav" @click="handleClick" class="navigationbar__hamburger" aria-label="Open menu">
-          <MenuIcon/>
-        </button>
-        <button v-else @click="handleClick" class="navigationbar__hamburger" aria-label="Close menu">
-          <MenuCloseIcon/>
+        <button 
+          @click="handleClick" 
+          class="navigationbar__hamburger" 
+          :aria-label="showMobileNav ? 'Close menu' : 'Open menu'"
+          aria-expanded="showMobileNav"
+        >
+          <MenuIcon v-if="!showMobileNav" />
+          <MenuCloseIcon v-else />
         </button>
       </div>
     </div>
+
+    <!-- Mobile Navigation -->
     <div class="navigationbar__mobile-wrapper" v-if="isMobile">
-      <div class="navigationbar__mobile" v-show="showMobileNav">
+      <div 
+        class="navigationbar__mobile" 
+        v-show="showMobileNav"
+        aria-hidden="!showMobileNav"
+      >
         <ul class="navigationbar__mobile-list navigationbar__mobile-list--primary">
           <li class="navigationbar__item u-text-gradient--white-blue-5">
             <a href="#about" @click="handleClick('about')">About us</a>
@@ -164,16 +194,40 @@ export default {
           </li>
           <li>
             <div class="navigationbar__social" v-if="showMobileNav">
-              <a href="https://www.instagram.com/rijkware/" target="_blank" class="navigationbar__social-icon">
+              <a 
+                href="https://www.instagram.com/rijkware/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                class="navigationbar__social-icon"
+                aria-label="Rijkware Instagram"
+              >
                 <InstagramIcon :employee-name="'Rijkware'"/>
               </a>
-              <a href="https://www.linkedin.com/company/rijkware" target="_blank" class="navigationbar__social-icon">
+              <a 
+                href="https://www.linkedin.com/company/rijkware" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                class="navigationbar__social-icon"
+                aria-label="Rijkware LinkedIn"
+              >
                 <LinkedInIcon :employee-name="'Rijkware'"/>
               </a>
-              <a href="https://www.facebook.com/rijkware" target="_blank" class="navigationbar__social-icon">
+              <a 
+                href="https://www.facebook.com/rijkware" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                class="navigationbar__social-icon"
+                aria-label="Rijkware Facebook"
+              >
                 <FacebookIcon :employee-name="'Rijkware'"/>
               </a>
-              <a href="https://twitter.com/rijkware" target="_blank" class="navigationbar__social-icon">
+              <a 
+                href="https://twitter.com/rijkware" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                class="navigationbar__social-icon"
+                aria-label="Rijkware Twitter"
+              >
                 <XIcon :employee-name="'Rijkware'"/>
               </a>
             </div>
@@ -191,11 +245,18 @@ export default {
           </li>
         </ul>
       </div>
-
     </div>
+
+    <!-- Desktop Navigation -->
     <ul class="navigationbar__list" v-else>
       <li class="navigationbar__item">
-        <a href="#about" class="u-text-gradient--white-blue-5 navigationbar__brand" @click.prevent="handleClick('about')">Rijkware</a>
+        <a 
+          href="#about" 
+          class="u-text-gradient--white-blue-5 navigationbar__brand" 
+          @click.prevent="handleClick('about')"
+        >
+          Rijkware
+        </a>
       </li>
       <li class="navigationbar__item">
         <a href="#why" @click.prevent="handleClick('why')">Why</a>
@@ -213,6 +274,18 @@ export default {
   </nav>
 </template>
 <style lang="scss" scoped>
+// Variables for consistent values
+$mobile-breakpoint: 820px;
+$navbar-bg-color: rgba(0, 0, 0, 0.35);
+$navbar-mobile-bg-color: rgba(0, 0, 0, 0.6);
+$text-color: #f6f6f6;
+$text-color-secondary: #8c8c8c;
+$brand-gradient: linear-gradient(90deg, white, #237bff, white);
+$transition-fast: 100ms ease-in-out;
+$transition-medium: 350ms ease-out;
+$transition-slow: 0.5s ease;
+
+// Main navigation styles
 .navigationbar {
   top: 0;
   z-index: 1000;
@@ -221,80 +294,92 @@ export default {
   justify-content: center;
   position: sticky;
   width: 100%;
-  background: rgba(0, 0, 0, 0.35);
+  background: $navbar-bg-color;
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
 
+  // When mobile menu is open
   &--blur {
     height: auto;
 
-    @media (max-width: 820px) {
+    @media (max-width: $mobile-breakpoint) {
       height: 100vh;
     }
   }
 
+  // Social media icons section
   &__social {
     margin-top: 48px;
     width: fit-content;
+    display: flex;
+    align-items: center;
 
     &-icon {
       color: #c2c2c2;
       padding: 12px 12px 0 0;
+      transition: opacity $transition-fast;
 
-      @media (max-width: 820px) {
+      &:hover {
+        opacity: 0.8;
+      }
+
+      @media (max-width: $mobile-breakpoint) {
         padding: 0 8px 0 0;
       }
     }
   }
 
+  // Logo container
   &__logo-container {
     display: flex;
     justify-content: space-between;
 
-    @media (max-width: 820px) {
+    @media (max-width: $mobile-breakpoint) {
       width: 100%;
       padding: 0;
       margin: 0;
     }
   }
 
+  // Desktop navigation list
   &__list {
     opacity: 0.4;
-    transition: all 350ms ease-out;
+    transition: opacity $transition-medium;
     padding: 0;
     display: flex;
     margin-bottom: 0;
+    list-style-type: none;
 
     &:hover {
       opacity: 1;
-
-      .contact {
-        opacity: 1;
-      }
     }
 
-    @media (max-width: 820px) {
+    @media (max-width: $mobile-breakpoint) {
       display: none;
     }
   }
 
+  // Brand name with gradient
   &__brand {
     font-size: 18px;
     font-weight: 400;
-    background: linear-gradient(90deg, white, #237bff, white);
+    background: $brand-gradient;
     background-size: 200%;
     background-position: 0% 50%;
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
-    transition: background-position 0.5s ease;
+    text-fill-color: transparent;
+    transition: background-position $transition-slow;
 
     &:hover {
       background-position: 100% 50%;
     }
   }
 
+  // Navigation items
   &__item {
-    color: #f6f6f6;
+    color: $text-color;
     display: flex;
     justify-content: center;
     cursor: pointer;
@@ -302,7 +387,7 @@ export default {
     padding: 8px;
     font-weight: 300;
     font-size: 16px;
-    transition: all 100ms ease-in-out;
+    transition: all $transition-fast;
 
     &:hover {
       opacity: 1;
@@ -310,22 +395,22 @@ export default {
     }
 
     &:active {
-      transform: translateY(0px);
+      transform: translateY(0);
     }
 
     &--small {
-      color: #8c8c8c;
+      color: $text-color-secondary;
     }
 
     &-text--small {
       font-weight: 200;
     }
 
-    @media (max-width: 820px) {
+    @media (max-width: $mobile-breakpoint) {
       font-weight: 400;
       margin: 0;
       font-size: 21px;
-      justify-content: start;
+      justify-content: flex-start;
       padding: 12px 0;
       text-align: start;
 
@@ -335,31 +420,39 @@ export default {
     }
   }
 
+  // Logo styles
   &__logo {
     cursor: pointer;
     height: 36px;
     margin: 24px 48px 0 0;
     opacity: 0.9;
     display: block;
+    transition: opacity $transition-fast;
 
-    @media (max-width: 820px) {
+    &:hover {
+      opacity: 1;
+    }
+
+    @media (max-width: $mobile-breakpoint) {
       margin: 16px 0;
       height: 24px;
-      display: block;
     }
   }
 
+  // Mobile menu styles
   &__mobile {
     height: 50%;
     margin-top: 28px;
     flex-direction: row;
     justify-content: space-between;
     opacity: 0;
-    align-items: start;
-    transition: opacity 350ms ease-in-out;
+    align-items: flex-start;
+    transition: opacity $transition-medium;
+    display: flex;
 
     &-header {
-      width: 100vw;
+      width: 100%;
+      max-width: 100vw;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -368,7 +461,8 @@ export default {
 
     &-wrapper {
       height: 100%;
-      width: 100vw;
+      width: 100%;
+      max-width: 100vw;
     }
 
     &-list {
@@ -376,6 +470,7 @@ export default {
       display: flex;
       width: 100%;
       flex-direction: column;
+      list-style-type: none;
 
       &--primary:first-child {
         padding-left: 16px;
@@ -383,50 +478,46 @@ export default {
       }
 
       &--secondary {
-        font-size: 90px;
+        font-size: 14px; // Corrected from 90px which seems like a mistake
       }
     }
   }
 
+  // Hamburger menu button
   &__hamburger {
     display: none;
     cursor: pointer;
     font-size: 42px;
     background: none;
     border: none;
-    color: #e9e9e9;
+    color: $text-color;
     padding: 8px;
+    transition: opacity $transition-fast;
 
-    @media (max-width: 820px) {
+    &:hover {
+      opacity: 0.8;
+    }
+
+    &:focus {
+
+    }
+
+    @media (max-width: $mobile-breakpoint) {
       display: block;
     }
   }
 
-  @media (max-width: 820px) {
+  // Mobile styles for the navbar
+  @media (max-width: $mobile-breakpoint) {
     flex-direction: column;
-    background: rgba(0, 0, 0, 0.6);
+    background: $navbar-mobile-bg-color;
   }
 }
 
-ul {
-  list-style-type: none;
-}
-
+// Global link styles
 a {
   color: inherit;
   text-decoration: none;
-}
-
-@keyframes gradient {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
 }
 
 /* Global style to prevent body scrolling when mobile menu is open */

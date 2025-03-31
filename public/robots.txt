@@ -1,0 +1,11 @@
+# robots.txt for Rijkware website
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://rijkware.com/sitemap.xml
+
+# Disallow access to specific files and directories
+Disallow: /assets/
+Disallow: /.git/
+Disallow: /.htaccess

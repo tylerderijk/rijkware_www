@@ -35,7 +35,8 @@
   </div>
 </template>
 
-<script>
+<script setup>
+import { ref, onMounted } from 'vue';
 import CookieBanner from "@/components/shorts/CookieBanner.vue";
 import NavBar from "@/components/NavBarComponent.vue";
 import FooterComponent from "@/components/FooterComponent.vue";
@@ -47,132 +48,111 @@ import TermsAndConditions from "@/components/TermsAndConditions.vue";
 import PrivacyPolicy from "@/components/PrivacyPolicy.vue";
 import CookiesPolicy from "@/components/CookiesPolicy.vue";
 
-export default {
-  name: 'App',
-  data() {
-    // Safely check localStorage for user consent
-    let userConsent = null;
+// Reactive state
+const showMobileNav = ref(false);
+const showBanner = ref(false);
+const showTermsModal = ref(false);
+const showPrivacyModal = ref(false);
+const showCookiesModal = ref(false);
+
+// Check for user consent in localStorage
+function checkUserConsent() {
+  try {
+    const userConsent = localStorage.getItem('posthog_user_consent');
+    return !!userConsent; // Convert to boolean
+  } catch (e) {
+    console.warn("Could not access localStorage:", e);
+    return false;
+  }
+}
+
+// Initialize banner visibility based on user consent
+showBanner.value = !checkUserConsent();
+
+// Methods
+function toggleMenu() {
+  showMobileNav.value = !showMobileNav.value;
+}
+
+function closeAllModals() {
+  showTermsModal.value = false;
+  showPrivacyModal.value = false;
+  showCookiesModal.value = false;
+}
+
+function openModal(modalType) {
+  closeAllModals();
+
+  switch (modalType) {
+    case 'terms':
+      showTermsModal.value = true;
+      break;
+    case 'privacy':
+      showPrivacyModal.value = true;
+      break;
+    case 'cookies':
+      showCookiesModal.value = true;
+      break;
+  }
+}
+
+// Modal handlers
+function openTermsModal() {
+  openModal('terms');
+}
+
+function closeTermsModal() {
+  closeAllModals();
+}
+
+function openPrivacyModal() {
+  openModal('privacy');
+}
+
+function closePrivacyModal() {
+  closeAllModals();
+}
+
+function openCookiesModal() {
+  openModal('cookies');
+}
+
+function closeCookiesModal() {
+  closeAllModals();
+}
+
+// Cookie banner handler
+function handleCookieBanner(accepted) {
+  showBanner.value = false;
+
+  if (accepted) {
     try {
-      userConsent = localStorage.getItem('posthog_user_consent');
-      console.log("[App] User consent from localStorage:", userConsent);
+      localStorage.setItem('posthog_user_consent', 'accepted');
     } catch (e) {
-      console.error("[App] Error accessing localStorage:", e);
-      // Default to showing the banner if localStorage is inaccessible
-      userConsent = null;
+      console.warn("Could not set localStorage:", e);
     }
+  }
+}
 
-    return {
-      showMobileNav: false,
-      isMobile: false,
-      showBanner: !userConsent, // Show banner if userConsent is null, undefined, or empty string
-      showTermsModal: false,
-      showPrivacyModal: false,
-      showCookiesModal: false
-    };
-  },
-  components: {
-    ContactComponent,
-    NavBar,
-    AboutUsComponent,
-    ManifestoComponent,
-    FooterComponent,
-    CookieBanner,
-    ModalComponent,
-    TermsAndConditions,
-    PrivacyPolicy,
-    CookiesPolicy,
-  },
-  methods: {
-    toggleMenu() {
-      this.showMobileNav = !this.showMobileNav;
-    },
-    toggleModal(modalType) {
-      // Close all modals first
-      this.showTermsModal = false;
-      this.showPrivacyModal = false;
-      this.showCookiesModal = false;
+// Handle hash navigation
+function scrollToHashElement() {
+  if (!window.location.hash) return;
 
-      // Open the requested modal
-      if (modalType === 'terms') {
-        this.showTermsModal = true;
-      } else if (modalType === 'privacy') {
-        this.showPrivacyModal = true;
-      } else if (modalType === 'cookies') {
-        this.showCookiesModal = true;
-      }
-    },
-    openTermsModal() {
-      this.toggleModal('terms');
-    },
-    closeTermsModal() {
-      this.toggleModal(null);
-    },
-    openPrivacyModal() {
-      this.toggleModal('privacy');
-    },
-    closePrivacyModal() {
-      this.toggleModal(null);
-    },
-    openCookiesModal() {
-      this.toggleModal('cookies');
-    },
-    closeCookiesModal() {
-      this.toggleModal(null);
-    },
-    handleCookieBanner(accepted) {
-      console.log("[App] Handling cookie banner, accepted:", accepted);
-      this.showBanner = false;
+  const sectionId = window.location.hash.substring(1);
+  const element = document.getElementById(sectionId);
 
-      if (accepted) {
-        try {
-          console.log("[App] Setting posthog_user_consent to 'accepted' in localStorage");
-          localStorage.setItem('posthog_user_consent', 'accepted');
-        } catch (e) {
-          console.error("[App] Error setting localStorage:", e);
-          // Continue even if localStorage fails - the banner will still be hidden
-        }
-      }
-    },
-  },
-  mounted() {
-    try {
-      console.log("[App] Component mounted");
+  if (element) {
+    // Small delay to ensure all components are rendered
+    setTimeout(() => {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }, 300);
+  }
+}
 
-      // Safely check for hash in URL and scroll to section
-      try {
-        if (window.location && window.location.hash) {
-          const sectionId = window.location.hash.substring(1);
-          console.log("[App] Found hash in URL, scrolling to section:", sectionId);
-
-          try {
-            const element = document.getElementById(sectionId);
-            if (element) {
-              console.log("[App] Found element with id:", sectionId);
-              setTimeout(() => {
-                try {
-                  element.scrollIntoView({behavior: 'smooth'});
-                  console.log("[App] Scrolled to element");
-                } catch (e) {
-                  console.error("[App] Error scrolling to element:", e);
-                }
-              }, 500);
-            } else {
-              console.warn("[App] Element with id not found:", sectionId);
-            }
-          } catch (e) {
-            console.error("[App] Error finding element by id:", e);
-          }
-        } else {
-          console.log("[App] No hash found in URL");
-        }
-      } catch (e) {
-        console.error("[App] Error accessing window.location:", e);
-      }
-    } catch (e) {
-      console.error("[App] Unexpected error in mounted hook:", e);
-    }
-  },
-};
+// Lifecycle hooks
+onMounted(() => {
+  scrollToHashElement();
+});
 </script>
 
 <style lang="scss">
