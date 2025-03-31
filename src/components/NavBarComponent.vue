@@ -23,15 +23,30 @@ export default {
       return this.$route.path;
     }
   },
+  watch: {
+    showMobileNav() {
+      this.toggleBodyScroll();
+    }
+  },
   methods: {
     handleClick(sectionId) {
       this.animateMenu();
       this.$emit('toggle-menu');
+      this.toggleBodyScroll();
 
       if (sectionId) {
         const element = document.getElementById(sectionId);
         if (element) {
           element.scrollIntoView({ behavior: 'smooth' });
+        }
+      }
+    },
+    toggleBodyScroll() {
+      if (this.isMobile) {
+        if (this.showMobileNav) {
+          document.body.classList.add('no-scroll');
+        } else {
+          document.body.classList.remove('no-scroll');
         }
       }
     },
@@ -90,6 +105,9 @@ export default {
     const navbar = this.$el;
     navbar.style.opacity = '0';
     navbar.style.transform = 'translateY(-100%)';
+
+    // Set initial body scroll state
+    this.toggleBodyScroll();
 
     // Make the navbar appear after 2 seconds
     setTimeout(() => {
@@ -177,19 +195,19 @@ export default {
     </div>
     <ul class="navigationbar__list" v-else>
       <li class="navigationbar__item">
-        <a href="#about" class="u-text-gradient--white-blue-5 navigationbar__brand" @click="handleClick('about')">Rijkware</a>
+        <a href="#" class="u-text-gradient--white-blue-5 navigationbar__brand" @click="handleClick('about')">Rijkware</a>
       </li>
       <li class="navigationbar__item">
-        <a href="#why" @click="handleClick('why')">Why</a>
+        <a href="#" @click="handleClick('why')">Why</a>
       </li>
       <li class="navigationbar__item">
-        <a href="#manifesto" @click="handleClick('manifesto')">Manifesto</a>
+        <a href="#" @click="handleClick('manifesto')">Manifesto</a>
       </li>
       <li class="navigationbar__item">
-        <a href="#contact" @click="handleClick('contact')">Contact</a>
+        <a href="#" @click="handleClick('contact')">Contact</a>
       </li>
       <li class="navigationbar__item">
-        <a href="#faq" @click="handleClick('faq')">FAQ's</a>
+        <a href="#" @click="handleClick('faq')">FAQ's</a>
       </li>
     </ul>
   </nav>
@@ -409,5 +427,13 @@ a {
   100% {
     background-position: 0% 50%;
   }
+}
+
+/* Global style to prevent body scrolling when mobile menu is open */
+:global(.no-scroll) {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+  height: 100%;
 }
 </style>
