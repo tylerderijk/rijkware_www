@@ -195,19 +195,19 @@ export default {
     </div>
     <ul class="navigationbar__list" v-else>
       <li class="navigationbar__item">
-        <a href="#" class="u-text-gradient--white-blue-5 navigationbar__brand" @click="handleClick('about')">Rijkware</a>
+        <a href="#about" class="u-text-gradient--white-blue-5 navigationbar__brand" @click.prevent="handleClick('about')">Rijkware</a>
       </li>
       <li class="navigationbar__item">
-        <a href="#" @click="handleClick('why')">Why</a>
+        <a href="#why" @click.prevent="handleClick('why')">Why</a>
       </li>
       <li class="navigationbar__item">
-        <a href="#" @click="handleClick('manifesto')">Manifesto</a>
+        <a href="#manifesto" @click.prevent="handleClick('manifesto')">Manifesto</a>
       </li>
       <li class="navigationbar__item">
-        <a href="#" @click="handleClick('contact')">Contact</a>
+        <a href="#contact" @click.prevent="handleClick('contact')">Contact</a>
       </li>
       <li class="navigationbar__item">
-        <a href="#" @click="handleClick('faq')">FAQ's</a>
+        <a href="#faq" @click.prevent="handleClick('faq')">FAQ's</a>
       </li>
     </ul>
   </nav>

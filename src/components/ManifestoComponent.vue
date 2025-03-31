@@ -48,7 +48,7 @@ export default {
 
 <style lang="scss" scoped>
 .manifesto {
-  padding: 48px 0;
+  padding: 52px 0;
   position: relative;
   background: linear-gradient(to bottom, transparent, black, rgba(61, 78, 135, 0.12), black);
   color: #e9e9e9;
