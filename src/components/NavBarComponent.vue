@@ -115,7 +115,7 @@ export default {
             duration: 800,
             easing: 'easeOutQuad'
           });
-        }, 500);
+        }, 800);
       }
     });
 

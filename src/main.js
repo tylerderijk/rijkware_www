@@ -2,10 +2,6 @@ import { createApp, nextTick } from 'vue'
 import App from './App.vue'
 import { createRouter, createWebHistory } from "vue-router";
 import AboutUs from "@/components/AboutUsComponent.vue";
-import Manifesto from "@/components/ManifestoComponent.vue";
-import Cases from "@/components/CasesComponent.vue";
-import People from "@/components/PeopleComponent.vue";
-import Contact from "@/components/ContactComponent.vue";
 import posthogPlugin from './plugins/posthog.js';
 
 // Create router with history mode for better SEO
@@ -16,27 +12,23 @@ const router = createRouter({
         { 
             path: '/', 
             component: AboutUs,
-            meta: { title: 'Rijkware - Home' }
+            meta: { title: 'Rijkware - Student Developers' }
         },
         { 
             path: '/manifesto', 
-            component: Manifesto,
-            meta: { title: 'Rijkware - Manifesto' }
+            redirect: '/'
         },
         { 
             path: '/cases', 
-            component: Cases,
-            meta: { title: 'Rijkware - Cases' }
+            redirect: '/'
         },
         { 
             path: '/people', 
-            component: People,
-            meta: { title: 'Rijkware - People' }
+            redirect: '/'
         },
         { 
             path: '/contact', 
-            component: Contact,
-            meta: { title: 'Rijkware - Contact' }
+            redirect: '/'
         },
         // Routes for policy pages removed as they are now displayed as modals
         { path: '/:pathMatch(.*)*', redirect: '/' },
