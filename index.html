@@ -44,6 +44,49 @@
     <!-- Latest compiled and minified CSS - optimized loading with media query to make it non-render-blocking -->
     <link rel="preload" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous" media="print" onload="this.media='all'">
     <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous"></noscript>
+    <!-- Structured Data for SEO -->
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            "name": "Rijkware",
+            "url": "https://rijkware.com",
+            "logo": "https://rijkware.com/src/assets/RijkwareLogo-2024-v2.png",
+            "sameAs": [
+                "https://www.instagram.com/rijkware/",
+                "https://www.linkedin.com/company/rijkware",
+                "https://www.facebook.com/rijkware",
+                "https://twitter.com/rijkware"
+            ],
+            "description": "Rijkware connects businesses with talented student developers in Amsterdam. Get high-quality software development at affordable rates while supporting student careers.",
+            "address": {
+                "@type": "PostalAddress",
+                "addressLocality": "Amsterdam",
+                "addressCountry": "NL"
+            },
+            "contactPoint": {
+                "@type": "ContactPoint",
+                "contactType": "customer service",
+                "email": "info@rijkware.com"
+            }
+        }
+    </script>
+
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            "url": "https://rijkware.com",
+            "name": "Rijkware",
+            "description": "Hire Student Developers for Your Projects",
+            "potentialAction": {
+                "@type": "SearchAction",
+                "target": "https://rijkware.com/search?q={search_term_string}",
+                "query-input": "required name=search_term_string"
+            }
+        }
+    </script>
+
 </head>
 <body>
 <noscript>

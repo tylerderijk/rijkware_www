@@ -118,7 +118,7 @@ export default {
         duration: 1000,
         easing: 'easeOutQuad'
       });
-    }, 2000);
+    }, 800);
   },
   beforeUnmount() {
     window.removeEventListener('resize', this.handleResize);
